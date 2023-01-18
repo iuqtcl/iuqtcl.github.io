@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"iuqtcl.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="人暂时没remake，blog已经re了">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Cyber Ghost">
+<meta property="og:url" content="https://iuqtcl.github.io/index.html">
+<meta property="og:site_name" content="Cyber Ghost">
+<meta property="og:description" content="人暂时没remake，blog已经re了">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="iuqtcl">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://iuqtcl.github.io/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Cyber Ghost</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Cyber Ghost</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">（确信）</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/01/19/07_classes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ee2.jpg">
+      <meta itemprop="name" content="iuqtcl">
+      <meta itemprop="description" content="人暂时没remake，blog已经re了">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyber Ghost">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/19/07_classes/" class="post-title-link" itemprop="url">07 Classes</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-01-19 00:57:13 / 修改时间：01:00:55" itemprop="dateCreated datePublished" datetime="2023-01-19T00:57:13+08:00">2023-01-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CS106L%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">CS106L笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><em>How to make your own custom types</em></p>
+<h2 id="Classes-Introduction"><a href="#Classes-Introduction" class="headerlink" title="Classes Introduction"></a>Classes Introduction</h2><p><em>Containers are all classes defined in the STL</em></p>
+<h4 id="issues-with-structs"><a href="#issues-with-structs" class="headerlink" title="issues with structs"></a>issues with structs</h4><ol>
+<li>默认可以访问任意内部数据(public)</li>
+<li>需要直接初始化每个 data member</li>
+</ol>
+<p>classes 提供 public interface 和 private implement</p>
+<p><strong>声明结构</strong></p>
+<p>declare in .h  + implement in .cpp</p>
+<p>在 .cpp 中加入 .h 头文件</p>
+<p>.h include .cpp</p>
+<p><strong>namespace</strong></p>
+<ol>
+<li>防止名字冲突</li>
+<li>每个类有单独的namespace</li>
+</ol>
+<p><strong>this</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Student::setName</span><span class="params">(string name)</span></span>&#123;</span><br><span class="line"><span class="keyword">this</span>-&gt;name=name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>构造函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Student.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;Student.h&gt;</span></span></span><br><span class="line">Student::<span class="built_in">Student</span>():name&#123;<span class="string">&quot;&quot;</span>&#125;,age&#123;<span class="number">0</span>&#125;,state&#123;<span class="string">&quot;&quot;</span>&#125;</span><br><span class="line">Student::<span class="built_in">Student</span>(string name,<span class="type">int</span> age,string state)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">this</span>-&gt;name=name;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>destructors</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class_name::~Class_name();</span><br></pre></td></tr></table></figure>
+
+<p><strong>using</strong></p>
+<ol>
+<li><pre><code class="c++">using namespace name;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2. 指定别名</span><br><span class="line"></span><br><span class="line">```c++</span><br><span class="line">    using iterator = std::string*;</span><br><span class="line">    using size_type = size_t;</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>在派生类中引用基类成员</p>
+</li>
+</ol>
+<h4 id="operator-重载"><a href="#operator-重载" class="headerlink" title="operator 重载"></a>operator 重载</h4><p>重载[]</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">std::string&amp; StrVector::<span class="keyword">operator</span>[](size_type index) &#123;</span><br><span class="line">    <span class="keyword">return</span> *(<span class="built_in">begin</span>() + index);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="const"><a href="#const" class="headerlink" title="const"></a>const</h4><p>后加const表函数不修改成员数据，可以被const对象引用。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">empty</span><span class="params">()</span> <span class="type">const</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>前加const表示返回值为const类型</p>
+<h2 id="Template-Class"><a href="#Template-Class" class="headerlink" title="Template Class"></a>Template Class</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> First, <span class="keyword">typename</span> Second&gt; <span class="keyword">class</span> <span class="title class_">MyPair</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="function">First <span class="title">getFirst</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function">Second <span class="title">getSecond</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setFirst</span><span class="params">(First f)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setSecond</span><span class="params">(Second f)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">First first;</span><br><span class="line">Second second;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/01/19/06_iterators_and_pointers/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ee2.jpg">
+      <meta itemprop="name" content="iuqtcl">
+      <meta itemprop="description" content="人暂时没remake，blog已经re了">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyber Ghost">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/19/06_iterators_and_pointers/" class="post-title-link" itemprop="url">06 Iterators and Pointers</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-01-19 00:57:13 / 修改时间：01:11:47" itemprop="dateCreated datePublished" datetime="2023-01-19T00:57:13+08:00">2023-01-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CS106L%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">CS106L笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><em>How do we access elements in a container in order?</em></p>
+<p><em>How do we reference existing data in our code?</em></p>
+<h2 id="iterators"><a href="#iterators" class="headerlink" title="iterators"></a>iterators</h2><p><em>访问容器中的元素</em></p>
+<p><strong>作用</strong></p>
+<ol>
+<li>访问容器中所有的数据</li>
+<li>按序访问（找到下一项）</li>
+</ol>
+<p>在不同容器中的<strong>种类</strong></p>
+<p><img src="https://i.imgur.com/EEXNpog.png"></p>
+<p><img src="https://i.imgur.com/bqbw0zU.png"></p>
+<p>取值时使用dereference(*iter)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="keyword">auto</span>&amp; elem = *iter;</span><br></pre></td></tr></table></figure>
+
+<p>&amp;为引用</p>
+<p>iterators are a type of pointer</p>
+<h2 id="pointers"><a href="#pointers" class="headerlink" title="pointers"></a>pointers</h2><p><em><strong>引用</strong> 现有数据</em></p>
+<p>pointers reference memory addresses</p>
+<p>&amp;+variable 变量地址</p>
+<p>*+pointer   取值</p>
+<p>pointer声明时 type+*</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/01/19/05_containers/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ee2.jpg">
+      <meta itemprop="name" content="iuqtcl">
+      <meta itemprop="description" content="人暂时没remake，blog已经re了">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyber Ghost">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/19/05_containers/" class="post-title-link" itemprop="url">05 Containers</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-01-19 00:57:13 / 修改时间：01:10:36" itemprop="dateCreated datePublished" datetime="2023-01-19T00:57:13+08:00">2023-01-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CS106L%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">CS106L笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="containers"><a href="#containers" class="headerlink" title="containers"></a>containers</h2><h4 id="defining-containers"><a href="#defining-containers" class="headerlink" title="defining containers"></a>defining containers</h4><p><em>vector,stack,queue</em></p>
+<h4 id="two-types"><a href="#two-types" class="headerlink" title="two types"></a>two types</h4><p>1.sequence:</p>
+<pre><code>vector,deque,list
+</code></pre>
+<p>2.associative: 通过key访问数据</p>
+<pre><code>map,set
+
+ordered/unordered
+</code></pre>
+<p><strong>map</strong></p>
+<p>make_pair实现</p>
+<h4 id="container-adaptors"><a href="#container-adaptors" class="headerlink" title="container adaptors"></a>container adaptors</h4><p>在基础容器的基础上实现特定接口&#x2F;操作</p>
+<p>具体实现没太懂</p>
+<p><img src="https://i.imgur.com/PQrSCk9.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/01/19/04_initialization_and_references/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ee2.jpg">
+      <meta itemprop="name" content="iuqtcl">
+      <meta itemprop="description" content="人暂时没remake，blog已经re了">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyber Ghost">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/19/04_initialization_and_references/" class="post-title-link" itemprop="url">04 Initialization and References</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-01-19 00:57:13 / 修改时间：00:58:19" itemprop="dateCreated datePublished" datetime="2023-01-19T00:57:13+08:00">2023-01-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CS106L%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">CS106L笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="initialization"><a href="#initialization" class="headerlink" title="initialization"></a>initialization</h2><h5 id="uniform-initialization"><a href="#uniform-initialization" class="headerlink" title="uniform initialization"></a>uniform initialization</h5><p>大括号初始化，声明完立刻初始化</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">std::vector&lt;<span class="type">int</span>&gt; vec&#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>&#125;;</span><br><span class="line"><span class="type">int</span> x&#123;<span class="number">5</span>&#125;;</span><br><span class="line">string f&#123;<span class="string">&quot;Sarah&quot;</span>&#125;;</span><br></pre></td></tr></table></figure>
+
+<h5 id="auto"><a href="#auto" class="headerlink" title="auto"></a>auto</h5><p>use it to reduce long type names</p>
+<p>[]的使用</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> [found, solutions] = <span class="built_in">quadratic</span>(a, b, c);</span><br></pre></td></tr></table></figure>
+
+<h2 id="reference-引用-amp"><a href="#reference-引用-amp" class="headerlink" title="reference 引用  &amp;"></a>reference 引用  &amp;</h2><p><strong>引用和copy的区别</strong></p>
+<p>An alias (another name) for a named variable</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; original&#123;<span class="number">1</span>, <span class="number">2</span>&#125;;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; copy = original;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt;&amp; ref = original;</span><br><span class="line">original.<span class="built_in">push_back</span>(<span class="number">3</span>);</span><br><span class="line">copy.<span class="built_in">push_back</span>(<span class="number">4</span>);</span><br><span class="line">ref.<span class="built_in">push_back</span>(<span class="number">5</span>);</span><br><span class="line">cout &lt;&lt; original &lt;&lt; endl; <span class="comment">// &#123;1, 2, 3, 5&#125;</span></span><br><span class="line">cout &lt;&lt; copy &lt;&lt; endl; <span class="comment">// &#123;1, 2, 4&#125;</span></span><br><span class="line">cout &lt;&lt; ref &lt;&lt; endl; <span class="comment">// &#123;1, 2, 3, 5&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>You can only create references to variables</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>&amp; thisWontWork = <span class="number">5</span>; <span class="comment">// This doesn&#x27;t work!</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="const-and-const-references"><a href="#const-and-const-references" class="headerlink" title="const and const references"></a>const and const references</h5><p>const声明变量不会被改变-specify that a variable can’t be modified</p>
+<p>const引用可以引不const的，反之不行</p>
+<h5 id="reference使用场景"><a href="#reference使用场景" class="headerlink" title="reference使用场景"></a>reference使用场景</h5><p>1.variable占空间较大</p>
+<p>2.需要改变变量</p>
+<p>3.不需改变+占空间较大-&gt;用const reference</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/01/19/09_template_functions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ee2.jpg">
+      <meta itemprop="name" content="iuqtcl">
+      <meta itemprop="description" content="人暂时没remake，blog已经re了">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyber Ghost">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/19/09_template_functions/" class="post-title-link" itemprop="url">09 Template Functions</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-01-19 00:28:26 / 修改时间：01:12:49" itemprop="dateCreated datePublished" datetime="2023-01-19T00:28:26+08:00">2023-01-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CS106L%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">CS106L笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><em>What else in C++ can be generalized? What is the philosophy behind generalization?</em></p>
+<h1 id="Template-Functions"><a href="#Template-Functions" class="headerlink" title="Template Functions"></a>Template Functions</h1><h2 id="generic-programming泛型编程"><a href="#generic-programming泛型编程" class="headerlink" title="generic programming		泛型编程"></a>generic programming		泛型编程</h2><p>参数化数据类型</p>
+<p>特性：</p>
+<ol>
+<li>function 仅在被实例化后编译</li>
+<li>可以被多次编译</li>
+</ol>
+<p>特性展示：逆天结构体当函数递归用</p>
+<p><img src="https://i.imgur.com/MJiQbZy.png"></p>
+<p>an instance</p>
+<p>在任意串中计数某字符的出现次数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> InputType,<span class="keyword">typename</span> DataType&gt;</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">count_ocur</span><span class="params">(InputType begin,InputType end, DataType d)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> cnt=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(InputType iter=begin; iter!=end; iter++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(*iter==d) cnt++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> cnt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">usage: std::string str= <span class="string">&quot;nsannd&quot;</span>;</span><br><span class="line">		<span class="built_in">count_ocur</span>(str.<span class="built_in">begin</span>(),str.<span class="built_in">end</span>(),<span class="string">&#x27;a&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/01/19/08_template_classes_and_const_correctness/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ee2.jpg">
+      <meta itemprop="name" content="iuqtcl">
+      <meta itemprop="description" content="人暂时没remake，blog已经re了">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyber Ghost">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/19/08_template_classes_and_const_correctness/" class="post-title-link" itemprop="url">08 Template Classes and Const Correctness</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-01-19 00:28:26 / 修改时间：00:46:11" itemprop="dateCreated datePublished" datetime="2023-01-19T00:28:26+08:00">2023-01-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CS106L%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">CS106L笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><em>How do we make our classes general? How do we make them safe?</em></p>
+<h2 id="Template-Classes"><a href="#Template-Classes" class="headerlink" title="Template Classes"></a>Template Classes</h2><h3 id="member-types"><a href="#member-types" class="headerlink" title="member types"></a>member types</h3><p>成员类型——为某种模板类赋一个名称</p>
+<p><em>例：iterators</em></p>
+<p>定义</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//vector.h</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; <span class="keyword">class</span> <span class="title class_">vector</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="keyword">using</span> iterator = … <span class="comment">// something internal like T*</span></span><br><span class="line">iterator <span class="built_in">begin</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用(after class specifier)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::vector::iterator it = a.<span class="built_in">begin</span>();</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在类接口中使用时（return），定义为嵌套类型(before class specifier)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//vector.cpp</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">typename</span> vector&lt;T&gt;::iterator vector&lt;T&gt;::<span class="built_in">begin</span>() &#123;...&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在函数模板中，&lt;&gt;中typename和class无区别</p>
+<p>非类型形参，在模板定义的内部是常量，可以是整型，指针，引用</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">T</span>, <span class="type">int</span> a&gt; <span class="keyword">class</span> <span class="title class_">B</span>&#123;&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Const-Correctness"><a href="#Const-Correctness" class="headerlink" title="Const Correctness"></a>Const Correctness</h2><h3 id="const-and-const-references"><a href="#const-and-const-references" class="headerlink" title="const and const references"></a>const and const references</h3><p>const function</p>
+<p>只读iterator</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> const_ iterator = <span class="type">const</span> std::string*;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">const_iterator <span class="title">begin</span><span class="params">()</span><span class="type">const</span></span>;</span><br><span class="line"><span class="function">const_iterator <span class="title">end</span><span class="params">()</span><span class="type">const</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>const iterator 不能改变iterator指向</p>
+<p>const_iterator 不能改变指向地址中的内容</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/01/19/15_RAll_smartpointers_buildingprojects/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ee2.jpg">
+      <meta itemprop="name" content="iuqtcl">
+      <meta itemprop="description" content="人暂时没remake，blog已经re了">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyber Ghost">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/19/15_RAll_smartpointers_buildingprojects/" class="post-title-link" itemprop="url">15 RALL</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-01-19 00:28:26 / 修改时间：00:54:30" itemprop="dateCreated datePublished" datetime="2023-01-19T00:28:26+08:00">2023-01-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CS106L%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">CS106L笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="RAll"><a href="#RAll" class="headerlink" title="RAll"></a>RAll</h2><p><em>a coding standard and practice</em></p>
+<h3 id="exceptions"><a href="#exceptions" class="headerlink" title="exceptions"></a>exceptions</h3><p><strong>resources that need to be released</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Acquire</th>
+<th>Release</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Heap memory</td>
+<td>new</td>
+<td>delete</td>
+</tr>
+<tr>
+<td>Files</td>
+<td>open</td>
+<td>close</td>
+</tr>
+<tr>
+<td>Lock</td>
+<td>try_lock</td>
+<td>unlock</td>
+</tr>
+<tr>
+<td>Sockets</td>
+<td>socket</td>
+<td>close</td>
+</tr>
+</tbody></table>
+<p><strong>exceptions</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="comment">//code associated with exception handler</span></span><br><span class="line">&#125; <span class="built_in">catch</span>()&#123;</span><br><span class="line">    <span class="comment">//exception handler</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>enforcing exception safety</strong> 抛异常的可能性大小</p>
+<ul>
+<li>Nothrow exception guarantee(destructors, …)</li>
+<li>…</li>
+<li>No exception guarantee (memory corruption, …)</li>
+</ul>
+<p><strong>RAII</strong></p>
+<p>又名</p>
+<p>scope based memory management</p>
+<p>&#x2F; constructor acquires, destructor releases</p>
+<p>目标</p>
+<ul>
+<li>avoid calling <em>new</em> and <em>delete</em> explicitly</li>
+</ul>
+<p>(资源出了scope自动释放)</p>
+<p><img src="https://i.imgur.com/lZxDl9h.png"></p>
+<p><img src="https://i.imgur.com/GzshscC.png"></p>
+<h3 id="Smart-Pointers"><a href="#Smart-Pointers" class="headerlink" title="Smart Pointers"></a>Smart Pointers</h3><p><em>put SMFs to good use</em></p>
+<p>在constructor中acquire，在destructor中release</p>
+<ul>
+<li>std::unique_ptr<ul>
+<li>Uniquely owns its resource, can’t be copied</li>
+</ul>
+</li>
+<li>std::shared_ptr<ul>
+<li>Can make copies, destructed when underlying memory goes out of scope</li>
+</ul>
+</li>
+<li>std::weak_ptr<ul>
+<li>Models temporary ownership: when an object only needs to be accessed if it exists (convert to shared_ptr to access)</li>
+</ul>
+</li>
+</ul>
+<p><strong>In practice</strong></p>
+<p><img src="https://i.imgur.com/ybziOx5.png"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//create smart pointers</span></span><br><span class="line">std::unique_ptr&lt;T&gt; up&#123;<span class="keyword">new</span> T&#125;;</span><br><span class="line">std::shared_ptr&lt;T&gt; sp&#123;<span class="keyword">new</span> T&#125;;</span><br><span class="line">std::weak_ptr&lt;T&gt; wp=sp;<span class="comment">//can only be copy/ move constructed</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//better one</span></span><br><span class="line">std::unique_ptr&lt;T&gt; up = std::<span class="built_in">make_unique</span>&lt;T&gt;();</span><br><span class="line">std::unique_ptr&lt;T&gt; sp = std::<span class="built_in">make_shared</span>&lt;T&gt;();</span><br></pre></td></tr></table></figure>
+
+<h3 id="Building-C-Projects"><a href="#Building-C-Projects" class="headerlink" title="Building C++ Projects"></a>Building C++ Projects</h3><p>v</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/01/19/14_std_optional_and_type_safety/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ee2.jpg">
+      <meta itemprop="name" content="iuqtcl">
+      <meta itemprop="description" content="人暂时没remake，blog已经re了">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyber Ghost">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/19/14_std_optional_and_type_safety/" class="post-title-link" itemprop="url">14 std Optional and Type Safety</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-01-19 00:28:26 / 修改时间：00:53:35" itemprop="dateCreated datePublished" datetime="2023-01-19T00:28:26+08:00">2023-01-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CS106L%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">CS106L笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><em>How can we use c++’s type system to prevent errors at compile time?</em></p>
+<h2 id="std-optional-and-Type-Safety"><a href="#std-optional-and-Type-Safety" class="headerlink" title="std::optional and Type Safety"></a>std::optional and Type Safety</h2><h3 id="Type-Safety"><a href="#Type-Safety" class="headerlink" title="Type Safety"></a>Type Safety</h3><p><strong>const-interface</strong>: All member functions marked const in a class definition.</p>
+<p>Objects of type <em>const ClassName</em> may only use the const-interface.</p>
+<p><strong>type safety</strong>: guarantee the behavior of programs</p>
+<p><img src="https://i.imgur.com/Sg91Dlt.png"></p>
+<p><img src="https://i.imgur.com/5t8piRO.png"></p>
+<h4 id="std-optional-lt-T-gt"><a href="#std-optional-lt-T-gt" class="headerlink" title="std::optional&lt;T&gt;"></a>std::optional&lt;T&gt;</h4><p>either contain a value of type T or nothing (nullopt)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    std::optional&lt;<span class="type">int</span>&gt; num1=&#123;&#125;;<span class="comment">//not have a value</span></span><br><span class="line">    num1 = std::optional&lt;<span class="type">int</span>&gt;&#123;<span class="number">1</span>&#125;;<span class="comment">//has a value</span></span><br><span class="line">    num1 = std::<span class="literal">nullopt</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用例</p>
+<p><img src="https://i.imgur.com/CSR8bVK.png"></p>
+<p>An optional take on realVector</p>
+<h3 id="The-need-for-“sometimes-a-thing”"><a href="#The-need-for-“sometimes-a-thing”" class="headerlink" title="The need for “sometimes-a-thing”"></a>The need for “sometimes-a-thing”</h3>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/01/19/13_move_semantics/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ee2.jpg">
+      <meta itemprop="name" content="iuqtcl">
+      <meta itemprop="description" content="人暂时没remake，blog已经re了">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyber Ghost">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/19/13_move_semantics/" class="post-title-link" itemprop="url">13 Move Semantics</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-01-19 00:28:26 / 修改时间：00:52:12" itemprop="dateCreated datePublished" datetime="2023-01-19T00:28:26+08:00">2023-01-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CS106L%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">CS106L笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><em>how can we avoid making unnecessary copies of resources</em></p>
+<h2 id="Move-Semantics"><a href="#Move-Semantics" class="headerlink" title="Move Semantics"></a>Move Semantics</h2><p><strong>aside: emplace_back</strong></p>
+<p>vector 的一个 function</p>
+<p><strong>直接</strong>添加元素到vector中 <strong>(no copy)</strong></p>
+<p><img src="https://i.imgur.com/z1WN7m4.png"></p>
+<p>可接受任意数量的参数</p>
+<p><img src="https://i.imgur.com/DHSBykC.png"></p>
+<h3 id="l-values-vs-r-values"><a href="#l-values-vs-r-values" class="headerlink" title="l-values vs. r-values"></a>l-values vs. r-values</h3><p><strong>r-values</strong></p>
+<ul>
+<li>temporary</li>
+<li>don’t have names</li>
+<li>live until the end of the line</li>
+<li>copy</li>
+</ul>
+<p><strong>l-values</strong></p>
+<ul>
+<li>not temporary</li>
+<li>have names</li>
+<li>live until the end of the scope</li>
+<li>copy and move</li>
+</ul>
+<p>only l-values can be referenced using <strong>&amp;</strong></p>
+<p>r-values can be bound to <strong>const &amp;</strong></p>
+<p>r-value reference  <strong>&amp;&amp;</strong> (extend r-value’s lifetime)</p>
+<p><img src="https://i.imgur.com/cGBOXLJ.png"></p>
+<h3 id="move-constructor-and-assignment"><a href="#move-constructor-and-assignment" class="headerlink" title="move constructor and assignment"></a>move constructor and assignment</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//move constructor</span></span><br><span class="line"></span><br><span class="line">StrVector::<span class="built_in">StrVector</span>(StrVector&amp;&amp; other):</span><br><span class="line">	<span class="built_in">elem</span>(other.elems),</span><br><span class="line">	<span class="built_in">logicalSize</span>(other.logicalSize),</span><br><span class="line">	<span class="built_in">allocatedSize</span>(other.allocatedSize)&#123;</span><br><span class="line">        other.elems = <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/TyLVPQG.png"></p>
+<p><strong>std::move</strong> casts a variable to an r-value</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Axess</span>(Axess&amp;&amp; other) : <span class="built_in">students</span>(std::<span class="built_in">move</span>(other.students))&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Axess&amp; <span class="keyword">operator</span>=(Axess&amp;&amp; rhs) &#123;</span><br><span class="line">     students = std::<span class="built_in">move</span>(rhs.students);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="swap"><a href="#swap" class="headerlink" title="swap"></a>swap</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">swap</span><span class="params">(T&amp; a,T&amp; b)</span></span>&#123;</span><br><span class="line">    T temp = std::<span class="built_in">move</span>(a);</span><br><span class="line">    a = std::<span class="built_in">move</span>(b);</span><br><span class="line">    b = std::<span class="built_in">move</span>(temp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/01/19/12_special_member_functions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ee2.jpg">
+      <meta itemprop="name" content="iuqtcl">
+      <meta itemprop="description" content="人暂时没remake，blog已经re了">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyber Ghost">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/19/12_special_member_functions/" class="post-title-link" itemprop="url">12 Special Member Functions</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-01-19 00:28:26 / 修改时间：00:50:49" itemprop="dateCreated datePublished" datetime="2023-01-19T00:28:26+08:00">2023-01-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CS106L%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">CS106L笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>every class has them by default</p>
+<table>
+<thead>
+<tr>
+<th>special member functions</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Default constructor</td>
+<td>不传参的默认构造</td>
+</tr>
+<tr>
+<td>Destructor</td>
+<td>回收空间</td>
+</tr>
+<tr>
+<td>Copy constructor</td>
+<td>复制一份值创建新对象 (constructor)</td>
+</tr>
+<tr>
+<td>Copy assignment operator</td>
+<td>Assigns an already existing object to another (覆盖)</td>
+</tr>
+<tr>
+<td>Move constructor</td>
+<td></td>
+</tr>
+<tr>
+<td>Move assignment operator</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><img src="https://i.imgur.com/vduoRSX.png"></p>
+<h3 id="constructor-and-destructor"><a href="#constructor-and-destructor" class="headerlink" title="constructor and destructor"></a>constructor and destructor</h3><h4 id="initializer-lists"><a href="#initializer-lists" class="headerlink" title="initializer lists"></a>initializer lists</h4><p>冒号后用逗号分隔的列表</p>
+<p>解决问题：将成员变量设为默认值再reassign效率低</p>
+<p>before</p>
+<p><img src="https://i.imgur.com/pjGILc0.png"></p>
+<p>after</p>
+<p><img src="https://i.imgur.com/F7YGcRl.png"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//default constructor</span></span><br><span class="line">StringVector::<span class="built_in">StringVector</span>():</span><br><span class="line">	<span class="built_in">logicalSize</span>(<span class="number">0</span>), <span class="built_in">allocatedSize</span>(kInitialSize)&#123;</span><br><span class="line">        elems = <span class="keyword">new</span> std::string[allocatedSize];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//fill constructor</span></span><br><span class="line">StringVector::<span class="built_in">StringVector</span>(size_type n,<span class="type">const</span> std::string &amp;val):</span><br><span class="line">	<span class="built_in">loficalSize</span>(n),<span class="built_in">allocatedSize</span>(<span class="number">2</span>*n)&#123;</span><br><span class="line">        elems = =<span class="keyword">new</span> std::string[allocatedSize];</span><br><span class="line">        std::<span class="built_in">fill</span>(<span class="built_in">begin</span>(),<span class="built_in">end</span>(),val);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="copy-and-copy-assignment"><a href="#copy-and-copy-assignment" class="headerlink" title="copy and copy assignment"></a>copy and copy assignment</h3><p><em>deep copies vs. shallow copies</em></p>
+<h4 id="copy-is-not-as-simple-as-copying-each-member"><a href="#copy-is-not-as-simple-as-copying-each-member" class="headerlink" title="copy is not as simple as copying each member"></a>copy is not as simple as copying each member</h4><p>当指针被复制时，并没有创建新的值，而是两个指针指向同一地址。调用destructor时有空间被free两次。</p>
+<p> deep copy: complete, independent copy of original</p>
+<p><strong>copy assignment</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//StringVector v1,v2;</span></span><br><span class="line"><span class="comment">//v1=v2;</span></span><br><span class="line">StringVector&amp; StringVector::<span class="keyword">operator</span>=(<span class="type">const</span> StringVector&amp; other)&#123;</span><br><span class="line">    <span class="comment">//copy logicalSize, copy allocatedSize, make sure array length same</span></span><br><span class="line">    <span class="comment">//free the old vector</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> == &amp;other)&#123;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">delete</span>[] elems;</span><br><span class="line">    allocatedSize = other.allocatedSize;</span><br><span class="line">    logicalSize = other.logicalSize;</span><br><span class="line">    elems = <span class="keyword">new</span> std::string[allocatedSize];</span><br><span class="line">    std::<span class="built_in">copy</span>(other.<span class="built_in">begin</span>(),other.<span class="built_in">end</span>(),<span class="built_in">begin</span>());</span><br><span class="line">   </span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="default-and-delete"><a href="#default-and-delete" class="headerlink" title="default and delete"></a>default and delete</h3><p><em>changing functionality using SMFS</em></p>
+<p> &#x3D; delete 删除函数</p>
+<p><img src="https://i.imgur.com/iNnNLAI.png"></p>
+<p><img src="https://i.imgur.com/GZc4ixK.png"></p>
+<p>何时需要重写默认的 special functions</p>
+<p>常见于对象拥有 class 以外的资源 (pointers, mutexes, file streams)</p>
+<h3 id="move-and-move-assignment"><a href="#move-and-move-assignment" class="headerlink" title="move and move assignment"></a>move and move assignment</h3><p>对象在参数传递时会复制多次，造成资源浪费</p>
+<p><img src="https://i.imgur.com/MtBaWqZ.png"></p>
+<p>改进</p>
+<p><img src="https://i.imgur.com/N2cmFvj.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="iuqtcl"
+      src="/images/ee2.jpg">
+  <p class="site-author-name" itemprop="name">iuqtcl</p>
+  <div class="site-description" itemprop="description">人暂时没remake，blog已经re了</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/iuqtcl" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;iuqtcl" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iuqtcl</span>
+</div>
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

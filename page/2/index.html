@@ -186,6 +186,131 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/01/19/12_special_member_functions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ee2.jpg">
+      <meta itemprop="name" content="iuqtcl">
+      <meta itemprop="description" content="人暂时没remake，blog已经re了">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyber Ghost">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/19/12_special_member_functions/" class="post-title-link" itemprop="url">12 Special Member Functions</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-01-19 00:28:26 / 修改时间：00:50:49" itemprop="dateCreated datePublished" datetime="2023-01-19T00:28:26+08:00">2023-01-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CS106L%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">CS106L笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>every class has them by default</p>
+<table>
+<thead>
+<tr>
+<th>special member functions</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Default constructor</td>
+<td>不传参的默认构造</td>
+</tr>
+<tr>
+<td>Destructor</td>
+<td>回收空间</td>
+</tr>
+<tr>
+<td>Copy constructor</td>
+<td>复制一份值创建新对象 (constructor)</td>
+</tr>
+<tr>
+<td>Copy assignment operator</td>
+<td>Assigns an already existing object to another (覆盖)</td>
+</tr>
+<tr>
+<td>Move constructor</td>
+<td></td>
+</tr>
+<tr>
+<td>Move assignment operator</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><img src="https://i.imgur.com/vduoRSX.png"></p>
+<h3 id="constructor-and-destructor"><a href="#constructor-and-destructor" class="headerlink" title="constructor and destructor"></a>constructor and destructor</h3><h4 id="initializer-lists"><a href="#initializer-lists" class="headerlink" title="initializer lists"></a>initializer lists</h4><p>冒号后用逗号分隔的列表</p>
+<p>解决问题：将成员变量设为默认值再reassign效率低</p>
+<p>before</p>
+<p><img src="https://i.imgur.com/pjGILc0.png"></p>
+<p>after</p>
+<p><img src="https://i.imgur.com/F7YGcRl.png"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//default constructor</span></span><br><span class="line">StringVector::<span class="built_in">StringVector</span>():</span><br><span class="line">	<span class="built_in">logicalSize</span>(<span class="number">0</span>), <span class="built_in">allocatedSize</span>(kInitialSize)&#123;</span><br><span class="line">        elems = <span class="keyword">new</span> std::string[allocatedSize];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//fill constructor</span></span><br><span class="line">StringVector::<span class="built_in">StringVector</span>(size_type n,<span class="type">const</span> std::string &amp;val):</span><br><span class="line">	<span class="built_in">loficalSize</span>(n),<span class="built_in">allocatedSize</span>(<span class="number">2</span>*n)&#123;</span><br><span class="line">        elems = =<span class="keyword">new</span> std::string[allocatedSize];</span><br><span class="line">        std::<span class="built_in">fill</span>(<span class="built_in">begin</span>(),<span class="built_in">end</span>(),val);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="copy-and-copy-assignment"><a href="#copy-and-copy-assignment" class="headerlink" title="copy and copy assignment"></a>copy and copy assignment</h3><p><em>deep copies vs. shallow copies</em></p>
+<h4 id="copy-is-not-as-simple-as-copying-each-member"><a href="#copy-is-not-as-simple-as-copying-each-member" class="headerlink" title="copy is not as simple as copying each member"></a>copy is not as simple as copying each member</h4><p>当指针被复制时，并没有创建新的值，而是两个指针指向同一地址。调用destructor时有空间被free两次。</p>
+<p> deep copy: complete, independent copy of original</p>
+<p><strong>copy assignment</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//StringVector v1,v2;</span></span><br><span class="line"><span class="comment">//v1=v2;</span></span><br><span class="line">StringVector&amp; StringVector::<span class="keyword">operator</span>=(<span class="type">const</span> StringVector&amp; other)&#123;</span><br><span class="line">    <span class="comment">//copy logicalSize, copy allocatedSize, make sure array length same</span></span><br><span class="line">    <span class="comment">//free the old vector</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> == &amp;other)&#123;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">delete</span>[] elems;</span><br><span class="line">    allocatedSize = other.allocatedSize;</span><br><span class="line">    logicalSize = other.logicalSize;</span><br><span class="line">    elems = <span class="keyword">new</span> std::string[allocatedSize];</span><br><span class="line">    std::<span class="built_in">copy</span>(other.<span class="built_in">begin</span>(),other.<span class="built_in">end</span>(),<span class="built_in">begin</span>());</span><br><span class="line">   </span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="default-and-delete"><a href="#default-and-delete" class="headerlink" title="default and delete"></a>default and delete</h3><p><em>changing functionality using SMFS</em></p>
+<p> &#x3D; delete 删除函数</p>
+<p><img src="https://i.imgur.com/iNnNLAI.png"></p>
+<p><img src="https://i.imgur.com/GZc4ixK.png"></p>
+<p>何时需要重写默认的 special functions</p>
+<p>常见于对象拥有 class 以外的资源 (pointers, mutexes, file streams)</p>
+<h3 id="move-and-move-assignment"><a href="#move-and-move-assignment" class="headerlink" title="move and move assignment"></a>move and move assignment</h3><p>对象在参数传递时会复制多次，造成资源浪费</p>
+<p><img src="https://i.imgur.com/MtBaWqZ.png"></p>
+<p>改进</p>
+<p><img src="https://i.imgur.com/N2cmFvj.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/01/19/11_operators/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -634,14 +759,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>

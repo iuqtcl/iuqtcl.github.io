@@ -1,6 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>程序语言理论与实践 01 Introduction;语义、解释器和栈式虚拟机</title>
+    <url>/2023/01/20/01_introducion_and_rescript_crash_course/</url>
+    <content><![CDATA[<p>函数式编程是什么？栈式虚拟机是什么？Rescript是什么？我是什么？</p>
+<p>哈哈，好像有关键词搜歪了，但我都不会，问题不大</p>
+<h2 id="1-1-Introducion"><a href="#1-1-Introducion" class="headerlink" title="1.1 Introducion"></a>1.1 Introducion</h2><p><img src="https://i.imgur.com/HR9IAJS.png"></p>
+<p>编译pipeline</p>
+<p><img src="https://i.imgur.com/7W3aGii.png"></p>
+<p>-&gt;字符串 </p>
+<p>-&gt;抽象语法树 </p>
+<p>-&gt;带类型抽象语法树</p>
+<p>-&gt;多层IR（中间表示）</p>
+<p>-&gt;IR</p>
+<p>-&gt;机器码</p>
+<p>Lexing &amp; Parsing 语法解析: 具体语法，抽象语法</p>
+<p>Semantic Analysis 语义分析: 类型分析&#x2F;推断;Type soundness</p>
+<p>……</p>
+<p>现代语言主要工作在前端和中端</p>
+<h4 id="解析器与解释器"><a href="#解析器与解释器" class="headerlink" title="解析器与解释器"></a>解析器与解释器</h4><p><strong>解析器（paser）</strong>	</p>
+<p>编译器&#x2F;解释器的重要组成部分，主要作用：语法分析，提取句子结构</p>
+<p><strong>解释器（interpreter）</strong></p>
+<p>实现程序执行的一种实现方式，与<strong>编译器</strong>相对。输入程序源码，输出执行得到的计算结果。而编译器的输出是用别的语言实现输入源码的语义的程序。</p>
+<p>解释器类似黑箱，直接得到结果。<strong>解释性语言</strong>一般是指主流实现为解释器的语言，而并不是不需要编译，只是用户不需要显式地使用编译器得到可执行代码。</p>
+<p>transplier 转义器 </p>
+<h2 id="1-2-语义、解释器和栈式虚拟机"><a href="#1-2-语义、解释器和栈式虚拟机" class="headerlink" title="1.2 语义、解释器和栈式虚拟机"></a>1.2 语义、解释器和栈式虚拟机</h2><h4 id="堆、栈-内存划分"><a href="#堆、栈-内存划分" class="headerlink" title="堆、栈 内存划分"></a>堆、栈 内存划分</h4><p><strong>栈内存</strong></p>
+<p>每个函数被调用时，创建一个对应本次函数调用的 stack frame 并 push 到栈内存上，当这个函数返回时 pop。</p>
+<p>每个栈帧的大小等于当前函数所有的形参和局部变量大小的总和加元数据。变量名在编译时转换为偏移量。</p>
+<p>多线程程序，每个线程都有自己的栈内存。</p>
+<p>优势:</p>
+<ol>
+<li>无需通过指针或引用动态寻址，访问速度快。</li>
+<li>生命周期明确，内存空间使用效率高。</li>
+<li>大小和偏移量固定。</li>
+<li>不需要复杂的垃圾回收机制。</li>
+</ol>
+<p>特性：</p>
+<ol>
+<li>函数不能返回一个指向栈内存的结构体的指针。因为返回后数据就被删除了。（但对于C&#x2F;C++，形参或局部变量是一个指针，变量大小只考虑指针本身的大小，不考虑指针指向的数据的大小）</li>
+<li>无法在多个线程间共享。</li>
+<li>大小较小（几MB），函数调用过深或结构体过大会 stack overflow</li>
+</ol>
+<p><strong>堆内存</strong></p>
+<p>和数据结构中的堆没有关系。</p>
+<p>按需分配的动态内存管理机制。申请时再分配（相对于栈内存调用函数时一次性分配）。因此访问时需要通过指针或引用。</p>
+<p>常见堆内存管理手段</p>
+<ol>
+<li>程序员手动管理（C&#x2F;C++)</li>
+<li>垃圾回收机制</li>
+<li>程序员明确指出每个变量的声明周期，并引入结构体的转让&#x2F;借用机制。（Rust）</li>
+</ol>
+<h4 id="什么是-高级语言-虚拟机（HLL-VM"><a href="#什么是-高级语言-虚拟机（HLL-VM" class="headerlink" title="什么是(高级语言)虚拟机（HLL VM)"></a>什么是(高级语言)虚拟机（HLL VM)</h4><p>用于实现高级语言的语义。（主流HLL VM，诸如JVM、CLI、CPython、CRuby 1.9）</p>
+<p>输入： 满足某种指令集架构的指令序列 （可能由编译器生成）</p>
+<p>处理： 转换为目标ISA的指令序列并加以执行（编译&#x2F;解释实现）</p>
+<p>输出： 程序的执行结果</p>
+<h4 id="基于栈和基于寄存器的指令集架构"><a href="#基于栈和基于寄存器的指令集架构" class="headerlink" title="基于栈和基于寄存器的指令集架构"></a>基于栈和基于寄存器的指令集架构</h4><p>基于寄存器</p>
+<p>例如典型的RISC架构会要求除load和store以外，其它用于运算的指令的源与目标都要是寄存器。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">a = b + c; <span class="comment">//c语法</span></span><br><span class="line">add a,b,c  <span class="comment">//二源一目标，三地址指令（ARM处理器主要指令集是三地址形式的）</span></span><br><span class="line">    </span><br><span class="line">a += b;</span><br><span class="line">add a,b;   <span class="comment">//其中一个源同时也作为目标，二地址指令（x86系列处理器是二地址形式的）</span></span><br><span class="line"></span><br><span class="line">acc += <span class="number">5</span>; <span class="comment">//只指定源，基于累加器</span></span><br><span class="line">add <span class="number">5</span></span><br></pre></td></tr></table></figure>
+
+<p>基于栈</p>
+<p>0地址指令，源与目标都是隐含参数，实现依赖于栈，针对此的编译器更容易实现， 比其他形式的指令更紧凑。</p>
+<p>求值evaluation&#x2F;操作数operand&#x2F;表达式expression栈（非系统调用栈）</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">iconst_1 <span class="comment">//将常量1压入栈</span></span><br><span class="line">iconst_2</span><br><span class="line">iadd	 <span class="comment">//从栈顶弹出2个值相加，压回栈顶</span></span><br><span class="line">istore_0 <span class="comment">//java字节码</span></span><br></pre></td></tr></table></figure>
+
+<p>优劣等：见参考2.</p>
+<h4 id="语义"><a href="#语义" class="headerlink" title="语义"></a>语义</h4><p><strong>符号说明</strong></p>
+<p>横线上方是前提，下方是结论 ，向下箭头↓为左侧计算结果是右侧。</p>
+<p>↓就是中缀的二元表达式，例 Add(Cst(3),Cst(4)) ↓ 7.</p>
+<p><img src="https://i.imgur.com/eRfwK2x.png"></p>
+<p>term计算得到value</p>
+<h4 id="栈式虚拟机"><a href="#栈式虚拟机" class="headerlink" title="栈式虚拟机"></a>栈式虚拟机</h4><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">|Add(a,b) =&gt; eval(a) + eval(b)</span><br></pre></td></tr></table></figure>
+
+<p>不能直接翻译成汇编代码，因为隐式地调用了 Add 的栈。</p>
+<p>需要 lowering to a stack machine and interpret</p>
+<p><strong>代码表示</strong></p>
+ <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">type instr = Cst(<span class="type">int</span>) | Add | Mul <span class="comment">//no recursive instr-指令集</span></span><br><span class="line">type instrs = <span class="built_in">list</span> &lt;instr&gt; <span class="comment">//指令列表</span></span><br><span class="line">type operand = <span class="type">int</span></span><br><span class="line">type <span class="built_in">stack</span> = <span class="built_in">list</span> &lt;operand&gt;</span><br><span class="line">    ----</span><br><span class="line">    let rec eval = (instrs : instrs ,stk : <span class="built_in">stack</span>) =&gt;&#123;</span><br><span class="line">    	<span class="keyword">switch</span> (instrs,stk) &#123;</span><br><span class="line">                |(<span class="built_in">list</span>&#123;Cst(i),...rest&#125;,_) =&gt;</span><br><span class="line">                    eval(rest, <span class="built_in">list</span>&#123;i,...stk&#125;)  <span class="comment">//取指令，压入栈</span></span><br><span class="line">                |</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> eval-指令集加栈的状态转移函数</p>
+<p>伪递归，可以用 while 循环实现</p>
+<p><strong>形式化语义</strong></p>
+<p>虚拟机有两个数据结构：</p>
+<ul>
+<li>指令集 通过指针c不断指向下一条指令</li>
+<li>栈</li>
+</ul>
+<p>栈的操作：</p>
+<p>s → v::s (push v on s)</p>
+<p>v::s → s (pop v off s)</p>
+<p>状态转移方程：</p>
+<p><img src="https://i.imgur.com/MdHOgPz.png"></p>
+<h4 id="高阶语言编译到指令集"><a href="#高阶语言编译到指令集" class="headerlink" title="高阶语言编译到指令集"></a>高阶语言编译到指令集</h4><p><img src="https://i.imgur.com/y2zJMrx.png"></p>
+<p>中括号用于表示编译</p>
+<p><strong>栈平衡性质</strong>： 进行动态执行后的结果是栈顶仅有一个值作为结果。</p>
+<p>可以用于证明编译过程的正确性</p>
+<p>栈式虚拟机显式地调用了栈，将递归从执行移到了编译。</p>
+<p><strong>课程视频</strong></p>
+<p><a href="https://www.bilibili.com/video/BV1Ug41187Zh/?spm_id_from=333.999.0.0&vd_source=ea5c1237aa357d0629f628327f80bad8">https://www.bilibili.com/video/BV1Ug41187Zh/?spm_id_from=333.999.0.0&amp;vd_source=ea5c1237aa357d0629f628327f80bad8</a></p>
+<p><strong>参考</strong>：</p>
+<ol>
+<li>堆栈内存 <a href="https://www.zhihu.com/question/447017261">https://www.zhihu.com/question/447017261</a></li>
+<li>虚拟机随谈（一）：解释器，树遍历解释器，基于栈与基于寄存器，大杂烩 <a href="https://www.pudn.com/news/628f83bdbf399b7f351eb05d.html">https://www.pudn.com/news/628f83bdbf399b7f351eb05d.html</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>程序语言理论与实践</category>
+      </categories>
+  </entry>
+  <entry>
     <title>05 Containers</title>
     <url>/2023/01/19/05_containers/</url>
     <content><![CDATA[<h2 id="containers"><a href="#containers" class="headerlink" title="containers"></a>containers</h2><h4 id="defining-containers"><a href="#defining-containers" class="headerlink" title="defining containers"></a>defining containers</h4><p><em>vector,stack,queue</em></p>
@@ -17,62 +123,6 @@ ordered/unordered
 <h4 id="container-adaptors"><a href="#container-adaptors" class="headerlink" title="container adaptors"></a>container adaptors</h4><p>在基础容器的基础上实现特定接口&#x2F;操作</p>
 <p>具体实现没太懂</p>
 <p><img src="https://i.imgur.com/PQrSCk9.png"></p>
-]]></content>
-      <categories>
-        <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>04 Initialization and References</title>
-    <url>/2023/01/19/04_initialization_and_references/</url>
-    <content><![CDATA[<h2 id="initialization"><a href="#initialization" class="headerlink" title="initialization"></a>initialization</h2><h5 id="uniform-initialization"><a href="#uniform-initialization" class="headerlink" title="uniform initialization"></a>uniform initialization</h5><p>大括号初始化，声明完立刻初始化</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::vector&lt;<span class="type">int</span>&gt; vec&#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>&#125;;</span><br><span class="line"><span class="type">int</span> x&#123;<span class="number">5</span>&#125;;</span><br><span class="line">string f&#123;<span class="string">&quot;Sarah&quot;</span>&#125;;</span><br></pre></td></tr></table></figure>
-
-<h5 id="auto"><a href="#auto" class="headerlink" title="auto"></a>auto</h5><p>use it to reduce long type names</p>
-<p>[]的使用</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> [found, solutions] = <span class="built_in">quadratic</span>(a, b, c);</span><br></pre></td></tr></table></figure>
-
-<h2 id="reference-引用-amp"><a href="#reference-引用-amp" class="headerlink" title="reference 引用  &amp;"></a>reference 引用  &amp;</h2><p><strong>引用和copy的区别</strong></p>
-<p>An alias (another name) for a named variable</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; original&#123;<span class="number">1</span>, <span class="number">2</span>&#125;;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; copy = original;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt;&amp; ref = original;</span><br><span class="line">original.<span class="built_in">push_back</span>(<span class="number">3</span>);</span><br><span class="line">copy.<span class="built_in">push_back</span>(<span class="number">4</span>);</span><br><span class="line">ref.<span class="built_in">push_back</span>(<span class="number">5</span>);</span><br><span class="line">cout &lt;&lt; original &lt;&lt; endl; <span class="comment">// &#123;1, 2, 3, 5&#125;</span></span><br><span class="line">cout &lt;&lt; copy &lt;&lt; endl; <span class="comment">// &#123;1, 2, 4&#125;</span></span><br><span class="line">cout &lt;&lt; ref &lt;&lt; endl; <span class="comment">// &#123;1, 2, 3, 5&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>You can only create references to variables</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>&amp; thisWontWork = <span class="number">5</span>; <span class="comment">// This doesn&#x27;t work!</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="const-and-const-references"><a href="#const-and-const-references" class="headerlink" title="const and const references"></a>const and const references</h5><p>const声明变量不会被改变-specify that a variable can’t be modified</p>
-<p>const引用可以引不const的，反之不行</p>
-<h5 id="reference使用场景"><a href="#reference使用场景" class="headerlink" title="reference使用场景"></a>reference使用场景</h5><p>1.variable占空间较大</p>
-<p>2.需要改变变量</p>
-<p>3.不需改变+占空间较大-&gt;用const reference</p>
-]]></content>
-      <categories>
-        <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>06 Iterators and Pointers</title>
-    <url>/2023/01/19/06_iterators_and_pointers/</url>
-    <content><![CDATA[<p><em>How do we access elements in a container in order?</em></p>
-<p><em>How do we reference existing data in our code?</em></p>
-<h2 id="iterators"><a href="#iterators" class="headerlink" title="iterators"></a>iterators</h2><p><em>访问容器中的元素</em></p>
-<p><strong>作用</strong></p>
-<ol>
-<li>访问容器中所有的数据</li>
-<li>按序访问（找到下一项）</li>
-</ol>
-<p>在不同容器中的<strong>种类</strong></p>
-<p><img src="https://i.imgur.com/EEXNpog.png"></p>
-<p><img src="https://i.imgur.com/bqbw0zU.png"></p>
-<p>取值时使用dereference(*iter)</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="keyword">auto</span>&amp; elem = *iter;</span><br></pre></td></tr></table></figure>
-
-<p>&amp;为引用</p>
-<p>iterators are a type of pointer</p>
-<h2 id="pointers"><a href="#pointers" class="headerlink" title="pointers"></a>pointers</h2><p><em><strong>引用</strong> 现有数据</em></p>
-<p>pointers reference memory addresses</p>
-<p>&amp;+variable 变量地址</p>
-<p>*+pointer   取值</p>
-<p>pointer声明时 type+*</p>
 ]]></content>
       <categories>
         <category>CS106L笔记</category>
@@ -124,6 +174,62 @@ ordered/unordered
 
 <p>前加const表示返回值为const类型</p>
 <h2 id="Template-Class"><a href="#Template-Class" class="headerlink" title="Template Class"></a>Template Class</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> First, <span class="keyword">typename</span> Second&gt; <span class="keyword">class</span> <span class="title class_">MyPair</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="function">First <span class="title">getFirst</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function">Second <span class="title">getSecond</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setFirst</span><span class="params">(First f)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setSecond</span><span class="params">(Second f)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">First first;</span><br><span class="line">Second second;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>06 Iterators and Pointers</title>
+    <url>/2023/01/19/06_iterators_and_pointers/</url>
+    <content><![CDATA[<p><em>How do we access elements in a container in order?</em></p>
+<p><em>How do we reference existing data in our code?</em></p>
+<h2 id="iterators"><a href="#iterators" class="headerlink" title="iterators"></a>iterators</h2><p><em>访问容器中的元素</em></p>
+<p><strong>作用</strong></p>
+<ol>
+<li>访问容器中所有的数据</li>
+<li>按序访问（找到下一项）</li>
+</ol>
+<p>在不同容器中的<strong>种类</strong></p>
+<p><img src="https://i.imgur.com/EEXNpog.png"></p>
+<p><img src="https://i.imgur.com/bqbw0zU.png"></p>
+<p>取值时使用dereference(*iter)</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="keyword">auto</span>&amp; elem = *iter;</span><br></pre></td></tr></table></figure>
+
+<p>&amp;为引用</p>
+<p>iterators are a type of pointer</p>
+<h2 id="pointers"><a href="#pointers" class="headerlink" title="pointers"></a>pointers</h2><p><em><strong>引用</strong> 现有数据</em></p>
+<p>pointers reference memory addresses</p>
+<p>&amp;+variable 变量地址</p>
+<p>*+pointer   取值</p>
+<p>pointer声明时 type+*</p>
+]]></content>
+      <categories>
+        <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>04 Initialization and References</title>
+    <url>/2023/01/19/04_initialization_and_references/</url>
+    <content><![CDATA[<h2 id="initialization"><a href="#initialization" class="headerlink" title="initialization"></a>initialization</h2><h5 id="uniform-initialization"><a href="#uniform-initialization" class="headerlink" title="uniform initialization"></a>uniform initialization</h5><p>大括号初始化，声明完立刻初始化</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::vector&lt;<span class="type">int</span>&gt; vec&#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>&#125;;</span><br><span class="line"><span class="type">int</span> x&#123;<span class="number">5</span>&#125;;</span><br><span class="line">string f&#123;<span class="string">&quot;Sarah&quot;</span>&#125;;</span><br></pre></td></tr></table></figure>
+
+<h5 id="auto"><a href="#auto" class="headerlink" title="auto"></a>auto</h5><p>use it to reduce long type names</p>
+<p>[]的使用</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> [found, solutions] = <span class="built_in">quadratic</span>(a, b, c);</span><br></pre></td></tr></table></figure>
+
+<h2 id="reference-引用-amp"><a href="#reference-引用-amp" class="headerlink" title="reference 引用  &amp;"></a>reference 引用  &amp;</h2><p><strong>引用和copy的区别</strong></p>
+<p>An alias (another name) for a named variable</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; original&#123;<span class="number">1</span>, <span class="number">2</span>&#125;;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; copy = original;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt;&amp; ref = original;</span><br><span class="line">original.<span class="built_in">push_back</span>(<span class="number">3</span>);</span><br><span class="line">copy.<span class="built_in">push_back</span>(<span class="number">4</span>);</span><br><span class="line">ref.<span class="built_in">push_back</span>(<span class="number">5</span>);</span><br><span class="line">cout &lt;&lt; original &lt;&lt; endl; <span class="comment">// &#123;1, 2, 3, 5&#125;</span></span><br><span class="line">cout &lt;&lt; copy &lt;&lt; endl; <span class="comment">// &#123;1, 2, 4&#125;</span></span><br><span class="line">cout &lt;&lt; ref &lt;&lt; endl; <span class="comment">// &#123;1, 2, 3, 5&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>You can only create references to variables</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>&amp; thisWontWork = <span class="number">5</span>; <span class="comment">// This doesn&#x27;t work!</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="const-and-const-references"><a href="#const-and-const-references" class="headerlink" title="const and const references"></a>const and const references</h5><p>const声明变量不会被改变-specify that a variable can’t be modified</p>
+<p>const引用可以引不const的，反之不行</p>
+<h5 id="reference使用场景"><a href="#reference使用场景" class="headerlink" title="reference使用场景"></a>reference使用场景</h5><p>1.variable占空间较大</p>
+<p>2.需要改变变量</p>
+<p>3.不需改变+占空间较大-&gt;用const reference</p>
 ]]></content>
       <categories>
         <category>CS106L笔记</category>
@@ -188,34 +294,49 @@ ordered/unordered
       </categories>
   </entry>
   <entry>
-    <title>11 Operators</title>
-    <url>/2023/01/19/11_operators/</url>
-    <content><![CDATA[<h2 id="operator-overloading"><a href="#operator-overloading" class="headerlink" title="operator overloading"></a>operator overloading</h2><p><img src="https://i.imgur.com/mObcRf8.png"></p>
-<h3 id="examples"><a href="#examples" class="headerlink" title="examples"></a>examples</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//vector&lt;string&gt;增加元素</span></span><br><span class="line">vector&lt;string&gt;&amp; vector&lt;string&gt;::<span class="keyword">operator</span>+=(<span class="type">const</span> std::string&amp; element)&#123;			<span class="comment">//const reference</span></span><br><span class="line">    <span class="built_in">push_back</span>(element);</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    vector&lt;string&gt; vec;</span><br><span class="line">    <span class="type">const</span> string s = <span class="string">&quot;111&quot;</span>;</span><br><span class="line">    vec+= <span class="string">&quot;gggg&quot;</span>;		<span class="comment">//vec.operator+=(&quot;gggg&quot;); </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>concept check</p>
-<ul>
-<li><p>why return a reference</p>
-</li>
-<li><p>why return *this</p>
-<p>another example</p>
-</li>
+    <title>10 Functions and Lambdas</title>
+    <url>/2023/01/19/10_funcioins_and_lambdas/</url>
+    <content><![CDATA[<p><em>How can we make template functions even more general?</em></p>
+<h1 id="Functions-and-Lambdas"><a href="#Functions-and-Lambdas" class="headerlink" title="Functions and Lambdas"></a>Functions and Lambdas</h1><h2 id="lambda"><a href="#lambda" class="headerlink" title="lambda"></a>lambda</h2><p>将函数作为参数</p>
+<p>instance</p>
+<p><img src="https://i.imgur.com/JTb45Mr.png"></p>
+<p>UniPred is what’s called a function pointer</p>
+<h3 id="function-pointers"><a href="#function-pointers" class="headerlink" title="function pointers"></a>function pointers</h3><ul>
+<li>可当作指针处理</li>
+<li>传参时跟变量一样</li>
+<li>调用时可作普通function</li>
 </ul>
-<p>修改 class StringVector 的 + 操作符</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">StringVector StringVector::<span class="keyword">operator</span>+(<span class="type">const</span> StringVector other) <span class="type">const</span> &#123;</span><br><span class="line">    StringVector result = *<span class="keyword">this</span>; <span class="comment">//copy constructor</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">const</span> std::string&amp; s : other)&#123;</span><br><span class="line">        result += s;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>使用例</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">qsort</span><span class="params">(<span class="type">void</span> *base, <span class="type">size_t</span> nmemb, <span class="type">size_t</span> size,</span></span></span><br><span class="line"><span class="params"><span class="function"><span class="type">int</span>(*compar)(<span class="type">const</span> <span class="type">void</span> *, <span class="type">const</span> <span class="type">void</span> *))</span></span>;</span><br></pre></td></tr></table></figure>
 
-<h3 id="General-rule-of-thumb"><a href="#General-rule-of-thumb" class="headerlink" title="General rule of thumb:"></a>General rule of thumb:</h3><h4 id="member-vs-non-member"><a href="#member-vs-non-member" class="headerlink" title="member vs. non-member"></a>member vs. non-member</h4><ol>
-<li>implement as members ( eg. [], (), -&gt;, &#x3D;)</li>
-<li>implement as non-members (eg. &lt;&lt;)</li>
-<li>一元操作符 implement as member (eg. ++)</li>
-<li>处理符号两侧 equally , implement as non-member ( maybe <strong>friend</strong> ) (eg. +, &lt;)</li>
-<li>not both equally, member (eg. +&#x3D;) 修改了某一个的值</li>
-</ol>
-<h4 id="const-vs-non-const-for-member-functions"><a href="#const-vs-non-const-for-member-functions" class="headerlink" title="const vs. non-const for member functions"></a>const vs. non-const for member functions</h4><p>const 对象只能调用 const function</p>
-<p>可申明一个 const 版本</p>
-<h3 id="Principle-of-Least-Astonishment-POLA"><a href="#Principle-of-Least-Astonishment-POLA" class="headerlink" title="Principle of Least Astonishment (POLA)"></a>Principle of Least Astonishment (POLA)</h3><p>参考</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">my_int_func</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>( <span class="string">&quot;%d\n&quot;</span>, x );</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">void</span> (*foo)(<span class="type">int</span>);</span><br><span class="line">    foo = &amp;my_int_func;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/* call my_int_func (note that you do not need to write (*foo)(2) ) */</span></span><br><span class="line">    <span class="built_in">foo</span>( <span class="number">2</span> );</span><br><span class="line">    <span class="comment">/* but if you want to, you may */</span></span><br><span class="line">    (*foo)( <span class="number">2</span> );</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="use-lambdas"><a href="#use-lambdas" class="headerlink" title="use lambdas"></a>use lambdas</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> car = [capture-clause] (<span class="keyword">auto</span> param) -&gt; <span class="type">bool</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//function body</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>capture clause:</p>
+<p>capture any outside variable by reference&#x2F;value.</p>
+<p><img src="https://i.imgur.com/c9ePu1h.png"></p>
+<p>using</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> limit =<span class="number">5</span>;</span><br><span class="line"><span class="keyword">auto</span> isMoreThan = [limit](<span class="type">int</span> n)&#123;<span class="keyword">return</span> n &gt; limit; &#125;;</span><br><span class="line"><span class="built_in">isMoreThan</span>(<span class="number">6</span>);</span><br></pre></td></tr></table></figure>
+
+<p>适用场景</p>
 <ol>
-<li><a href="https://www.youtube.com/watch?v=9i_TNfhVvSM&list=PLCgD3ws8aVdolCexlz8f3U-RROA0s5jWA&index=19&ab_channel=AveryWang">https://www.youtube.com/watch?v=9i_TNfhVvSM&amp;list=PLCgD3ws8aVdolCexlz8f3U-RROA0s5jWA&amp;index=19&amp;ab_channel=AveryWang</a></li>
+<li>简单function</li>
+<li>传局部变量到function</li>
+<li>通过function pointer塞进function来添加更多的花样重载</li>
+</ol>
+<h3 id="functor-仿函数-x2F-函子"><a href="#functor-仿函数-x2F-函子" class="headerlink" title="functor 仿函数&#x2F;函子"></a>functor 仿函数&#x2F;函子</h3><p>是看起来像函数的<strong>类</strong>。通过重载()运算符使类的行为像函数，可以通过()调用。</p>
+<p>lambdas是functors的一个变种。</p>
+<p><img src="https://i.imgur.com/bip6UZ6.png"></p>
+<p>也能用结构体实现</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// this is a functor</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">add_x</span> &#123;</span><br><span class="line">  <span class="built_in">add_x</span>(<span class="type">int</span> val) : <span class="built_in">x</span>(val) &#123;&#125;  <span class="comment">// Constructor</span></span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="type">int</span> y)</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> x + y; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="type">int</span> x;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Now you can use it like this:</span></span><br><span class="line"><span class="function">add_x <span class="title">add42</span><span class="params">(<span class="number">42</span>)</span></span>; <span class="comment">// create an instance of the functor class</span></span><br><span class="line"><span class="type">int</span> i = <span class="built_in">add42</span>(<span class="number">8</span>); <span class="comment">// and &quot;call&quot; it</span></span><br><span class="line"><span class="built_in">assert</span>(i == <span class="number">50</span>); <span class="comment">// and it added 42 to its argument</span></span><br><span class="line"></span><br><span class="line">std::vector&lt;<span class="type">int</span>&gt; in; <span class="comment">// assume this contains a bunch of values)</span></span><br><span class="line"><span class="function">std::vector&lt;<span class="type">int</span>&gt; <span class="title">out</span><span class="params">(in.size())</span></span>;</span><br><span class="line"><span class="comment">// Pass a functor to std::transform, which calls the functor on every element </span></span><br><span class="line"><span class="comment">// in the input sequence, and stores the result to the output sequence</span></span><br><span class="line">std::<span class="built_in">transform</span>(in.<span class="built_in">begin</span>(), in.<span class="built_in">end</span>(), out.<span class="built_in">begin</span>(), <span class="built_in">add_x</span>(<span class="number">1</span>)); </span><br><span class="line"><span class="built_in">assert</span>(out[i] == in[i] + <span class="number">1</span>); <span class="comment">// for all i</span></span><br></pre></td></tr></table></figure>
+
+<p>现成STL</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::function&lt;return_type(param_types)&gt; func;</span><br></pre></td></tr></table></figure>
+
+<p>参考：</p>
+<ol>
+<li><a href="https://stackoverflow.com/questions/356950/what-are-c-functors-and-their-uses">What are C++ functors and their uses?</a></li>
 </ol>
 ]]></content>
       <categories>
@@ -289,111 +410,36 @@ ordered/unordered
       </categories>
   </entry>
   <entry>
-    <title>13 Move Semantics</title>
-    <url>/2023/01/19/13_move_semantics/</url>
-    <content><![CDATA[<p><em>how can we avoid making unnecessary copies of resources</em></p>
-<h2 id="Move-Semantics"><a href="#Move-Semantics" class="headerlink" title="Move Semantics"></a>Move Semantics</h2><p><strong>aside: emplace_back</strong></p>
-<p>vector 的一个 function</p>
-<p><strong>直接</strong>添加元素到vector中 <strong>(no copy)</strong></p>
-<p><img src="https://i.imgur.com/z1WN7m4.png"></p>
-<p>可接受任意数量的参数</p>
-<p><img src="https://i.imgur.com/DHSBykC.png"></p>
-<h3 id="l-values-vs-r-values"><a href="#l-values-vs-r-values" class="headerlink" title="l-values vs. r-values"></a>l-values vs. r-values</h3><p><strong>r-values</strong></p>
+    <title>11 Operators</title>
+    <url>/2023/01/19/11_operators/</url>
+    <content><![CDATA[<h2 id="operator-overloading"><a href="#operator-overloading" class="headerlink" title="operator overloading"></a>operator overloading</h2><p><img src="https://i.imgur.com/mObcRf8.png"></p>
+<h3 id="examples"><a href="#examples" class="headerlink" title="examples"></a>examples</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//vector&lt;string&gt;增加元素</span></span><br><span class="line">vector&lt;string&gt;&amp; vector&lt;string&gt;::<span class="keyword">operator</span>+=(<span class="type">const</span> std::string&amp; element)&#123;			<span class="comment">//const reference</span></span><br><span class="line">    <span class="built_in">push_back</span>(element);</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    vector&lt;string&gt; vec;</span><br><span class="line">    <span class="type">const</span> string s = <span class="string">&quot;111&quot;</span>;</span><br><span class="line">    vec+= <span class="string">&quot;gggg&quot;</span>;		<span class="comment">//vec.operator+=(&quot;gggg&quot;); </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>concept check</p>
 <ul>
-<li>temporary</li>
-<li>don’t have names</li>
-<li>live until the end of the line</li>
-<li>copy</li>
+<li><p>why return a reference</p>
+</li>
+<li><p>why return *this</p>
+<p>another example</p>
+</li>
 </ul>
-<p><strong>l-values</strong></p>
-<ul>
-<li>not temporary</li>
-<li>have names</li>
-<li>live until the end of the scope</li>
-<li>copy and move</li>
-</ul>
-<p>only l-values can be referenced using <strong>&amp;</strong></p>
-<p>r-values can be bound to <strong>const &amp;</strong></p>
-<p>r-value reference  <strong>&amp;&amp;</strong> (extend r-value’s lifetime)</p>
-<p><img src="https://i.imgur.com/cGBOXLJ.png"></p>
-<h3 id="move-constructor-and-assignment"><a href="#move-constructor-and-assignment" class="headerlink" title="move constructor and assignment"></a>move constructor and assignment</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//move constructor</span></span><br><span class="line"></span><br><span class="line">StrVector::<span class="built_in">StrVector</span>(StrVector&amp;&amp; other):</span><br><span class="line">	<span class="built_in">elem</span>(other.elems),</span><br><span class="line">	<span class="built_in">logicalSize</span>(other.logicalSize),</span><br><span class="line">	<span class="built_in">allocatedSize</span>(other.allocatedSize)&#123;</span><br><span class="line">        other.elems = <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>修改 class StringVector 的 + 操作符</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">StringVector StringVector::<span class="keyword">operator</span>+(<span class="type">const</span> StringVector other) <span class="type">const</span> &#123;</span><br><span class="line">    StringVector result = *<span class="keyword">this</span>; <span class="comment">//copy constructor</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">const</span> std::string&amp; s : other)&#123;</span><br><span class="line">        result += s;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p><img src="https://i.imgur.com/TyLVPQG.png"></p>
-<p><strong>std::move</strong> casts a variable to an r-value</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Axess</span>(Axess&amp;&amp; other) : <span class="built_in">students</span>(std::<span class="built_in">move</span>(other.students))&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Axess&amp; <span class="keyword">operator</span>=(Axess&amp;&amp; rhs) &#123;</span><br><span class="line">     students = std::<span class="built_in">move</span>(rhs.students);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="swap"><a href="#swap" class="headerlink" title="swap"></a>swap</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">swap</span><span class="params">(T&amp; a,T&amp; b)</span></span>&#123;</span><br><span class="line">    T temp = std::<span class="built_in">move</span>(a);</span><br><span class="line">    a = std::<span class="built_in">move</span>(b);</span><br><span class="line">    b = std::<span class="built_in">move</span>(temp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>10 Functions and Lambdas</title>
-    <url>/2023/01/19/10_funcioins_and_lambdas/</url>
-    <content><![CDATA[<p><em>How can we make template functions even more general?</em></p>
-<h1 id="Functions-and-Lambdas"><a href="#Functions-and-Lambdas" class="headerlink" title="Functions and Lambdas"></a>Functions and Lambdas</h1><h2 id="lambda"><a href="#lambda" class="headerlink" title="lambda"></a>lambda</h2><p>将函数作为参数</p>
-<p>instance</p>
-<p><img src="https://i.imgur.com/JTb45Mr.png"></p>
-<p>UniPred is what’s called a function pointer</p>
-<h3 id="function-pointers"><a href="#function-pointers" class="headerlink" title="function pointers"></a>function pointers</h3><ul>
-<li>可当作指针处理</li>
-<li>传参时跟变量一样</li>
-<li>调用时可作普通function</li>
-</ul>
-<p>使用例</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">qsort</span><span class="params">(<span class="type">void</span> *base, <span class="type">size_t</span> nmemb, <span class="type">size_t</span> size,</span></span></span><br><span class="line"><span class="params"><span class="function"><span class="type">int</span>(*compar)(<span class="type">const</span> <span class="type">void</span> *, <span class="type">const</span> <span class="type">void</span> *))</span></span>;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">my_int_func</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>( <span class="string">&quot;%d\n&quot;</span>, x );</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">void</span> (*foo)(<span class="type">int</span>);</span><br><span class="line">    foo = &amp;my_int_func;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/* call my_int_func (note that you do not need to write (*foo)(2) ) */</span></span><br><span class="line">    <span class="built_in">foo</span>( <span class="number">2</span> );</span><br><span class="line">    <span class="comment">/* but if you want to, you may */</span></span><br><span class="line">    (*foo)( <span class="number">2</span> );</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="use-lambdas"><a href="#use-lambdas" class="headerlink" title="use lambdas"></a>use lambdas</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> car = [capture-clause] (<span class="keyword">auto</span> param) -&gt; <span class="type">bool</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//function body</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>capture clause:</p>
-<p>capture any outside variable by reference&#x2F;value.</p>
-<p><img src="https://i.imgur.com/c9ePu1h.png"></p>
-<p>using</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> limit =<span class="number">5</span>;</span><br><span class="line"><span class="keyword">auto</span> isMoreThan = [limit](<span class="type">int</span> n)&#123;<span class="keyword">return</span> n &gt; limit; &#125;;</span><br><span class="line"><span class="built_in">isMoreThan</span>(<span class="number">6</span>);</span><br></pre></td></tr></table></figure>
-
-<p>适用场景</p>
-<ol>
-<li>简单function</li>
-<li>传局部变量到function</li>
-<li>通过function pointer塞进function来添加更多的花样重载</li>
+<h3 id="General-rule-of-thumb"><a href="#General-rule-of-thumb" class="headerlink" title="General rule of thumb:"></a>General rule of thumb:</h3><h4 id="member-vs-non-member"><a href="#member-vs-non-member" class="headerlink" title="member vs. non-member"></a>member vs. non-member</h4><ol>
+<li>implement as members ( eg. [], (), -&gt;, &#x3D;)</li>
+<li>implement as non-members (eg. &lt;&lt;)</li>
+<li>一元操作符 implement as member (eg. ++)</li>
+<li>处理符号两侧 equally , implement as non-member ( maybe <strong>friend</strong> ) (eg. +, &lt;)</li>
+<li>not both equally, member (eg. +&#x3D;) 修改了某一个的值</li>
 </ol>
-<h3 id="functor-仿函数-x2F-函子"><a href="#functor-仿函数-x2F-函子" class="headerlink" title="functor 仿函数&#x2F;函子"></a>functor 仿函数&#x2F;函子</h3><p>是看起来像函数的<strong>类</strong>。通过重载()运算符使类的行为像函数，可以通过()调用。</p>
-<p>lambdas是functors的一个变种。</p>
-<p><img src="https://i.imgur.com/bip6UZ6.png"></p>
-<p>也能用结构体实现</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// this is a functor</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">add_x</span> &#123;</span><br><span class="line">  <span class="built_in">add_x</span>(<span class="type">int</span> val) : <span class="built_in">x</span>(val) &#123;&#125;  <span class="comment">// Constructor</span></span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="type">int</span> y)</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> x + y; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="type">int</span> x;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Now you can use it like this:</span></span><br><span class="line"><span class="function">add_x <span class="title">add42</span><span class="params">(<span class="number">42</span>)</span></span>; <span class="comment">// create an instance of the functor class</span></span><br><span class="line"><span class="type">int</span> i = <span class="built_in">add42</span>(<span class="number">8</span>); <span class="comment">// and &quot;call&quot; it</span></span><br><span class="line"><span class="built_in">assert</span>(i == <span class="number">50</span>); <span class="comment">// and it added 42 to its argument</span></span><br><span class="line"></span><br><span class="line">std::vector&lt;<span class="type">int</span>&gt; in; <span class="comment">// assume this contains a bunch of values)</span></span><br><span class="line"><span class="function">std::vector&lt;<span class="type">int</span>&gt; <span class="title">out</span><span class="params">(in.size())</span></span>;</span><br><span class="line"><span class="comment">// Pass a functor to std::transform, which calls the functor on every element </span></span><br><span class="line"><span class="comment">// in the input sequence, and stores the result to the output sequence</span></span><br><span class="line">std::<span class="built_in">transform</span>(in.<span class="built_in">begin</span>(), in.<span class="built_in">end</span>(), out.<span class="built_in">begin</span>(), <span class="built_in">add_x</span>(<span class="number">1</span>)); </span><br><span class="line"><span class="built_in">assert</span>(out[i] == in[i] + <span class="number">1</span>); <span class="comment">// for all i</span></span><br></pre></td></tr></table></figure>
-
-<p>现成STL</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::function&lt;return_type(param_types)&gt; func;</span><br></pre></td></tr></table></figure>
-
-<p>参考：</p>
+<h4 id="const-vs-non-const-for-member-functions"><a href="#const-vs-non-const-for-member-functions" class="headerlink" title="const vs. non-const for member functions"></a>const vs. non-const for member functions</h4><p>const 对象只能调用 const function</p>
+<p>可申明一个 const 版本</p>
+<h3 id="Principle-of-Least-Astonishment-POLA"><a href="#Principle-of-Least-Astonishment-POLA" class="headerlink" title="Principle of Least Astonishment (POLA)"></a>Principle of Least Astonishment (POLA)</h3><p>参考</p>
 <ol>
-<li><a href="https://stackoverflow.com/questions/356950/what-are-c-functors-and-their-uses">What are C++ functors and their uses?</a></li>
+<li><a href="https://www.youtube.com/watch?v=9i_TNfhVvSM&list=PLCgD3ws8aVdolCexlz8f3U-RROA0s5jWA&index=19&ab_channel=AveryWang">https://www.youtube.com/watch?v=9i_TNfhVvSM&amp;list=PLCgD3ws8aVdolCexlz8f3U-RROA0s5jWA&amp;index=19&amp;ab_channel=AveryWang</a></li>
 </ol>
 ]]></content>
-      <categories>
-        <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>14 std Optional and Type Safety</title>
-    <url>/2023/01/19/14_std_optional_and_type_safety/</url>
-    <content><![CDATA[<p><em>How can we use c++’s type system to prevent errors at compile time?</em></p>
-<h2 id="std-optional-and-Type-Safety"><a href="#std-optional-and-Type-Safety" class="headerlink" title="std::optional and Type Safety"></a>std::optional and Type Safety</h2><h3 id="Type-Safety"><a href="#Type-Safety" class="headerlink" title="Type Safety"></a>Type Safety</h3><p><strong>const-interface</strong>: All member functions marked const in a class definition.</p>
-<p>Objects of type <em>const ClassName</em> may only use the const-interface.</p>
-<p><strong>type safety</strong>: guarantee the behavior of programs</p>
-<p><img src="https://i.imgur.com/Sg91Dlt.png"></p>
-<p><img src="https://i.imgur.com/5t8piRO.png"></p>
-<h4 id="std-optional-lt-T-gt"><a href="#std-optional-lt-T-gt" class="headerlink" title="std::optional&lt;T&gt;"></a>std::optional&lt;T&gt;</h4><p>either contain a value of type T or nothing (nullopt)</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    std::optional&lt;<span class="type">int</span>&gt; num1=&#123;&#125;;<span class="comment">//not have a value</span></span><br><span class="line">    num1 = std::optional&lt;<span class="type">int</span>&gt;&#123;<span class="number">1</span>&#125;;<span class="comment">//has a value</span></span><br><span class="line">    num1 = std::<span class="literal">nullopt</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>使用例</p>
-<p><img src="https://i.imgur.com/CSR8bVK.png"></p>
-<p>An optional take on realVector</p>
-<h3 id="The-need-for-“sometimes-a-thing”"><a href="#The-need-for-“sometimes-a-thing”" class="headerlink" title="The need for “sometimes-a-thing”"></a>The need for “sometimes-a-thing”</h3>]]></content>
       <categories>
         <category>CS106L笔记</category>
       </categories>
@@ -476,6 +522,66 @@ ordered/unordered
 
 <h3 id="Building-C-Projects"><a href="#Building-C-Projects" class="headerlink" title="Building C++ Projects"></a>Building C++ Projects</h3><p>v</p>
 ]]></content>
+      <categories>
+        <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>13 Move Semantics</title>
+    <url>/2023/01/19/13_move_semantics/</url>
+    <content><![CDATA[<p><em>how can we avoid making unnecessary copies of resources</em></p>
+<h2 id="Move-Semantics"><a href="#Move-Semantics" class="headerlink" title="Move Semantics"></a>Move Semantics</h2><p><strong>aside: emplace_back</strong></p>
+<p>vector 的一个 function</p>
+<p><strong>直接</strong>添加元素到vector中 <strong>(no copy)</strong></p>
+<p><img src="https://i.imgur.com/z1WN7m4.png"></p>
+<p>可接受任意数量的参数</p>
+<p><img src="https://i.imgur.com/DHSBykC.png"></p>
+<h3 id="l-values-vs-r-values"><a href="#l-values-vs-r-values" class="headerlink" title="l-values vs. r-values"></a>l-values vs. r-values</h3><p><strong>r-values</strong></p>
+<ul>
+<li>temporary</li>
+<li>don’t have names</li>
+<li>live until the end of the line</li>
+<li>copy</li>
+</ul>
+<p><strong>l-values</strong></p>
+<ul>
+<li>not temporary</li>
+<li>have names</li>
+<li>live until the end of the scope</li>
+<li>copy and move</li>
+</ul>
+<p>only l-values can be referenced using <strong>&amp;</strong></p>
+<p>r-values can be bound to <strong>const &amp;</strong></p>
+<p>r-value reference  <strong>&amp;&amp;</strong> (extend r-value’s lifetime)</p>
+<p><img src="https://i.imgur.com/cGBOXLJ.png"></p>
+<h3 id="move-constructor-and-assignment"><a href="#move-constructor-and-assignment" class="headerlink" title="move constructor and assignment"></a>move constructor and assignment</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//move constructor</span></span><br><span class="line"></span><br><span class="line">StrVector::<span class="built_in">StrVector</span>(StrVector&amp;&amp; other):</span><br><span class="line">	<span class="built_in">elem</span>(other.elems),</span><br><span class="line">	<span class="built_in">logicalSize</span>(other.logicalSize),</span><br><span class="line">	<span class="built_in">allocatedSize</span>(other.allocatedSize)&#123;</span><br><span class="line">        other.elems = <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/TyLVPQG.png"></p>
+<p><strong>std::move</strong> casts a variable to an r-value</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Axess</span>(Axess&amp;&amp; other) : <span class="built_in">students</span>(std::<span class="built_in">move</span>(other.students))&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Axess&amp; <span class="keyword">operator</span>=(Axess&amp;&amp; rhs) &#123;</span><br><span class="line">     students = std::<span class="built_in">move</span>(rhs.students);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="swap"><a href="#swap" class="headerlink" title="swap"></a>swap</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">swap</span><span class="params">(T&amp; a,T&amp; b)</span></span>&#123;</span><br><span class="line">    T temp = std::<span class="built_in">move</span>(a);</span><br><span class="line">    a = std::<span class="built_in">move</span>(b);</span><br><span class="line">    b = std::<span class="built_in">move</span>(temp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>14 std Optional and Type Safety</title>
+    <url>/2023/01/19/14_std_optional_and_type_safety/</url>
+    <content><![CDATA[<p><em>How can we use c++’s type system to prevent errors at compile time?</em></p>
+<h2 id="std-optional-and-Type-Safety"><a href="#std-optional-and-Type-Safety" class="headerlink" title="std::optional and Type Safety"></a>std::optional and Type Safety</h2><h3 id="Type-Safety"><a href="#Type-Safety" class="headerlink" title="Type Safety"></a>Type Safety</h3><p><strong>const-interface</strong>: All member functions marked const in a class definition.</p>
+<p>Objects of type <em>const ClassName</em> may only use the const-interface.</p>
+<p><strong>type safety</strong>: guarantee the behavior of programs</p>
+<p><img src="https://i.imgur.com/Sg91Dlt.png"></p>
+<p><img src="https://i.imgur.com/5t8piRO.png"></p>
+<h4 id="std-optional-lt-T-gt"><a href="#std-optional-lt-T-gt" class="headerlink" title="std::optional&lt;T&gt;"></a>std::optional&lt;T&gt;</h4><p>either contain a value of type T or nothing (nullopt)</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    std::optional&lt;<span class="type">int</span>&gt; num1=&#123;&#125;;<span class="comment">//not have a value</span></span><br><span class="line">    num1 = std::optional&lt;<span class="type">int</span>&gt;&#123;<span class="number">1</span>&#125;;<span class="comment">//has a value</span></span><br><span class="line">    num1 = std::<span class="literal">nullopt</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用例</p>
+<p><img src="https://i.imgur.com/CSR8bVK.png"></p>
+<p>An optional take on realVector</p>
+<h3 id="The-need-for-“sometimes-a-thing”"><a href="#The-need-for-“sometimes-a-thing”" class="headerlink" title="The need for “sometimes-a-thing”"></a>The need for “sometimes-a-thing”</h3>]]></content>
       <categories>
         <category>CS106L笔记</category>
       </categories>

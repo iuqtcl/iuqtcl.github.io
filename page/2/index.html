@@ -186,6 +186,184 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/01/19/14_std_optional_and_type_safety/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ee2.jpg">
+      <meta itemprop="name" content="iuqtcl">
+      <meta itemprop="description" content="人暂时没remake，blog已经re了">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyber Ghost">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/19/14_std_optional_and_type_safety/" class="post-title-link" itemprop="url">14 std Optional and Type Safety</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-01-19 00:28:26 / 修改时间：00:53:35" itemprop="dateCreated datePublished" datetime="2023-01-19T00:28:26+08:00">2023-01-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CS106L%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">CS106L笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><em>How can we use c++’s type system to prevent errors at compile time?</em></p>
+<h2 id="std-optional-and-Type-Safety"><a href="#std-optional-and-Type-Safety" class="headerlink" title="std::optional and Type Safety"></a>std::optional and Type Safety</h2><h3 id="Type-Safety"><a href="#Type-Safety" class="headerlink" title="Type Safety"></a>Type Safety</h3><p><strong>const-interface</strong>: All member functions marked const in a class definition.</p>
+<p>Objects of type <em>const ClassName</em> may only use the const-interface.</p>
+<p><strong>type safety</strong>: guarantee the behavior of programs</p>
+<p><img src="https://i.imgur.com/Sg91Dlt.png"></p>
+<p><img src="https://i.imgur.com/5t8piRO.png"></p>
+<h4 id="std-optional-lt-T-gt"><a href="#std-optional-lt-T-gt" class="headerlink" title="std::optional&lt;T&gt;"></a>std::optional&lt;T&gt;</h4><p>either contain a value of type T or nothing (nullopt)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    std::optional&lt;<span class="type">int</span>&gt; num1=&#123;&#125;;<span class="comment">//not have a value</span></span><br><span class="line">    num1 = std::optional&lt;<span class="type">int</span>&gt;&#123;<span class="number">1</span>&#125;;<span class="comment">//has a value</span></span><br><span class="line">    num1 = std::<span class="literal">nullopt</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用例</p>
+<p><img src="https://i.imgur.com/CSR8bVK.png"></p>
+<p>An optional take on realVector</p>
+<h3 id="The-need-for-“sometimes-a-thing”"><a href="#The-need-for-“sometimes-a-thing”" class="headerlink" title="The need for “sometimes-a-thing”"></a>The need for “sometimes-a-thing”</h3>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/01/19/13_move_semantics/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ee2.jpg">
+      <meta itemprop="name" content="iuqtcl">
+      <meta itemprop="description" content="人暂时没remake，blog已经re了">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyber Ghost">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/19/13_move_semantics/" class="post-title-link" itemprop="url">13 Move Semantics</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-01-19 00:28:26 / 修改时间：00:52:12" itemprop="dateCreated datePublished" datetime="2023-01-19T00:28:26+08:00">2023-01-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CS106L%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">CS106L笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><em>how can we avoid making unnecessary copies of resources</em></p>
+<h2 id="Move-Semantics"><a href="#Move-Semantics" class="headerlink" title="Move Semantics"></a>Move Semantics</h2><p><strong>aside: emplace_back</strong></p>
+<p>vector 的一个 function</p>
+<p><strong>直接</strong>添加元素到vector中 <strong>(no copy)</strong></p>
+<p><img src="https://i.imgur.com/z1WN7m4.png"></p>
+<p>可接受任意数量的参数</p>
+<p><img src="https://i.imgur.com/DHSBykC.png"></p>
+<h3 id="l-values-vs-r-values"><a href="#l-values-vs-r-values" class="headerlink" title="l-values vs. r-values"></a>l-values vs. r-values</h3><p><strong>r-values</strong></p>
+<ul>
+<li>temporary</li>
+<li>don’t have names</li>
+<li>live until the end of the line</li>
+<li>copy</li>
+</ul>
+<p><strong>l-values</strong></p>
+<ul>
+<li>not temporary</li>
+<li>have names</li>
+<li>live until the end of the scope</li>
+<li>copy and move</li>
+</ul>
+<p>only l-values can be referenced using <strong>&amp;</strong></p>
+<p>r-values can be bound to <strong>const &amp;</strong></p>
+<p>r-value reference  <strong>&amp;&amp;</strong> (extend r-value’s lifetime)</p>
+<p><img src="https://i.imgur.com/cGBOXLJ.png"></p>
+<h3 id="move-constructor-and-assignment"><a href="#move-constructor-and-assignment" class="headerlink" title="move constructor and assignment"></a>move constructor and assignment</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//move constructor</span></span><br><span class="line"></span><br><span class="line">StrVector::<span class="built_in">StrVector</span>(StrVector&amp;&amp; other):</span><br><span class="line">	<span class="built_in">elem</span>(other.elems),</span><br><span class="line">	<span class="built_in">logicalSize</span>(other.logicalSize),</span><br><span class="line">	<span class="built_in">allocatedSize</span>(other.allocatedSize)&#123;</span><br><span class="line">        other.elems = <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/TyLVPQG.png"></p>
+<p><strong>std::move</strong> casts a variable to an r-value</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Axess</span>(Axess&amp;&amp; other) : <span class="built_in">students</span>(std::<span class="built_in">move</span>(other.students))&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Axess&amp; <span class="keyword">operator</span>=(Axess&amp;&amp; rhs) &#123;</span><br><span class="line">     students = std::<span class="built_in">move</span>(rhs.students);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="swap"><a href="#swap" class="headerlink" title="swap"></a>swap</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">swap</span><span class="params">(T&amp; a,T&amp; b)</span></span>&#123;</span><br><span class="line">    T temp = std::<span class="built_in">move</span>(a);</span><br><span class="line">    a = std::<span class="built_in">move</span>(b);</span><br><span class="line">    b = std::<span class="built_in">move</span>(temp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/01/19/12_special_member_functions/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -759,14 +937,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>

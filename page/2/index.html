@@ -186,6 +186,147 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/01/19/15_RAll_smartpointers_buildingprojects/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ee2.jpg">
+      <meta itemprop="name" content="iuqtcl">
+      <meta itemprop="description" content="人暂时没remake，blog已经re了">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyber Ghost">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/19/15_RAll_smartpointers_buildingprojects/" class="post-title-link" itemprop="url">15 RALL</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-01-19 00:28:26 / 修改时间：00:54:30" itemprop="dateCreated datePublished" datetime="2023-01-19T00:28:26+08:00">2023-01-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CS106L%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">CS106L笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="RAll"><a href="#RAll" class="headerlink" title="RAll"></a>RAll</h2><p><em>a coding standard and practice</em></p>
+<h3 id="exceptions"><a href="#exceptions" class="headerlink" title="exceptions"></a>exceptions</h3><p><strong>resources that need to be released</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Acquire</th>
+<th>Release</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Heap memory</td>
+<td>new</td>
+<td>delete</td>
+</tr>
+<tr>
+<td>Files</td>
+<td>open</td>
+<td>close</td>
+</tr>
+<tr>
+<td>Lock</td>
+<td>try_lock</td>
+<td>unlock</td>
+</tr>
+<tr>
+<td>Sockets</td>
+<td>socket</td>
+<td>close</td>
+</tr>
+</tbody></table>
+<p><strong>exceptions</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="comment">//code associated with exception handler</span></span><br><span class="line">&#125; <span class="built_in">catch</span>()&#123;</span><br><span class="line">    <span class="comment">//exception handler</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>enforcing exception safety</strong> 抛异常的可能性大小</p>
+<ul>
+<li>Nothrow exception guarantee(destructors, …)</li>
+<li>…</li>
+<li>No exception guarantee (memory corruption, …)</li>
+</ul>
+<p><strong>RAII</strong></p>
+<p>又名</p>
+<p>scope based memory management</p>
+<p>&#x2F; constructor acquires, destructor releases</p>
+<p>目标</p>
+<ul>
+<li>avoid calling <em>new</em> and <em>delete</em> explicitly</li>
+</ul>
+<p>(资源出了scope自动释放)</p>
+<p><img src="https://i.imgur.com/lZxDl9h.png"></p>
+<p><img src="https://i.imgur.com/GzshscC.png"></p>
+<h3 id="Smart-Pointers"><a href="#Smart-Pointers" class="headerlink" title="Smart Pointers"></a>Smart Pointers</h3><p><em>put SMFs to good use</em></p>
+<p>在constructor中acquire，在destructor中release</p>
+<ul>
+<li>std::unique_ptr<ul>
+<li>Uniquely owns its resource, can’t be copied</li>
+</ul>
+</li>
+<li>std::shared_ptr<ul>
+<li>Can make copies, destructed when underlying memory goes out of scope</li>
+</ul>
+</li>
+<li>std::weak_ptr<ul>
+<li>Models temporary ownership: when an object only needs to be accessed if it exists (convert to shared_ptr to access)</li>
+</ul>
+</li>
+</ul>
+<p><strong>In practice</strong></p>
+<p><img src="https://i.imgur.com/ybziOx5.png"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//create smart pointers</span></span><br><span class="line">std::unique_ptr&lt;T&gt; up&#123;<span class="keyword">new</span> T&#125;;</span><br><span class="line">std::shared_ptr&lt;T&gt; sp&#123;<span class="keyword">new</span> T&#125;;</span><br><span class="line">std::weak_ptr&lt;T&gt; wp=sp;<span class="comment">//can only be copy/ move constructed</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//better one</span></span><br><span class="line">std::unique_ptr&lt;T&gt; up = std::<span class="built_in">make_unique</span>&lt;T&gt;();</span><br><span class="line">std::unique_ptr&lt;T&gt; sp = std::<span class="built_in">make_shared</span>&lt;T&gt;();</span><br></pre></td></tr></table></figure>
+
+<h3 id="Building-C-Projects"><a href="#Building-C-Projects" class="headerlink" title="Building C++ Projects"></a>Building C++ Projects</h3><p>v</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/01/19/14_std_optional_and_type_safety/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -937,7 +1078,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

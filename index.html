@@ -186,6 +186,204 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/02/17/rucbase_execution/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ee2.jpg">
+      <meta itemprop="name" content="iuqtcl">
+      <meta itemprop="description" content="人暂时没remake，blog已经re了">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyber Ghost">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/02/17/rucbase_execution/" class="post-title-link" itemprop="url">实验三 查询执行</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-02-17 23:10:27 / 修改时间：23:15:10" itemprop="dateCreated datePublished" datetime="2023-02-17T23:10:27+08:00">2023-02-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/rucbase/" itemprop="url" rel="index"><span itemprop="name">rucbase</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="查询执行"><a href="#查询执行" class="headerlink" title="查询执行"></a>查询执行</h1><h2 id="火山-x2F-迭代模型-Volcano-Model"><a href="#火山-x2F-迭代模型-Volcano-Model" class="headerlink" title="火山&#x2F;迭代模型 Volcano Model"></a>火山&#x2F;迭代模型 Volcano Model</h2><p>是解释计算模型，将关系代数中的每一种操作抽象为一个 Operator ，将整个 SQL 构建成一个 Operator 树，从根结点到叶子结点自上而下递归调用 next() 。</p>
+<p>与物化模型相对，物化模型将每一步物理操作实体化（全部完成）后，用于下一步输入。</p>
+<ul>
+<li>火山模型将物理操作符的结果元组直接发送给下一个操作符使用。</li>
+<li><strong>每一次传递一批元组</strong>，是向量化模型。（攒够一批传递），更好地利用现代 CPU 的 SIMD 指令。</li>
+</ul>
+<h3 id="火山模型样例"><a href="#火山模型样例" class="headerlink" title="火山模型样例"></a>火山模型样例</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Id, Name, Age, (Age <span class="operator">-</span> <span class="number">30</span>) <span class="operator">*</span> <span class="number">50</span> <span class="keyword">AS</span> Bonus</span><br><span class="line"><span class="keyword">FROM</span> People</span><br><span class="line"><span class="keyword">WHERE</span> Age <span class="operator">&gt;</span> <span class="number">30</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/icZUVDd.png"></p>
+<p>每个Operateor调用子结点，获得子结点的返回值之后进行操作，返回给上游。</p>
+<p>Select Operator 的伪代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Tuple <span class="title function_">Select::next</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">        Tuple candidate = child-&gt;next(); <span class="comment">// 从子节点中获取 next tuple</span></span><br><span class="line">        <span class="keyword">if</span> (candidate == EndOfStream) <span class="comment">// 是否得到结束标记</span></span><br><span class="line">            <span class="keyword">return</span> EndOfStream;</span><br><span class="line">        <span class="keyword">if</span> (condition-&gt;check(candidate)) <span class="comment">// 是否满足过滤条件</span></span><br><span class="line">            <span class="keyword">return</span> candidate; <span class="comment">// 返回 tuple</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="火山模型优缺点"><a href="#火山模型优缺点" class="headerlink" title="火山模型优缺点"></a>火山模型优缺点</h3><p>优点： 每个 Operator 可以单独抽象实现，不需要关心其他 Operator 的逻辑。</p>
+<p>缺点： Tuple-at-a-time ,多次调用 next() ，造成大量的虚函数调用。</p>
+<h3 id="优化方向"><a href="#优化方向" class="headerlink" title="优化方向"></a>优化方向</h3><p>编译执行 &#x2F; 向量化。</p>
+<h2 id="数据库操作语句类型"><a href="#数据库操作语句类型" class="headerlink" title="数据库操作语句类型"></a>数据库操作语句类型</h2><h3 id="DDL-data-definition-language-操作数据库和表结构"><a href="#DDL-data-definition-language-操作数据库和表结构" class="headerlink" title="DDL(data definition language) 操作数据库和表结构"></a>DDL(data definition language) 操作数据库和表结构</h3><p>创建数据库和表、删除数据库和表、修改表结构等。</p>
+<h3 id="DML-data-manipulation-language-数据操纵语言"><a href="#DML-data-manipulation-language-数据操纵语言" class="headerlink" title="DML(data manipulation language) 数据操纵语言"></a>DML(data manipulation language) 数据操纵语言</h3><p>对数据库数据进行一些操作： update , insert , delete</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> 表名称 <span class="keyword">SET</span> 列名称 <span class="operator">=</span> 新值 <span class="keyword">WHERE</span> 列名称 <span class="operator">=</span> 某值</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> table_name (列<span class="number">1</span>, 列<span class="number">2</span>,...) <span class="keyword">VALUES</span> (值<span class="number">1</span>, 值<span class="number">2</span>,....)</span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> 表名称 <span class="keyword">WHERE</span> 列名称 <span class="operator">=</span> 值</span><br></pre></td></tr></table></figure>
+
+<h3 id="DQL-data-query-language-数据查询语言"><a href="#DQL-data-query-language-数据查询语言" class="headerlink" title="DQL(data query language) 数据查询语言"></a>DQL(data query language) 数据查询语言</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">&lt;&gt;</span> <span class="keyword">FROM</span> <span class="operator">&lt;&gt;</span> WEHRE<span class="operator">&lt;&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="任务一-元数据管理和DDL实现"><a href="#任务一-元数据管理和DDL实现" class="headerlink" title="任务一 元数据管理和DDL实现"></a>任务一 元数据管理和DDL实现</h2><p>数据库系统基本的元数据组织与管理。</p>
+<h3 id="元数据管理"><a href="#元数据管理" class="headerlink" title="元数据管理"></a>元数据管理</h3><p>代码目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">src/system/sm_manager.h|.cpp</span><br><span class="line">src/system/sm_meta.h</span><br></pre></td></tr></table></figure>
+
+<p>sm_meta.h 中维护了 <strong>ColMeta</strong> (列元数据)， <strong>TabMeta</strong> (表元数据)， <strong>DbMeta</strong> (数据库元数据)</p>
+<p>表元数据由多个列元数据组成，数据库元数据由多个表元数据组成。列元数据包括了</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">ColMeta</span> &#123;</span><br><span class="line">	std::string tab_name;  <span class="comment">// 字段所属表名称</span></span><br><span class="line">    std::string name;      <span class="comment">// 字段名称</span></span><br><span class="line">    ColType type;          <span class="comment">// 字段类型</span></span><br><span class="line">    <span class="type">int</span> len;               <span class="comment">// 字段长度</span></span><br><span class="line">    <span class="type">int</span> offset;            <span class="comment">// 字段位于记录中的偏移量</span></span><br><span class="line">    <span class="type">bool</span> index;            <span class="comment">// 该字段上是否建立索引</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重载了操作符，ColMeta 中重载&lt;&lt;将col信息变为const类型并塞进 os</p>
+<h4 id="方法实现"><a href="#方法实现" class="headerlink" title="方法实现"></a>方法实现</h4><p><strong>TabMeta</strong></p>
+<ol>
+<li>is_col()</li>
+<li>get_col()</li>
+</ol>
+<p>使用 std::vector&lt;ColMeta&gt;::iterator 遍历 vector&lt;ColMeta&gt;即可。 &#x2F; 可以使用容器方法 find()</p>
+<h3 id="DDL实现"><a href="#DDL实现" class="headerlink" title="DDL实现"></a>DDL实现</h3><p>代码位置： sm_manager.cpp</p>
+<p>实现常见DDL语句 CREAT，DROP 和功能语句 SHOW，DESC 等</p>
+<h4 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h4><p><strong>SmManager</strong>（类似15445中的Catalog)</p>
+<p>管理数据库中的 db,table,index 的元数据。每个 SmManager 对应一个 db</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">std::unordered_map&lt;std::string, std::unique_ptr&lt;RmFileHandle&gt;&gt; fhs_;<span class="comment">//储存每个文件（数据库元数据，表） &lt;名称，handle&gt;</span></span><br><span class="line">std::unordered_map&lt;std::string, std::unique_ptr&lt;IxIndexHandle&gt;&gt; ihs_;<span class="comment">//&lt;表名，索引handle&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="方法实现-1"><a href="#方法实现-1" class="headerlink" title="方法实现"></a>方法实现</h4><p>create_db() 若目录不存在，创建仓库目录；进入仓库目录；使用输出文件流创建数据库元数据文件。退出仓库目录。</p>
+<p>close_db() 对应 open_db() 。将内存中修改过的数据库数据，包括元数据 db_ ，写回硬盘中；并关闭数据库内所有表文件和索引文件。退出仓库目录。</p>
+<p>drop_table()</p>
+<h4 id="代码实现相关问题"><a href="#代码实现相关问题" class="headerlink" title="代码实现相关问题"></a>代码实现相关问题</h4><h5 id="文件和流"><a href="#文件和流" class="headerlink" title="文件和流"></a>文件和流</h5><table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ofstream</td>
+<td>输出文件流。创建文件；向文件写入信息</td>
+</tr>
+<tr>
+<td>ifstream</td>
+<td>输入文件流。从文件中读取信息</td>
+</tr>
+<tr>
+<td>fstream</td>
+<td>文件流</td>
+</tr>
+</tbody></table>
+<h5 id="unique-ptr-指针内容作为参数传递"><a href="#unique-ptr-指针内容作为参数传递" class="headerlink" title="unique_ptr 指针内容作为参数传递"></a>unique_ptr 指针内容作为参数传递</h5><p>get() 返回内容的引用。 buffer.get() 等价于 &amp;*buffer</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm_manager_-&gt;<span class="built_in">close_file</span>(tab.second.<span class="built_in">get</span>());</span><br></pre></td></tr></table></figure>
+
+<h4 id="test"><a href="#test" class="headerlink" title="test"></a>test</h4><p>文件储存结构是以数据库名称命名的文件夹下，有名为 db.meta 的元数据文件，以及每个表的表文件，和按&lt;表-表内索引序号&gt;命名的索引文件。</p>
+<p>create_db() 后未退出仓库目录。创建元数据文件时需要进入仓库目录，结束后退出。open_db() 时进入目录，close_db() 时退出。</p>
+<h2 id="任务二-DQL——select-from-语句和相关算子实现"><a href="#任务二-DQL——select-from-语句和相关算子实现" class="headerlink" title="任务二 DQL——select_from 语句和相关算子实现"></a>任务二 DQL——select_from 语句和相关算子实现</h2><p>代码目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">src/execution/executor_index_scan.h</span><br><span class="line">src/execution/executor_seq_scan.h</span><br><span class="line">src/execution/executor_nestedloop_join.h</span><br><span class="line">src/execution/executor_projection.h</span><br></pre></td></tr></table></figure>
+
+<h3 id="扫描算子-（顺序-amp-索引）"><a href="#扫描算子-（顺序-amp-索引）" class="headerlink" title="扫描算子 （顺序 &amp; 索引）"></a>扫描算子 （顺序 &amp; 索引）</h3><h4 id="数据结构-1"><a href="#数据结构-1" class="headerlink" title="数据结构"></a>数据结构</h4><p>顺序扫描算子：读入初始扫描条件 <strong>vector&lt;Condition&gt;</strong> conds_ ，转换为实际扫描条件 fed_conds_ .表的信息：表名、列。通过 RmFileHandle 读取表中记录数据。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">SeqScanExecutor</span> : <span class="keyword">public</span> AbstractExecutor &#123; </span><br><span class="line">   <span class="keyword">private</span>:</span><br><span class="line">    std::string tab_name_;</span><br><span class="line">    std::vector&lt;Condition&gt; conds_;  <span class="comment">// 初始扫描条件(来自SQL)</span></span><br><span class="line">    RmFileHandle *fh_;              <span class="comment">// TableHeap</span></span><br><span class="line">    std::vector&lt;ColMeta&gt; cols_;</span><br><span class="line">    <span class="type">size_t</span> len_;</span><br><span class="line">    std::vector&lt;Condition&gt; fed_conds_;  <span class="comment">// 实际扫描条件(可能由于连接运算动态改变)</span></span><br><span class="line"></span><br><span class="line">    Rid rid_;                        <span class="comment">// 当前扫描到的记录的rid</span></span><br><span class="line">    std::unique_ptr&lt;RecScan&gt; scan_;  <span class="comment">// table_iterator</span></span><br><span class="line"></span><br><span class="line">    SmManager *sm_manager_;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Condition</strong>: 筛选条件</p>
+<p>描述条件的算式，记录了算式左右侧以及比较符号，算式右侧可能为另一列&#x2F;值。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Condition</span> &#123;</span><br><span class="line">    TabCol lhs_col;   <span class="comment">// left-hand side column</span></span><br><span class="line">    CompOp op;        <span class="comment">// comparison operator</span></span><br><span class="line">    <span class="type">bool</span> is_rhs_val;  <span class="comment">// true if right-hand side is a value (not a column)</span></span><br><span class="line">    TabCol rhs_col;   <span class="comment">// right-hand side column</span></span><br><span class="line">    Value rhs_val;    <span class="comment">// right-hand side value</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>value: 带类型的值，类型+指向原记录的指针。</p>
+<h4 id="方法实现-2"><a href="#方法实现-2" class="headerlink" title="方法实现"></a>方法实现</h4><p><strong>beginTuple()</strong>  :构建表迭代器并找到第一个满足谓词条件的 record 。</p>
+<p>构建表迭代器 scan_ ， 并使用 scan_-&gt;next() 跳过无记录的位置迭代扫描，调用 eval_conds() 判断是否满足条件，直到扫描到第一个满足谓词条件的记录，并赋值给算子成员rid_ 。</p>
+<p>现有方法 eval_conds() 用于比较扫描到的数据与过滤条件。eval_conds() 调用了 eval_cond() 函数，增加了是否所有过滤条件都成立的判断。现观察 eval_cond() :</p>
+<p>rec_cols 为现有列，cond 过滤条件，rec 当前元组。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">eval_cond</span><span class="params">(<span class="type">const</span> std::vector&lt;ColMeta&gt; &amp;rec_cols, <span class="type">const</span> Condition &amp;cond, <span class="type">const</span> RmRecord *rec)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>在索引扫描中，找到索引列对应的条件，通过 lower_bound() 等函数找到符合条件的上下限来剪枝，再在上下限范围内建立 scan_ 顺序扫描。</p>
+<p><strong>nextTuple()</strong> : 找到下一个满足谓词条件的 record 。</p>
+<p>类似beginTuple() 。</p>
+<p><strong>Next()</strong> : 找到下一个满足谓词条件的 record ，并返回 record 地址。（分情况调用beginTuple() 和 nextTuple() ）</p>
+<p><strong>IndexScanExecutor()</strong> : 初始化，将传入的参数赋值给对象，并转化 conds_ ，将该表下的列移动为条件的左值。</p>
+<p>feed() (在连接算子任务中实现)</p>
+<h4 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h4><p>何时调用 check_runtime_conds() ，作用是什么</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">check_runtime_conds</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;cond : fed_conds_) &#123;</span><br><span class="line">        <span class="built_in">assert</span>(cond.lhs_col.tab_name == tab_name_);</span><br><span class="line">        <span class="keyword">if</span> (!cond.is_rhs_val) &#123;</span><br><span class="line">            <span class="built_in">assert</span>(cond.rhs_col.tab_name == tab_name_);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="连接算子-Nested-Loop-Join"><a href="#连接算子-Nested-Loop-Join" class="headerlink" title="连接算子 ( Nested Loop Join )"></a>连接算子 ( Nested Loop Join )</h3><p>朴素实现： 对于外表的每条记录，扫一遍内表（比较、条件连接）。默认以左孩子作为 outer table 。</p>
+<h4 id="数据结构-2"><a href="#数据结构-2" class="headerlink" title="数据结构"></a>数据结构</h4><p>多表连接语句</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> [col..] <span class="keyword">from</span> TbName1 <span class="keyword">join</span> TbName2 ... <span class="keyword">where</span> cond;</span><br></pre></td></tr></table></figure>
+
+<p>连接算子中有两个指向左右孩子算子的指针</p>
+<p>**feed()  **</p>
+<p><strong>feed_right()</strong> ：创建复制了 prev_feed_dict 的值的 <code>feed_dict</code> ，向 feed_dict 中插入 left_dict ，然后调用 feed()</p>
+<pre><code>**left_dict** 是 map&lt;TabCol, Value&gt; 类型的变量，调用函数 rec2dict() 返回值为 map&lt;外表中每一列的元数据，表中下一个元组的每一列的值&gt; 。
+
+**prev_feed_dict**
+</code></pre>
+<h4 id="方法实现-3"><a href="#方法实现-3" class="headerlink" title="方法实现"></a>方法实现</h4><p><strong>nextTuple()</strong> :  调用内表的 nextTuple() ，若内表扫描完一遍，则将外表移动到下一个记录，内表调用 beginTuple() 回到第一个记录，并更新 feed 信息。</p>
+<p><strong>Next()</strong> : 分别调用左右算子的 Next() 获取记录，使用 memcpy() 拼接记录的 data 给返回值。</p>
+<h3 id="投影算子"><a href="#投影算子" class="headerlink" title="投影算子"></a>投影算子</h3><p>投影算子调用其要处理的 <code>prev</code>算子的 <code>Next()</code>获得元祖，根据要投影的列进行投影返回投影后的新元祖。</p>
+<h4 id="数据结构-3"><a href="#数据结构-3" class="headerlink" title="数据结构"></a>数据结构</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ProjectionExecutor</span> : <span class="keyword">public</span> AbstractExecutor &#123;</span><br><span class="line">   <span class="keyword">private</span>:</span><br><span class="line">    std::unique_ptr&lt;AbstractExecutor&gt; prev_;</span><br><span class="line">    std::vector&lt;ColMeta&gt; cols_;			<span class="comment">//投影的列的元数据</span></span><br><span class="line">    <span class="type">size_t</span> len_;</span><br><span class="line">    std::vector&lt;<span class="type">size_t</span>&gt; sel_idxs_;		<span class="comment">//储存了需要保留的列在原表中的位置索引</span></span><br><span class="line">    ...&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Next-实现"><a href="#Next-实现" class="headerlink" title="Next() 实现"></a>Next() 实现</h4><p>调用下一层的算子 prev 的 Next() 获得投影前的记录 prev_rec ，按 sel_idxs_ 依次生成投影列，</p>
+<p>是否需要修改列元数据  </p>
+<p>摆烂暂停了，我最好是会去写6.824</p>
+<h2 id="任务三-DML——-insert-x2F-delete-x2F-update-语句和算子实现"><a href="#任务三-DML——-insert-x2F-delete-x2F-update-语句和算子实现" class="headerlink" title="任务三 DML—— insert&#x2F;delete&#x2F;update 语句和算子实现"></a>任务三 DML—— insert&#x2F;delete&#x2F;update 语句和算子实现</h2><h4 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h4><p><strong>lt、le、eq、ne、ge、gt的含义</strong></p>
+<ul>
+<li><strong>lt：less than</strong> 小于</li>
+<li><strong>le：less than or equal to</strong> 小于等于</li>
+<li><strong>eq：equal to</strong> 等于</li>
+<li><strong>ne：not equal to</strong> 不等于</li>
+<li><strong>ge：greater than or equal to</strong> 大于等于</li>
+<li><strong>gt：greater than</strong> 大于</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li>SQL优化之火山模型 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/219516250">https://zhuanlan.zhihu.com/p/219516250</a></li>
+<li>Why does std::unique_ptr has a “get()” member function? <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/26664585/why-does-stdunique-ptr-has-a-get-member-function">https://stackoverflow.com/questions/26664585/why-does-stdunique-ptr-has-a-get-member-function</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wenxuehai/p/13485427.html">DDL基本语法（操作数据库和表结构）</a></li>
+<li></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/01/29/rucbase_btree/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1157,147 +1355,6 @@ ordered/unordered
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/01/19/15_RAll_smartpointers_buildingprojects/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/ee2.jpg">
-      <meta itemprop="name" content="iuqtcl">
-      <meta itemprop="description" content="人暂时没remake，blog已经re了">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cyber Ghost">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/01/19/15_RAll_smartpointers_buildingprojects/" class="post-title-link" itemprop="url">15 RALL</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2023-01-19 00:28:26 / 修改时间：00:54:30" itemprop="dateCreated datePublished" datetime="2023-01-19T00:28:26+08:00">2023-01-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CS106L%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">CS106L笔记</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="RAll"><a href="#RAll" class="headerlink" title="RAll"></a>RAll</h2><p><em>a coding standard and practice</em></p>
-<h3 id="exceptions"><a href="#exceptions" class="headerlink" title="exceptions"></a>exceptions</h3><p><strong>resources that need to be released</strong></p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Acquire</th>
-<th>Release</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Heap memory</td>
-<td>new</td>
-<td>delete</td>
-</tr>
-<tr>
-<td>Files</td>
-<td>open</td>
-<td>close</td>
-</tr>
-<tr>
-<td>Lock</td>
-<td>try_lock</td>
-<td>unlock</td>
-</tr>
-<tr>
-<td>Sockets</td>
-<td>socket</td>
-<td>close</td>
-</tr>
-</tbody></table>
-<p><strong>exceptions</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="comment">//code associated with exception handler</span></span><br><span class="line">&#125; <span class="built_in">catch</span>()&#123;</span><br><span class="line">    <span class="comment">//exception handler</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>enforcing exception safety</strong> 抛异常的可能性大小</p>
-<ul>
-<li>Nothrow exception guarantee(destructors, …)</li>
-<li>…</li>
-<li>No exception guarantee (memory corruption, …)</li>
-</ul>
-<p><strong>RAII</strong></p>
-<p>又名</p>
-<p>scope based memory management</p>
-<p>&#x2F; constructor acquires, destructor releases</p>
-<p>目标</p>
-<ul>
-<li>avoid calling <em>new</em> and <em>delete</em> explicitly</li>
-</ul>
-<p>(资源出了scope自动释放)</p>
-<p><img src="https://i.imgur.com/lZxDl9h.png"></p>
-<p><img src="https://i.imgur.com/GzshscC.png"></p>
-<h3 id="Smart-Pointers"><a href="#Smart-Pointers" class="headerlink" title="Smart Pointers"></a>Smart Pointers</h3><p><em>put SMFs to good use</em></p>
-<p>在constructor中acquire，在destructor中release</p>
-<ul>
-<li>std::unique_ptr<ul>
-<li>Uniquely owns its resource, can’t be copied</li>
-</ul>
-</li>
-<li>std::shared_ptr<ul>
-<li>Can make copies, destructed when underlying memory goes out of scope</li>
-</ul>
-</li>
-<li>std::weak_ptr<ul>
-<li>Models temporary ownership: when an object only needs to be accessed if it exists (convert to shared_ptr to access)</li>
-</ul>
-</li>
-</ul>
-<p><strong>In practice</strong></p>
-<p><img src="https://i.imgur.com/ybziOx5.png"></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//create smart pointers</span></span><br><span class="line">std::unique_ptr&lt;T&gt; up&#123;<span class="keyword">new</span> T&#125;;</span><br><span class="line">std::shared_ptr&lt;T&gt; sp&#123;<span class="keyword">new</span> T&#125;;</span><br><span class="line">std::weak_ptr&lt;T&gt; wp=sp;<span class="comment">//can only be copy/ move constructed</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//better one</span></span><br><span class="line">std::unique_ptr&lt;T&gt; up = std::<span class="built_in">make_unique</span>&lt;T&gt;();</span><br><span class="line">std::unique_ptr&lt;T&gt; sp = std::<span class="built_in">make_shared</span>&lt;T&gt;();</span><br></pre></td></tr></table></figure>
-
-<h3 id="Building-C-Projects"><a href="#Building-C-Projects" class="headerlink" title="Building C++ Projects"></a>Building C++ Projects</h3><p>v</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1369,7 +1426,7 @@ ordered/unordered
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

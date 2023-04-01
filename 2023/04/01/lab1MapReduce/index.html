@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"iuqtcl.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="仅调试记录有少许回忆价值，其他部分抄都没抄完。——写给以后试图回忆起自己写过什么的我。 目标实现一个包括 coordinator 和 worker 两个 program 的 distributed mapreduce。 workers  通过 RPC 联络 coordinator 多个 workers 并发 向 coordinator 请求任务，读取任务输出，执行，输出结果  coordinato">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lab 1 MapReduce">
+<meta property="og:url" content="https://iuqtcl.github.io/2023/04/01/lab1MapReduce/index.html">
+<meta property="og:site_name" content="Cyber Ghost">
+<meta property="og:description" content="仅调试记录有少许回忆价值，其他部分抄都没抄完。——写给以后试图回忆起自己写过什么的我。 目标实现一个包括 coordinator 和 worker 两个 program 的 distributed mapreduce。 workers  通过 RPC 联络 coordinator 多个 workers 并发 向 coordinator 请求任务，读取任务输出，执行，输出结果  coordinato">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-04-01T02:57:09.276Z">
+<meta property="article:modified_time" content="2023-04-01T02:58:34.440Z">
+<meta property="article:author" content="iuqtcl">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://iuqtcl.github.io/2023/04/01/lab1MapReduce/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>lab 1 MapReduce | Cyber Ghost</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Cyber Ghost</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">（确信）</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/04/01/lab1MapReduce/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ee2.jpg">
+      <meta itemprop="name" content="iuqtcl">
+      <meta itemprop="description" content="人暂时没remake，blog已经re了">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyber Ghost">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          lab 1 MapReduce
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-04-01 10:57:09 / 修改时间：10:58:34" itemprop="dateCreated datePublished" datetime="2023-04-01T10:57:09+08:00">2023-04-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mit6-824/" itemprop="url" rel="index"><span itemprop="name">mit6.824</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>仅调试记录有少许回忆价值，其他部分抄都没抄完。——写给以后试图回忆起自己写过什么的我。</p>
+<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>实现一个包括 coordinator 和 worker 两个 program 的 distributed mapreduce。</p>
+<p>workers</p>
+<ul>
+<li>通过 RPC 联络 coordinator</li>
+<li>多个 workers 并发</li>
+<li>向 coordinator 请求任务，读取任务输出，执行，输出结果</li>
+</ul>
+<p>coordinator</p>
+<ul>
+<li>只有一个</li>
+<li>如果有 worker 长时间未完成任务(10s)，将任务发给其他 worker</li>
+</ul>
+<h4 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h4><ul>
+<li>nReduce 指定了 reduce 任务的数量，每个 mapper 需要创建 nReduce 个中间文件， worker 完成第 X 个 task 输出的文件为 mr-out-X</li>
+<li>将 worker 输出的中间文件保存到当前文件夹，使其能在 reduce时读到</li>
+<li>Done() 用于完成 mapreduce 后停止 coordinator</li>
+</ul>
+<h3 id="代码路径"><a href="#代码路径" class="headerlink" title="代码路径"></a>代码路径</h3><p>示例代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">main/mrcoordinator.go</span><br><span class="line">main/mrworker.go</span><br></pre></td></tr></table></figure>
+
+<p>实现</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mr/coordinator.go</span><br><span class="line">mr/worker.go</span><br><span class="line">mr/rpc.go</span><br></pre></td></tr></table></figure>
+
+<h3 id="mrsequential-go"><a href="#mrsequential-go" class="headerlink" title="mrsequential.go"></a>mrsequential.go</h3><p><code>ByKey</code>是一个 key-value 结构体数组，有三个方法</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// for sorting by key.</span></span><br><span class="line"><span class="keyword">type</span> ByKey []mr.KeyValue</span><br><span class="line"></span><br><span class="line"><span class="comment">// for sorting by key.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a ByKey)</span></span> Len() <span class="type">int</span>           &#123; <span class="keyword">return</span> <span class="built_in">len</span>(a) &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a ByKey)</span></span> Swap(i, j <span class="type">int</span>)      &#123; a[i], a[j] = a[j], a[i] &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a ByKey)</span></span> Less(i, j <span class="type">int</span>) <span class="type">bool</span> &#123; <span class="keyword">return</span> a[i].Key &lt; a[j].Key &#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>loadPlugin</code>加载了用户定义的map和reduce</p>
+<p>Map() 的输入是一个键值对（例子中为[文章名]-内容），输出是键值对数组。</p>
+<p>Reduce() 的输入是一个键和对应的多个值，输出该键合并后的值。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Map</span><span class="params">(filename <span class="type">string</span>, contents <span class="type">string</span>)</span></span> []mr.KeyValue</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Reduce</span><span class="params">(key <span class="type">string</span>, values []<span class="type">string</span>)</span></span> <span class="type">string</span></span><br></pre></td></tr></table></figure>
+
+<p>plugin是一种用于编写模块化go程序的特性，可以将go包编译为共享对象**(.so)<strong>文件，然后在运行时动态加载和调用插件中的</strong>函数和变量**</p>
+<p>这段代码中读入了用户编写的map和reduce函数为mapf , reducef</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// load the application Map and Reduce functions</span></span><br><span class="line"><span class="comment">// from a plugin file, e.g. ../mrapps/wc.so</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">loadPlugin</span><span class="params">(filename <span class="type">string</span>)</span></span> (<span class="function"><span class="keyword">func</span><span class="params">(<span class="type">string</span>, <span class="type">string</span>)</span></span> []mr.KeyValue, <span class="function"><span class="keyword">func</span><span class="params">(<span class="type">string</span>, []<span class="type">string</span>)</span></span> <span class="type">string</span>) &#123;</span><br><span class="line">	p, err := plugin.Open(filename)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;cannot load plugin %v&quot;</span>, filename)</span><br><span class="line">	&#125;</span><br><span class="line">	xmapf, err := p.Lookup(<span class="string">&quot;Map&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;cannot find Map in %v&quot;</span>, filename)</span><br><span class="line">	&#125;</span><br><span class="line">	mapf := xmapf.(<span class="function"><span class="keyword">func</span><span class="params">(<span class="type">string</span>, <span class="type">string</span>)</span></span> []mr.KeyValue)</span><br><span class="line">	xreducef, err := p.Lookup(<span class="string">&quot;Reduce&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;cannot find Reduce in %v&quot;</span>, filename)</span><br><span class="line">	&#125;</span><br><span class="line">	reducef := xreducef.(<span class="function"><span class="keyword">func</span><span class="params">(<span class="type">string</span>, []<span class="type">string</span>)</span></span> <span class="type">string</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> mapf, reducef</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实现了单线程处理 map 和 reduce ，读文件，顺序调用 map ，全部保存到中间状态中，再将所有key排序，按key分组输入reduce。</p>
+<h3 id="mrworker-go"><a href="#mrworker-go" class="headerlink" title="mrworker.go"></a>mrworker.go</h3><p>调用了worker.go</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><h4 id="coordinator"><a href="#coordinator" class="headerlink" title="coordinator"></a>coordinator</h4><p>Coordinatro 对象结构</p>
+<p>创建coordinator后监听</p>
+<h4 id="worker"><a href="#worker" class="headerlink" title="worker"></a>worker</h4><h4 id="coordinator和worker的交互流程："><a href="#coordinator和worker的交互流程：" class="headerlink" title="coordinator和worker的交互流程："></a>coordinator和worker的交互流程：</h4><p><strong>1.</strong> coordinator.go 中为 Coordinator 添加 <code>接收到请求后的处理方法 Example()</code>，方法接受的参数 <code>reply的引用</code>，使得 Coordinator 可以对 worker 的值进行修改，等价于进行了信息传递。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Coordinator)</span></span> Example(args *ExampleArgs, reply *ExampleReply) <span class="type">error</span> &#123;</span><br><span class="line">	reply.Y = args.X + <span class="number">1</span></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参数的特殊类型定义在 rpc.go 中</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> ExampleArgs <span class="keyword">struct</span> &#123;</span><br><span class="line">	X <span class="type">int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>2.</strong> 创建 Coordinator ，并通过 RPC 开始监听</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// start a thread that listens for RPCs from worker.go</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Coordinator)</span></span> server() &#123;</span><br><span class="line">	rpc.Register(c)</span><br><span class="line">	rpc.HandleHTTP()</span><br><span class="line">	<span class="comment">//l, e := net.Listen(&quot;tcp&quot;, &quot;:1234&quot;)</span></span><br><span class="line">	sockname := coordinatorSock()</span><br><span class="line">	os.Remove(sockname)</span><br><span class="line">	l, e := net.Listen(<span class="string">&quot;unix&quot;</span>, sockname)</span><br><span class="line">	<span class="keyword">if</span> e != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(<span class="string">&quot;listen error:&quot;</span>, e)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">go</span> http.Serve(l, <span class="literal">nil</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 rpc.go 中添加迫真地址</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">coordinatorSock</span><span class="params">()</span></span> <span class="type">string</span> &#123;</span><br><span class="line">	s := <span class="string">&quot;/var/tmp/5840-mr-&quot;</span></span><br><span class="line">	s += strconv.Itoa(os.Getuid())</span><br><span class="line">	<span class="keyword">return</span> s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>3.</strong> worker 调用 call()， 向 coordinator 发送请求，使 Coordinator 调用指定处理函数。</p>
+<h4 id="调试记录"><a href="#调试记录" class="headerlink" title="调试记录"></a>调试记录</h4><ol>
+<li><p>添加了分配任务函数，功能仅有从coordinator任务列表中传一个文件名。</p>
+</li>
+<li><p>添加Register()，用于给worker分配id，在worker.go中传入参数想填nil，出现报错 <code>gob: cannot encode nil value</code>，原理不明，改成虚空workerid之后能跑了，有空再研究。</p>
+<p>出现报错 <code>panic: assignment to entry in nil map</code>，原因未初始化结构体中的map，被教了make()怎么用</p>
+</li>
+<li><p>为 Allocate 添加了寻找未分配任务的功能，向 Coordinator 中添加了 <code>TasksList []*Task</code>，一开始未使用指针，在循环里复制出的 task 里修改任务状态，导致实际上没改到，略二。考虑到 worker 完成后需要通过 taskid 修改 task 状态，因此选择了数组储存TaskList。考虑到在worker crash后可能需要通过 workerid 找到 task 并修改任务状态，向 Coordinator 中添加了 <code>WorkerTaskMap</code></p>
+</li>
+<li><p>添加了DoMap(). 打开文件读文件调用mapf处理，并保存中间量至中间文件。在内存中使用了二维数组 [][]intermediate 保存 kv .存入文件时，使用了 <code>json.NewEncoder</code>等函数将数据转为二进制格式。<code>ioutil.TempFile()</code>和 <code>defer os.Remove()</code>一起使用，避免文件写入中途 worker crash 了使文件不全。</p>
+<p>使用了 CallTask() 递归调用的方式实现了完成一个 Task 后立即请求下一个任务。</p>
+<p>出现报错：<code>gob: type mismatch in decoder: want struct type mr.WorkerId; got non-struct</code>，原因是应该定义结构体WorkerId{}，直接传了 int 型的 Id 就报错了。</p>
+<p>又出现报错，二维数组越界。如果需要通过第一维序号随机访问，需要在定义为 [][]KeyValue{} 之后 append 一些 []KeyValue 。</p>
+<p>输出了一堆 mr-x-10 ，也许 hash 出了一些问题。–只是命名的时候写错了。</p>
+</li>
+<li><p>添加了 wait 状态，分配任务时的条件添加了一条任务类型与 coordinator 当前状态一致才可能分配。map任务数由文件数决定，reduce任务数确定，因此初始化 coordinator 时就可以一起把 map 和 reduce 办了。</p>
+</li>
+<li><p>添加了 CheckDone() 和 Done() ，4s一次，检查是否所有任务都被完成，exit(0)暴力退出，希望程序没事。</p>
+</li>
+<li><p>对 worker crash 的处理：coordinator 不需要辨别 worker ，worker crash 后会导致任务不能完成，因此只要在分配了某任务之后一定时间检查任务是否完成，若未完成，则将该任务的状态改回未分配。</p>
+</li>
+<li><p>锁：为 AllocateTask() 添加锁。</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/04/01/230401%E8%AE%B0%E4%BA%8B/" rel="prev" title="230401">
+      <i class="fa fa-chevron-left"></i> 230401
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">目标</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%84%E5%88%99"><span class="nav-number">1.1.</span> <span class="nav-text">规则</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%B7%AF%E5%BE%84"><span class="nav-number">2.</span> <span class="nav-text">代码路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mrsequential-go"><span class="nav-number">3.</span> <span class="nav-text">mrsequential.go</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mrworker-go"><span class="nav-number">4.</span> <span class="nav-text">mrworker.go</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">5.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#coordinator"><span class="nav-number">5.1.</span> <span class="nav-text">coordinator</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#worker"><span class="nav-number">5.2.</span> <span class="nav-text">worker</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#coordinator%E5%92%8Cworker%E7%9A%84%E4%BA%A4%E4%BA%92%E6%B5%81%E7%A8%8B%EF%BC%9A"><span class="nav-number">5.3.</span> <span class="nav-text">coordinator和worker的交互流程：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E8%AE%B0%E5%BD%95"><span class="nav-number">5.4.</span> <span class="nav-text">调试记录</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="iuqtcl"
+      src="/images/ee2.jpg">
+  <p class="site-author-name" itemprop="name">iuqtcl</p>
+  <div class="site-description" itemprop="description">人暂时没remake，blog已经re了</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/iuqtcl" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;iuqtcl" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iuqtcl</span>
+</div>
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

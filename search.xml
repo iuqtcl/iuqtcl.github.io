@@ -589,7 +589,7 @@ ordered/unordered
   <entry>
     <title>230401</title>
     <url>/2023/04/01/230401%E8%AE%B0%E4%BA%8B/</url>
-    <content><![CDATA[<p>今天两点我在想，如果我有不受限的能力，我会有什么愿望。我想到高山流水荒漠远洋，然后问如果我有创造的能力，那我创造出来的东西智力水平是否能超过我。我猜没有这样的好事。然后我想了五分钟，我想这世上从未有过文明，或者没有人能感知到我，或者很多人都爱我，最后的答案是拯救世界。也许这是很多人年轻时做过的狂梦，但我很少有这样的幻想，哪怕是看中二作品时。拯救世界能被爱而不亏欠别人。</p>
+    <content><![CDATA[<p>今天两点我在想，如果我有不受限的能力，我会有什么愿望。我想到高山流水荒漠远洋，然后问如果我有创造的能力，那我创造出来的东西智力水平是否能超过我。我猜没有这样的好事。后来我想了五分钟，我想这世上从未有过文明，或者没有人能感知到我，或者很多人都爱我，最后的答案是拯救世界。也许这是很多人年轻时做过的狂梦，但我很少有这样的幻想，哪怕是看中二作品时。拯救世界能被爱而不亏欠别人。</p>
 <p>但这个世界是混沌的，它不会有一个更好的状态，至少不会有一个所有人共识中的更好状态。没有人拯救世界。</p>
 <p>昨天母亲发他新拍的照片。他快五十岁了，比年轻的时候更爱拍照。我想到这里便落下泪来。我已忘记很多事，远离很多岁月。</p>
 ]]></content>
@@ -998,6 +998,90 @@ ordered/unordered
 ]]></content>
       <categories>
         <category>rucbase</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>lab 1 MapReduce</title>
+    <url>/2023/04/01/lab1MapReduce/</url>
+    <content><![CDATA[<p>仅调试记录有少许回忆价值，其他部分抄都没抄完。——写给以后试图回忆起自己写过什么的我。</p>
+<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>实现一个包括 coordinator 和 worker 两个 program 的 distributed mapreduce。</p>
+<p>workers</p>
+<ul>
+<li>通过 RPC 联络 coordinator</li>
+<li>多个 workers 并发</li>
+<li>向 coordinator 请求任务，读取任务输出，执行，输出结果</li>
+</ul>
+<p>coordinator</p>
+<ul>
+<li>只有一个</li>
+<li>如果有 worker 长时间未完成任务(10s)，将任务发给其他 worker</li>
+</ul>
+<h4 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h4><ul>
+<li>nReduce 指定了 reduce 任务的数量，每个 mapper 需要创建 nReduce 个中间文件， worker 完成第 X 个 task 输出的文件为 mr-out-X</li>
+<li>将 worker 输出的中间文件保存到当前文件夹，使其能在 reduce时读到</li>
+<li>Done() 用于完成 mapreduce 后停止 coordinator</li>
+</ul>
+<h3 id="代码路径"><a href="#代码路径" class="headerlink" title="代码路径"></a>代码路径</h3><p>示例代码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main/mrcoordinator.go</span><br><span class="line">main/mrworker.go</span><br></pre></td></tr></table></figure>
+
+<p>实现</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mr/coordinator.go</span><br><span class="line">mr/worker.go</span><br><span class="line">mr/rpc.go</span><br></pre></td></tr></table></figure>
+
+<h3 id="mrsequential-go"><a href="#mrsequential-go" class="headerlink" title="mrsequential.go"></a>mrsequential.go</h3><p><code>ByKey</code>是一个 key-value 结构体数组，有三个方法</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// for sorting by key.</span></span><br><span class="line"><span class="keyword">type</span> ByKey []mr.KeyValue</span><br><span class="line"></span><br><span class="line"><span class="comment">// for sorting by key.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a ByKey)</span></span> Len() <span class="type">int</span>           &#123; <span class="keyword">return</span> <span class="built_in">len</span>(a) &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a ByKey)</span></span> Swap(i, j <span class="type">int</span>)      &#123; a[i], a[j] = a[j], a[i] &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a ByKey)</span></span> Less(i, j <span class="type">int</span>) <span class="type">bool</span> &#123; <span class="keyword">return</span> a[i].Key &lt; a[j].Key &#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>loadPlugin</code>加载了用户定义的map和reduce</p>
+<p>Map() 的输入是一个键值对（例子中为[文章名]-内容），输出是键值对数组。</p>
+<p>Reduce() 的输入是一个键和对应的多个值，输出该键合并后的值。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Map</span><span class="params">(filename <span class="type">string</span>, contents <span class="type">string</span>)</span></span> []mr.KeyValue</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Reduce</span><span class="params">(key <span class="type">string</span>, values []<span class="type">string</span>)</span></span> <span class="type">string</span></span><br></pre></td></tr></table></figure>
+
+<p>plugin是一种用于编写模块化go程序的特性，可以将go包编译为共享对象**(.so)<strong>文件，然后在运行时动态加载和调用插件中的</strong>函数和变量**</p>
+<p>这段代码中读入了用户编写的map和reduce函数为mapf , reducef</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// load the application Map and Reduce functions</span></span><br><span class="line"><span class="comment">// from a plugin file, e.g. ../mrapps/wc.so</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">loadPlugin</span><span class="params">(filename <span class="type">string</span>)</span></span> (<span class="function"><span class="keyword">func</span><span class="params">(<span class="type">string</span>, <span class="type">string</span>)</span></span> []mr.KeyValue, <span class="function"><span class="keyword">func</span><span class="params">(<span class="type">string</span>, []<span class="type">string</span>)</span></span> <span class="type">string</span>) &#123;</span><br><span class="line">	p, err := plugin.Open(filename)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;cannot load plugin %v&quot;</span>, filename)</span><br><span class="line">	&#125;</span><br><span class="line">	xmapf, err := p.Lookup(<span class="string">&quot;Map&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;cannot find Map in %v&quot;</span>, filename)</span><br><span class="line">	&#125;</span><br><span class="line">	mapf := xmapf.(<span class="function"><span class="keyword">func</span><span class="params">(<span class="type">string</span>, <span class="type">string</span>)</span></span> []mr.KeyValue)</span><br><span class="line">	xreducef, err := p.Lookup(<span class="string">&quot;Reduce&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;cannot find Reduce in %v&quot;</span>, filename)</span><br><span class="line">	&#125;</span><br><span class="line">	reducef := xreducef.(<span class="function"><span class="keyword">func</span><span class="params">(<span class="type">string</span>, []<span class="type">string</span>)</span></span> <span class="type">string</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> mapf, reducef</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实现了单线程处理 map 和 reduce ，读文件，顺序调用 map ，全部保存到中间状态中，再将所有key排序，按key分组输入reduce。</p>
+<h3 id="mrworker-go"><a href="#mrworker-go" class="headerlink" title="mrworker.go"></a>mrworker.go</h3><p>调用了worker.go</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><h4 id="coordinator"><a href="#coordinator" class="headerlink" title="coordinator"></a>coordinator</h4><p>Coordinatro 对象结构</p>
+<p>创建coordinator后监听</p>
+<h4 id="worker"><a href="#worker" class="headerlink" title="worker"></a>worker</h4><h4 id="coordinator和worker的交互流程："><a href="#coordinator和worker的交互流程：" class="headerlink" title="coordinator和worker的交互流程："></a>coordinator和worker的交互流程：</h4><p><strong>1.</strong> coordinator.go 中为 Coordinator 添加 <code>接收到请求后的处理方法 Example()</code>，方法接受的参数 <code>reply的引用</code>，使得 Coordinator 可以对 worker 的值进行修改，等价于进行了信息传递。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Coordinator)</span></span> Example(args *ExampleArgs, reply *ExampleReply) <span class="type">error</span> &#123;</span><br><span class="line">	reply.Y = args.X + <span class="number">1</span></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参数的特殊类型定义在 rpc.go 中</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> ExampleArgs <span class="keyword">struct</span> &#123;</span><br><span class="line">	X <span class="type">int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>2.</strong> 创建 Coordinator ，并通过 RPC 开始监听</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// start a thread that listens for RPCs from worker.go</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Coordinator)</span></span> server() &#123;</span><br><span class="line">	rpc.Register(c)</span><br><span class="line">	rpc.HandleHTTP()</span><br><span class="line">	<span class="comment">//l, e := net.Listen(&quot;tcp&quot;, &quot;:1234&quot;)</span></span><br><span class="line">	sockname := coordinatorSock()</span><br><span class="line">	os.Remove(sockname)</span><br><span class="line">	l, e := net.Listen(<span class="string">&quot;unix&quot;</span>, sockname)</span><br><span class="line">	<span class="keyword">if</span> e != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(<span class="string">&quot;listen error:&quot;</span>, e)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">go</span> http.Serve(l, <span class="literal">nil</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 rpc.go 中添加迫真地址</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">coordinatorSock</span><span class="params">()</span></span> <span class="type">string</span> &#123;</span><br><span class="line">	s := <span class="string">&quot;/var/tmp/5840-mr-&quot;</span></span><br><span class="line">	s += strconv.Itoa(os.Getuid())</span><br><span class="line">	<span class="keyword">return</span> s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>3.</strong> worker 调用 call()， 向 coordinator 发送请求，使 Coordinator 调用指定处理函数。</p>
+<h4 id="调试记录"><a href="#调试记录" class="headerlink" title="调试记录"></a>调试记录</h4><ol>
+<li><p>添加了分配任务函数，功能仅有从coordinator任务列表中传一个文件名。</p>
+</li>
+<li><p>添加Register()，用于给worker分配id，在worker.go中传入参数想填nil，出现报错 <code>gob: cannot encode nil value</code>，原理不明，改成虚空workerid之后能跑了，有空再研究。</p>
+<p>出现报错 <code>panic: assignment to entry in nil map</code>，原因未初始化结构体中的map，被教了make()怎么用</p>
+</li>
+<li><p>为 Allocate 添加了寻找未分配任务的功能，向 Coordinator 中添加了 <code>TasksList []*Task</code>，一开始未使用指针，在循环里复制出的 task 里修改任务状态，导致实际上没改到，略二。考虑到 worker 完成后需要通过 taskid 修改 task 状态，因此选择了数组储存TaskList。考虑到在worker crash后可能需要通过 workerid 找到 task 并修改任务状态，向 Coordinator 中添加了 <code>WorkerTaskMap</code></p>
+</li>
+<li><p>添加了DoMap(). 打开文件读文件调用mapf处理，并保存中间量至中间文件。在内存中使用了二维数组 [][]intermediate 保存 kv .存入文件时，使用了 <code>json.NewEncoder</code>等函数将数据转为二进制格式。<code>ioutil.TempFile()</code>和 <code>defer os.Remove()</code>一起使用，避免文件写入中途 worker crash 了使文件不全。</p>
+<p>使用了 CallTask() 递归调用的方式实现了完成一个 Task 后立即请求下一个任务。</p>
+<p>出现报错：<code>gob: type mismatch in decoder: want struct type mr.WorkerId; got non-struct</code>，原因是应该定义结构体WorkerId{}，直接传了 int 型的 Id 就报错了。</p>
+<p>又出现报错，二维数组越界。如果需要通过第一维序号随机访问，需要在定义为 [][]KeyValue{} 之后 append 一些 []KeyValue 。</p>
+<p>输出了一堆 mr-x-10 ，也许 hash 出了一些问题。–只是命名的时候写错了。</p>
+</li>
+<li><p>添加了 wait 状态，分配任务时的条件添加了一条任务类型与 coordinator 当前状态一致才可能分配。map任务数由文件数决定，reduce任务数确定，因此初始化 coordinator 时就可以一起把 map 和 reduce 办了。</p>
+</li>
+<li><p>添加了 CheckDone() 和 Done() ，4s一次，检查是否所有任务都被完成，exit(0)暴力退出，希望程序没事。</p>
+</li>
+<li><p>对 worker crash 的处理：coordinator 不需要辨别 worker ，worker crash 后会导致任务不能完成，因此只要在分配了某任务之后一定时间检查任务是否完成，若未完成，则将该任务的状态改回未分配。</p>
+</li>
+<li><p>锁：为 AllocateTask() 添加锁。</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>mit6.824</category>
       </categories>
   </entry>
 </search>

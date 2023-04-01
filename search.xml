@@ -1,55 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>04 Initialization and References</title>
-    <url>/2023/01/19/04_initialization_and_references/</url>
-    <content><![CDATA[<h2 id="initialization"><a href="#initialization" class="headerlink" title="initialization"></a>initialization</h2><h5 id="uniform-initialization"><a href="#uniform-initialization" class="headerlink" title="uniform initialization"></a>uniform initialization</h5><p>大括号初始化，声明完立刻初始化</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::vector&lt;<span class="type">int</span>&gt; vec&#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>&#125;;</span><br><span class="line"><span class="type">int</span> x&#123;<span class="number">5</span>&#125;;</span><br><span class="line">string f&#123;<span class="string">&quot;Sarah&quot;</span>&#125;;</span><br></pre></td></tr></table></figure>
-
-<h5 id="auto"><a href="#auto" class="headerlink" title="auto"></a>auto</h5><p>use it to reduce long type names</p>
-<p>[]的使用</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> [found, solutions] = <span class="built_in">quadratic</span>(a, b, c);</span><br></pre></td></tr></table></figure>
-
-<h2 id="reference-引用-amp"><a href="#reference-引用-amp" class="headerlink" title="reference 引用  &amp;"></a>reference 引用  &amp;</h2><p><strong>引用和copy的区别</strong></p>
-<p>An alias (another name) for a named variable</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; original&#123;<span class="number">1</span>, <span class="number">2</span>&#125;;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; copy = original;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt;&amp; ref = original;</span><br><span class="line">original.<span class="built_in">push_back</span>(<span class="number">3</span>);</span><br><span class="line">copy.<span class="built_in">push_back</span>(<span class="number">4</span>);</span><br><span class="line">ref.<span class="built_in">push_back</span>(<span class="number">5</span>);</span><br><span class="line">cout &lt;&lt; original &lt;&lt; endl; <span class="comment">// &#123;1, 2, 3, 5&#125;</span></span><br><span class="line">cout &lt;&lt; copy &lt;&lt; endl; <span class="comment">// &#123;1, 2, 4&#125;</span></span><br><span class="line">cout &lt;&lt; ref &lt;&lt; endl; <span class="comment">// &#123;1, 2, 3, 5&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>You can only create references to variables</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>&amp; thisWontWork = <span class="number">5</span>; <span class="comment">// This doesn&#x27;t work!</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="const-and-const-references"><a href="#const-and-const-references" class="headerlink" title="const and const references"></a>const and const references</h5><p>const声明变量不会被改变-specify that a variable can’t be modified</p>
-<p>const引用可以引不const的，反之不行</p>
-<h5 id="reference使用场景"><a href="#reference使用场景" class="headerlink" title="reference使用场景"></a>reference使用场景</h5><p>1.variable占空间较大</p>
-<p>2.需要改变变量</p>
-<p>3.不需改变+占空间较大-&gt;用const reference</p>
-]]></content>
-      <categories>
-        <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>05 Containers</title>
-    <url>/2023/01/19/05_containers/</url>
-    <content><![CDATA[<h2 id="containers"><a href="#containers" class="headerlink" title="containers"></a>containers</h2><h4 id="defining-containers"><a href="#defining-containers" class="headerlink" title="defining containers"></a>defining containers</h4><p><em>vector,stack,queue</em></p>
-<h4 id="two-types"><a href="#two-types" class="headerlink" title="two types"></a>two types</h4><p>1.sequence:</p>
-<pre><code>vector,deque,list
-</code></pre>
-<p>2.associative: 通过key访问数据</p>
-<pre><code>map,set
-
-ordered/unordered
-</code></pre>
-<p><strong>map</strong></p>
-<p>make_pair实现</p>
-<h4 id="container-adaptors"><a href="#container-adaptors" class="headerlink" title="container adaptors"></a>container adaptors</h4><p>在基础容器的基础上实现特定接口&#x2F;操作</p>
-<p>具体实现没太懂</p>
-<p><img src="https://i.imgur.com/PQrSCk9.png"></p>
-]]></content>
-      <categories>
-        <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
     <title>程序语言理论与实践 01 Introduction;语义、解释器和栈式虚拟机</title>
     <url>/2023/01/20/01_introducion_and_rescript_crash_course/</url>
     <content><![CDATA[<p>函数式编程是什么？栈式虚拟机是什么？Rescript是什么？我是什么？</p>
@@ -156,6 +107,135 @@ ordered/unordered
       </categories>
   </entry>
   <entry>
+    <title>04 Initialization and References</title>
+    <url>/2023/01/19/04_initialization_and_references/</url>
+    <content><![CDATA[<h2 id="initialization"><a href="#initialization" class="headerlink" title="initialization"></a>initialization</h2><h5 id="uniform-initialization"><a href="#uniform-initialization" class="headerlink" title="uniform initialization"></a>uniform initialization</h5><p>大括号初始化，声明完立刻初始化</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::vector&lt;<span class="type">int</span>&gt; vec&#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>&#125;;</span><br><span class="line"><span class="type">int</span> x&#123;<span class="number">5</span>&#125;;</span><br><span class="line">string f&#123;<span class="string">&quot;Sarah&quot;</span>&#125;;</span><br></pre></td></tr></table></figure>
+
+<h5 id="auto"><a href="#auto" class="headerlink" title="auto"></a>auto</h5><p>use it to reduce long type names</p>
+<p>[]的使用</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> [found, solutions] = <span class="built_in">quadratic</span>(a, b, c);</span><br></pre></td></tr></table></figure>
+
+<h2 id="reference-引用-amp"><a href="#reference-引用-amp" class="headerlink" title="reference 引用  &amp;"></a>reference 引用  &amp;</h2><p><strong>引用和copy的区别</strong></p>
+<p>An alias (another name) for a named variable</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; original&#123;<span class="number">1</span>, <span class="number">2</span>&#125;;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; copy = original;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt;&amp; ref = original;</span><br><span class="line">original.<span class="built_in">push_back</span>(<span class="number">3</span>);</span><br><span class="line">copy.<span class="built_in">push_back</span>(<span class="number">4</span>);</span><br><span class="line">ref.<span class="built_in">push_back</span>(<span class="number">5</span>);</span><br><span class="line">cout &lt;&lt; original &lt;&lt; endl; <span class="comment">// &#123;1, 2, 3, 5&#125;</span></span><br><span class="line">cout &lt;&lt; copy &lt;&lt; endl; <span class="comment">// &#123;1, 2, 4&#125;</span></span><br><span class="line">cout &lt;&lt; ref &lt;&lt; endl; <span class="comment">// &#123;1, 2, 3, 5&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>You can only create references to variables</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>&amp; thisWontWork = <span class="number">5</span>; <span class="comment">// This doesn&#x27;t work!</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="const-and-const-references"><a href="#const-and-const-references" class="headerlink" title="const and const references"></a>const and const references</h5><p>const声明变量不会被改变-specify that a variable can’t be modified</p>
+<p>const引用可以引不const的，反之不行</p>
+<h5 id="reference使用场景"><a href="#reference使用场景" class="headerlink" title="reference使用场景"></a>reference使用场景</h5><p>1.variable占空间较大</p>
+<p>2.需要改变变量</p>
+<p>3.不需改变+占空间较大-&gt;用const reference</p>
+]]></content>
+      <categories>
+        <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>06 Iterators and Pointers</title>
+    <url>/2023/01/19/06_iterators_and_pointers/</url>
+    <content><![CDATA[<p><em>How do we access elements in a container in order?</em></p>
+<p><em>How do we reference existing data in our code?</em></p>
+<h2 id="iterators"><a href="#iterators" class="headerlink" title="iterators"></a>iterators</h2><p><em>访问容器中的元素</em></p>
+<p><strong>作用</strong></p>
+<ol>
+<li>访问容器中所有的数据</li>
+<li>按序访问（找到下一项）</li>
+</ol>
+<p>在不同容器中的<strong>种类</strong></p>
+<p><img src="https://i.imgur.com/EEXNpog.png"></p>
+<p><img src="https://i.imgur.com/bqbw0zU.png"></p>
+<p>取值时使用dereference(*iter)</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="keyword">auto</span>&amp; elem = *iter;</span><br></pre></td></tr></table></figure>
+
+<p>&amp;为引用</p>
+<p>iterators are a type of pointer</p>
+<h2 id="pointers"><a href="#pointers" class="headerlink" title="pointers"></a>pointers</h2><p><em><strong>引用</strong> 现有数据</em></p>
+<p>pointers reference memory addresses</p>
+<p>&amp;+variable 变量地址</p>
+<p>*+pointer   取值</p>
+<p>pointer声明时 type+*</p>
+]]></content>
+      <categories>
+        <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>05 Containers</title>
+    <url>/2023/01/19/05_containers/</url>
+    <content><![CDATA[<h2 id="containers"><a href="#containers" class="headerlink" title="containers"></a>containers</h2><h4 id="defining-containers"><a href="#defining-containers" class="headerlink" title="defining containers"></a>defining containers</h4><p><em>vector,stack,queue</em></p>
+<h4 id="two-types"><a href="#two-types" class="headerlink" title="two types"></a>two types</h4><p>1.sequence:</p>
+<pre><code>vector,deque,list
+</code></pre>
+<p>2.associative: 通过key访问数据</p>
+<pre><code>map,set
+
+ordered/unordered
+</code></pre>
+<p><strong>map</strong></p>
+<p>make_pair实现</p>
+<h4 id="container-adaptors"><a href="#container-adaptors" class="headerlink" title="container adaptors"></a>container adaptors</h4><p>在基础容器的基础上实现特定接口&#x2F;操作</p>
+<p>具体实现没太懂</p>
+<p><img src="https://i.imgur.com/PQrSCk9.png"></p>
+]]></content>
+      <categories>
+        <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>07 Classes</title>
+    <url>/2023/01/19/07_classes/</url>
+    <content><![CDATA[<p><em>How to make your own custom types</em></p>
+<h2 id="Classes-Introduction"><a href="#Classes-Introduction" class="headerlink" title="Classes Introduction"></a>Classes Introduction</h2><p><em>Containers are all classes defined in the STL</em></p>
+<h4 id="issues-with-structs"><a href="#issues-with-structs" class="headerlink" title="issues with structs"></a>issues with structs</h4><ol>
+<li>默认可以访问任意内部数据(public)</li>
+<li>需要直接初始化每个 data member</li>
+</ol>
+<p>classes 提供 public interface 和 private implement</p>
+<p><strong>声明结构</strong></p>
+<p>declare in .h  + implement in .cpp</p>
+<p>在 .cpp 中加入 .h 头文件</p>
+<p>.h include .cpp</p>
+<p><strong>namespace</strong></p>
+<ol>
+<li>防止名字冲突</li>
+<li>每个类有单独的namespace</li>
+</ol>
+<p><strong>this</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Student::setName</span><span class="params">(string name)</span></span>&#123;</span><br><span class="line"><span class="keyword">this</span>-&gt;name=name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>构造函数</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Student.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;Student.h&gt;</span></span></span><br><span class="line">Student::<span class="built_in">Student</span>():name&#123;<span class="string">&quot;&quot;</span>&#125;,age&#123;<span class="number">0</span>&#125;,state&#123;<span class="string">&quot;&quot;</span>&#125;</span><br><span class="line">Student::<span class="built_in">Student</span>(string name,<span class="type">int</span> age,string state)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">this</span>-&gt;name=name;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>destructors</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Class_name::~Class_name();</span><br></pre></td></tr></table></figure>
+
+<p><strong>using</strong></p>
+<ol>
+<li><pre><code class="c++">using namespace name;
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2. 指定别名</span><br><span class="line"></span><br><span class="line">```c++</span><br><span class="line">    using iterator = std::string*;</span><br><span class="line">    using size_type = size_t;</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>在派生类中引用基类成员</p>
+</li>
+</ol>
+<h4 id="operator-重载"><a href="#operator-重载" class="headerlink" title="operator 重载"></a>operator 重载</h4><p>重载[]</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::string&amp; StrVector::<span class="keyword">operator</span>[](size_type index) &#123;</span><br><span class="line">    <span class="keyword">return</span> *(<span class="built_in">begin</span>() + index);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="const"><a href="#const" class="headerlink" title="const"></a>const</h4><p>后加const表函数不修改成员数据，可以被const对象引用。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">empty</span><span class="params">()</span> <span class="type">const</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>前加const表示返回值为const类型</p>
+<h2 id="Template-Class"><a href="#Template-Class" class="headerlink" title="Template Class"></a>Template Class</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> First, <span class="keyword">typename</span> Second&gt; <span class="keyword">class</span> <span class="title class_">MyPair</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="function">First <span class="title">getFirst</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function">Second <span class="title">getSecond</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setFirst</span><span class="params">(First f)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setSecond</span><span class="params">(Second f)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">First first;</span><br><span class="line">Second second;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
     <title>08 Template Classes and Const Correctness</title>
     <url>/2023/01/19/08_template_classes_and_const_correctness/</url>
     <content><![CDATA[<p><em>How do we make our classes general? How do we make them safe?</em></p>
@@ -188,35 +268,6 @@ ordered/unordered
 
 <p>const iterator 不能改变iterator指向</p>
 <p>const_iterator 不能改变指向地址中的内容</p>
-]]></content>
-      <categories>
-        <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>06 Iterators and Pointers</title>
-    <url>/2023/01/19/06_iterators_and_pointers/</url>
-    <content><![CDATA[<p><em>How do we access elements in a container in order?</em></p>
-<p><em>How do we reference existing data in our code?</em></p>
-<h2 id="iterators"><a href="#iterators" class="headerlink" title="iterators"></a>iterators</h2><p><em>访问容器中的元素</em></p>
-<p><strong>作用</strong></p>
-<ol>
-<li>访问容器中所有的数据</li>
-<li>按序访问（找到下一项）</li>
-</ol>
-<p>在不同容器中的<strong>种类</strong></p>
-<p><img src="https://i.imgur.com/EEXNpog.png"></p>
-<p><img src="https://i.imgur.com/bqbw0zU.png"></p>
-<p>取值时使用dereference(*iter)</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="keyword">auto</span>&amp; elem = *iter;</span><br></pre></td></tr></table></figure>
-
-<p>&amp;为引用</p>
-<p>iterators are a type of pointer</p>
-<h2 id="pointers"><a href="#pointers" class="headerlink" title="pointers"></a>pointers</h2><p><em><strong>引用</strong> 现有数据</em></p>
-<p>pointers reference memory addresses</p>
-<p>&amp;+variable 变量地址</p>
-<p>*+pointer   取值</p>
-<p>pointer声明时 type+*</p>
 ]]></content>
       <categories>
         <category>CS106L笔记</category>
@@ -328,46 +379,6 @@ ordered/unordered
       </categories>
   </entry>
   <entry>
-    <title>13 Move Semantics</title>
-    <url>/2023/01/19/13_move_semantics/</url>
-    <content><![CDATA[<p><em>how can we avoid making unnecessary copies of resources</em></p>
-<h2 id="Move-Semantics"><a href="#Move-Semantics" class="headerlink" title="Move Semantics"></a>Move Semantics</h2><p><strong>aside: emplace_back</strong></p>
-<p>vector 的一个 function</p>
-<p><strong>直接</strong>添加元素到vector中 <strong>(no copy)</strong></p>
-<p><img src="https://i.imgur.com/z1WN7m4.png"></p>
-<p>可接受任意数量的参数</p>
-<p><img src="https://i.imgur.com/DHSBykC.png"></p>
-<h3 id="l-values-vs-r-values"><a href="#l-values-vs-r-values" class="headerlink" title="l-values vs. r-values"></a>l-values vs. r-values</h3><p><strong>r-values</strong></p>
-<ul>
-<li>temporary</li>
-<li>don’t have names</li>
-<li>live until the end of the line</li>
-<li>copy</li>
-</ul>
-<p><strong>l-values</strong></p>
-<ul>
-<li>not temporary</li>
-<li>have names</li>
-<li>live until the end of the scope</li>
-<li>copy and move</li>
-</ul>
-<p>only l-values can be referenced using <strong>&amp;</strong></p>
-<p>r-values can be bound to <strong>const &amp;</strong></p>
-<p>r-value reference  <strong>&amp;&amp;</strong> (extend r-value’s lifetime)</p>
-<p><img src="https://i.imgur.com/cGBOXLJ.png"></p>
-<h3 id="move-constructor-and-assignment"><a href="#move-constructor-and-assignment" class="headerlink" title="move constructor and assignment"></a>move constructor and assignment</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//move constructor</span></span><br><span class="line"></span><br><span class="line">StrVector::<span class="built_in">StrVector</span>(StrVector&amp;&amp; other):</span><br><span class="line">	<span class="built_in">elem</span>(other.elems),</span><br><span class="line">	<span class="built_in">logicalSize</span>(other.logicalSize),</span><br><span class="line">	<span class="built_in">allocatedSize</span>(other.allocatedSize)&#123;</span><br><span class="line">        other.elems = <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.imgur.com/TyLVPQG.png"></p>
-<p><strong>std::move</strong> casts a variable to an r-value</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Axess</span>(Axess&amp;&amp; other) : <span class="built_in">students</span>(std::<span class="built_in">move</span>(other.students))&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Axess&amp; <span class="keyword">operator</span>=(Axess&amp;&amp; rhs) &#123;</span><br><span class="line">     students = std::<span class="built_in">move</span>(rhs.students);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="swap"><a href="#swap" class="headerlink" title="swap"></a>swap</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">swap</span><span class="params">(T&amp; a,T&amp; b)</span></span>&#123;</span><br><span class="line">    T temp = std::<span class="built_in">move</span>(a);</span><br><span class="line">    a = std::<span class="built_in">move</span>(b);</span><br><span class="line">    b = std::<span class="built_in">move</span>(temp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
     <title>12 Special Member Functions</title>
     <url>/2023/01/19/12_special_member_functions/</url>
     <content><![CDATA[<p>every class has them by default</p>
@@ -434,51 +445,40 @@ ordered/unordered
       </categories>
   </entry>
   <entry>
-    <title>07 Classes</title>
-    <url>/2023/01/19/07_classes/</url>
-    <content><![CDATA[<p><em>How to make your own custom types</em></p>
-<h2 id="Classes-Introduction"><a href="#Classes-Introduction" class="headerlink" title="Classes Introduction"></a>Classes Introduction</h2><p><em>Containers are all classes defined in the STL</em></p>
-<h4 id="issues-with-structs"><a href="#issues-with-structs" class="headerlink" title="issues with structs"></a>issues with structs</h4><ol>
-<li>默认可以访问任意内部数据(public)</li>
-<li>需要直接初始化每个 data member</li>
-</ol>
-<p>classes 提供 public interface 和 private implement</p>
-<p><strong>声明结构</strong></p>
-<p>declare in .h  + implement in .cpp</p>
-<p>在 .cpp 中加入 .h 头文件</p>
-<p>.h include .cpp</p>
-<p><strong>namespace</strong></p>
-<ol>
-<li>防止名字冲突</li>
-<li>每个类有单独的namespace</li>
-</ol>
-<p><strong>this</strong></p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Student::setName</span><span class="params">(string name)</span></span>&#123;</span><br><span class="line"><span class="keyword">this</span>-&gt;name=name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    <title>13 Move Semantics</title>
+    <url>/2023/01/19/13_move_semantics/</url>
+    <content><![CDATA[<p><em>how can we avoid making unnecessary copies of resources</em></p>
+<h2 id="Move-Semantics"><a href="#Move-Semantics" class="headerlink" title="Move Semantics"></a>Move Semantics</h2><p><strong>aside: emplace_back</strong></p>
+<p>vector 的一个 function</p>
+<p><strong>直接</strong>添加元素到vector中 <strong>(no copy)</strong></p>
+<p><img src="https://i.imgur.com/z1WN7m4.png"></p>
+<p>可接受任意数量的参数</p>
+<p><img src="https://i.imgur.com/DHSBykC.png"></p>
+<h3 id="l-values-vs-r-values"><a href="#l-values-vs-r-values" class="headerlink" title="l-values vs. r-values"></a>l-values vs. r-values</h3><p><strong>r-values</strong></p>
+<ul>
+<li>temporary</li>
+<li>don’t have names</li>
+<li>live until the end of the line</li>
+<li>copy</li>
+</ul>
+<p><strong>l-values</strong></p>
+<ul>
+<li>not temporary</li>
+<li>have names</li>
+<li>live until the end of the scope</li>
+<li>copy and move</li>
+</ul>
+<p>only l-values can be referenced using <strong>&amp;</strong></p>
+<p>r-values can be bound to <strong>const &amp;</strong></p>
+<p>r-value reference  <strong>&amp;&amp;</strong> (extend r-value’s lifetime)</p>
+<p><img src="https://i.imgur.com/cGBOXLJ.png"></p>
+<h3 id="move-constructor-and-assignment"><a href="#move-constructor-and-assignment" class="headerlink" title="move constructor and assignment"></a>move constructor and assignment</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//move constructor</span></span><br><span class="line"></span><br><span class="line">StrVector::<span class="built_in">StrVector</span>(StrVector&amp;&amp; other):</span><br><span class="line">	<span class="built_in">elem</span>(other.elems),</span><br><span class="line">	<span class="built_in">logicalSize</span>(other.logicalSize),</span><br><span class="line">	<span class="built_in">allocatedSize</span>(other.allocatedSize)&#123;</span><br><span class="line">        other.elems = <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>构造函数</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Student.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;Student.h&gt;</span></span></span><br><span class="line">Student::<span class="built_in">Student</span>():name&#123;<span class="string">&quot;&quot;</span>&#125;,age&#123;<span class="number">0</span>&#125;,state&#123;<span class="string">&quot;&quot;</span>&#125;</span><br><span class="line">Student::<span class="built_in">Student</span>(string name,<span class="type">int</span> age,string state)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">this</span>-&gt;name=name;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/TyLVPQG.png"></p>
+<p><strong>std::move</strong> casts a variable to an r-value</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Axess</span>(Axess&amp;&amp; other) : <span class="built_in">students</span>(std::<span class="built_in">move</span>(other.students))&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Axess&amp; <span class="keyword">operator</span>=(Axess&amp;&amp; rhs) &#123;</span><br><span class="line">     students = std::<span class="built_in">move</span>(rhs.students);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-
-<p>destructors</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Class_name::~Class_name();</span><br></pre></td></tr></table></figure>
-
-<p><strong>using</strong></p>
-<ol>
-<li><pre><code class="c++">using namespace name;
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2. 指定别名</span><br><span class="line"></span><br><span class="line">```c++</span><br><span class="line">    using iterator = std::string*;</span><br><span class="line">    using size_type = size_t;</span><br></pre></td></tr></table></figure>
-</code></pre>
-</li>
-<li><p>在派生类中引用基类成员</p>
-</li>
-</ol>
-<h4 id="operator-重载"><a href="#operator-重载" class="headerlink" title="operator 重载"></a>operator 重载</h4><p>重载[]</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::string&amp; StrVector::<span class="keyword">operator</span>[](size_type index) &#123;</span><br><span class="line">    <span class="keyword">return</span> *(<span class="built_in">begin</span>() + index);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="const"><a href="#const" class="headerlink" title="const"></a>const</h4><p>后加const表函数不修改成员数据，可以被const对象引用。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">empty</span><span class="params">()</span> <span class="type">const</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>前加const表示返回值为const类型</p>
-<h2 id="Template-Class"><a href="#Template-Class" class="headerlink" title="Template Class"></a>Template Class</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> First, <span class="keyword">typename</span> Second&gt; <span class="keyword">class</span> <span class="title class_">MyPair</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="function">First <span class="title">getFirst</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function">Second <span class="title">getSecond</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setFirst</span><span class="params">(First f)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setSecond</span><span class="params">(Second f)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">First first;</span><br><span class="line">Second second;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="swap"><a href="#swap" class="headerlink" title="swap"></a>swap</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">swap</span><span class="params">(T&amp; a,T&amp; b)</span></span>&#123;</span><br><span class="line">    T temp = std::<span class="built_in">move</span>(a);</span><br><span class="line">    a = std::<span class="built_in">move</span>(b);</span><br><span class="line">    b = std::<span class="built_in">move</span>(temp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>CS106L笔记</category>
@@ -502,6 +502,17 @@ ordered/unordered
 <h3 id="The-need-for-“sometimes-a-thing”"><a href="#The-need-for-“sometimes-a-thing”" class="headerlink" title="The need for “sometimes-a-thing”"></a>The need for “sometimes-a-thing”</h3>]]></content>
       <categories>
         <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>230401</title>
+    <url>/2023/04/01/230401%E8%AE%B0%E4%BA%8B/</url>
+    <content><![CDATA[<p>今天两点我在想，如果我有不受限的能力，我会有什么愿望。我想到高山流水荒漠远洋，然后问如果我有创造的能力，那我创造出来的东西智力水平是否能超过我。我猜没有这样的好事。后来我想了五分钟，我想这世上从未有过文明，或者没有人能感知到我，或者很多人都爱我，最后的答案是拯救世界。也许这是很多人年轻时做过的狂梦，但我很少有这样的幻想，哪怕是看中二作品时。拯救世界能被爱而不亏欠别人。</p>
+<p>但这个世界是混沌的，它不会有一个更好的状态，至少不会有一个所有人共识中的更好状态。没有人拯救世界。</p>
+<p>昨天母亲发他新拍的照片。他快五十岁了，比年轻的时候更爱拍照。我想到这里便落下泪来。我已忘记很多事，远离很多岁月。</p>
+]]></content>
+      <categories>
+        <category>pieces</category>
       </categories>
   </entry>
   <entry>
@@ -584,17 +595,6 @@ ordered/unordered
 ]]></content>
       <categories>
         <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>230401</title>
-    <url>/2023/04/01/230401%E8%AE%B0%E4%BA%8B/</url>
-    <content><![CDATA[<p>今天两点我在想，如果我有不受限的能力，我会有什么愿望。我想到高山流水荒漠远洋，然后问如果我有创造的能力，那我创造出来的东西智力水平是否能超过我。我猜没有这样的好事。后来我想了五分钟，我想这世上从未有过文明，或者没有人能感知到我，或者很多人都爱我，最后的答案是拯救世界。也许这是很多人年轻时做过的狂梦，但我很少有这样的幻想，哪怕是看中二作品时。拯救世界能被爱而不亏欠别人。</p>
-<p>但这个世界是混沌的，它不会有一个更好的状态，至少不会有一个所有人共识中的更好状态。没有人拯救世界。</p>
-<p>昨天母亲发他新拍的照片。他快五十岁了，比年轻的时候更爱拍照。我想到这里便落下泪来。我已忘记很多事，远离很多岁月。</p>
-]]></content>
-      <categories>
-        <category>pieces</category>
       </categories>
   </entry>
   <entry>
@@ -708,6 +708,90 @@ ordered/unordered
 ]]></content>
       <categories>
         <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>lab 1 MapReduce</title>
+    <url>/2023/04/01/lab1MapReduce/</url>
+    <content><![CDATA[<p>仅调试记录有少许回忆价值，其他部分抄都没抄完。——写给以后试图回忆起自己写过什么的我。</p>
+<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>实现一个包括 coordinator 和 worker 两个 program 的 distributed mapreduce。</p>
+<p>workers</p>
+<ul>
+<li>通过 RPC 联络 coordinator</li>
+<li>多个 workers 并发</li>
+<li>向 coordinator 请求任务，读取任务输出，执行，输出结果</li>
+</ul>
+<p>coordinator</p>
+<ul>
+<li>只有一个</li>
+<li>如果有 worker 长时间未完成任务(10s)，将任务发给其他 worker</li>
+</ul>
+<h4 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h4><ul>
+<li>nReduce 指定了 reduce 任务的数量，每个 mapper 需要创建 nReduce 个中间文件， worker 完成第 X 个 task 输出的文件为 mr-out-X</li>
+<li>将 worker 输出的中间文件保存到当前文件夹，使其能在 reduce时读到</li>
+<li>Done() 用于完成 mapreduce 后停止 coordinator</li>
+</ul>
+<h3 id="代码路径"><a href="#代码路径" class="headerlink" title="代码路径"></a>代码路径</h3><p>示例代码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main/mrcoordinator.go</span><br><span class="line">main/mrworker.go</span><br></pre></td></tr></table></figure>
+
+<p>实现</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mr/coordinator.go</span><br><span class="line">mr/worker.go</span><br><span class="line">mr/rpc.go</span><br></pre></td></tr></table></figure>
+
+<h3 id="mrsequential-go"><a href="#mrsequential-go" class="headerlink" title="mrsequential.go"></a>mrsequential.go</h3><p><code>ByKey</code>是一个 key-value 结构体数组，有三个方法</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// for sorting by key.</span></span><br><span class="line"><span class="keyword">type</span> ByKey []mr.KeyValue</span><br><span class="line"></span><br><span class="line"><span class="comment">// for sorting by key.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a ByKey)</span></span> Len() <span class="type">int</span>           &#123; <span class="keyword">return</span> <span class="built_in">len</span>(a) &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a ByKey)</span></span> Swap(i, j <span class="type">int</span>)      &#123; a[i], a[j] = a[j], a[i] &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a ByKey)</span></span> Less(i, j <span class="type">int</span>) <span class="type">bool</span> &#123; <span class="keyword">return</span> a[i].Key &lt; a[j].Key &#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>loadPlugin</code>加载了用户定义的map和reduce</p>
+<p>Map() 的输入是一个键值对（例子中为[文章名]-内容），输出是键值对数组。</p>
+<p>Reduce() 的输入是一个键和对应的多个值，输出该键合并后的值。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Map</span><span class="params">(filename <span class="type">string</span>, contents <span class="type">string</span>)</span></span> []mr.KeyValue</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Reduce</span><span class="params">(key <span class="type">string</span>, values []<span class="type">string</span>)</span></span> <span class="type">string</span></span><br></pre></td></tr></table></figure>
+
+<p>plugin是一种用于编写模块化go程序的特性，可以将go包编译为共享对象**(.so)<strong>文件，然后在运行时动态加载和调用插件中的</strong>函数和变量**</p>
+<p>这段代码中读入了用户编写的map和reduce函数为mapf , reducef</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// load the application Map and Reduce functions</span></span><br><span class="line"><span class="comment">// from a plugin file, e.g. ../mrapps/wc.so</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">loadPlugin</span><span class="params">(filename <span class="type">string</span>)</span></span> (<span class="function"><span class="keyword">func</span><span class="params">(<span class="type">string</span>, <span class="type">string</span>)</span></span> []mr.KeyValue, <span class="function"><span class="keyword">func</span><span class="params">(<span class="type">string</span>, []<span class="type">string</span>)</span></span> <span class="type">string</span>) &#123;</span><br><span class="line">	p, err := plugin.Open(filename)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;cannot load plugin %v&quot;</span>, filename)</span><br><span class="line">	&#125;</span><br><span class="line">	xmapf, err := p.Lookup(<span class="string">&quot;Map&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;cannot find Map in %v&quot;</span>, filename)</span><br><span class="line">	&#125;</span><br><span class="line">	mapf := xmapf.(<span class="function"><span class="keyword">func</span><span class="params">(<span class="type">string</span>, <span class="type">string</span>)</span></span> []mr.KeyValue)</span><br><span class="line">	xreducef, err := p.Lookup(<span class="string">&quot;Reduce&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;cannot find Reduce in %v&quot;</span>, filename)</span><br><span class="line">	&#125;</span><br><span class="line">	reducef := xreducef.(<span class="function"><span class="keyword">func</span><span class="params">(<span class="type">string</span>, []<span class="type">string</span>)</span></span> <span class="type">string</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> mapf, reducef</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实现了单线程处理 map 和 reduce ，读文件，顺序调用 map ，全部保存到中间状态中，再将所有key排序，按key分组输入reduce。</p>
+<h3 id="mrworker-go"><a href="#mrworker-go" class="headerlink" title="mrworker.go"></a>mrworker.go</h3><p>调用了worker.go</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><h4 id="coordinator"><a href="#coordinator" class="headerlink" title="coordinator"></a>coordinator</h4><p>Coordinatro 对象结构</p>
+<p>创建coordinator后监听</p>
+<h4 id="worker"><a href="#worker" class="headerlink" title="worker"></a>worker</h4><h4 id="coordinator和worker的交互流程："><a href="#coordinator和worker的交互流程：" class="headerlink" title="coordinator和worker的交互流程："></a>coordinator和worker的交互流程：</h4><p><strong>1.</strong> coordinator.go 中为 Coordinator 添加 <code>接收到请求后的处理方法 Example()</code>，方法接受的参数 <code>reply的引用</code>，使得 Coordinator 可以对 worker 的值进行修改，等价于进行了信息传递。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Coordinator)</span></span> Example(args *ExampleArgs, reply *ExampleReply) <span class="type">error</span> &#123;</span><br><span class="line">	reply.Y = args.X + <span class="number">1</span></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参数的特殊类型定义在 rpc.go 中</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> ExampleArgs <span class="keyword">struct</span> &#123;</span><br><span class="line">	X <span class="type">int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>2.</strong> 创建 Coordinator ，并通过 RPC 开始监听</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// start a thread that listens for RPCs from worker.go</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Coordinator)</span></span> server() &#123;</span><br><span class="line">	rpc.Register(c)</span><br><span class="line">	rpc.HandleHTTP()</span><br><span class="line">	<span class="comment">//l, e := net.Listen(&quot;tcp&quot;, &quot;:1234&quot;)</span></span><br><span class="line">	sockname := coordinatorSock()</span><br><span class="line">	os.Remove(sockname)</span><br><span class="line">	l, e := net.Listen(<span class="string">&quot;unix&quot;</span>, sockname)</span><br><span class="line">	<span class="keyword">if</span> e != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(<span class="string">&quot;listen error:&quot;</span>, e)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">go</span> http.Serve(l, <span class="literal">nil</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 rpc.go 中添加迫真地址</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">coordinatorSock</span><span class="params">()</span></span> <span class="type">string</span> &#123;</span><br><span class="line">	s := <span class="string">&quot;/var/tmp/5840-mr-&quot;</span></span><br><span class="line">	s += strconv.Itoa(os.Getuid())</span><br><span class="line">	<span class="keyword">return</span> s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>3.</strong> worker 调用 call()， 向 coordinator 发送请求，使 Coordinator 调用指定处理函数。</p>
+<h4 id="调试记录"><a href="#调试记录" class="headerlink" title="调试记录"></a>调试记录</h4><ol>
+<li><p>添加了分配任务函数，功能仅有从coordinator任务列表中传一个文件名。</p>
+</li>
+<li><p>添加Register()，用于给worker分配id，在worker.go中传入参数想填nil，出现报错 <code>gob: cannot encode nil value</code>，原理不明，改成虚空workerid之后能跑了，有空再研究。</p>
+<p>出现报错 <code>panic: assignment to entry in nil map</code>，原因未初始化结构体中的map，被教了make()怎么用</p>
+</li>
+<li><p>为 Allocate 添加了寻找未分配任务的功能，向 Coordinator 中添加了 <code>TasksList []*Task</code>，一开始未使用指针，在循环里复制出的 task 里修改任务状态，导致实际上没改到，略二。考虑到 worker 完成后需要通过 taskid 修改 task 状态，因此选择了数组储存TaskList。考虑到在worker crash后可能需要通过 workerid 找到 task 并修改任务状态，向 Coordinator 中添加了 <code>WorkerTaskMap</code></p>
+</li>
+<li><p>添加了DoMap(). 打开文件读文件调用mapf处理，并保存中间量至中间文件。在内存中使用了二维数组 [][]intermediate 保存 kv .存入文件时，使用了 <code>json.NewEncoder</code>等函数将数据转为二进制格式。<code>ioutil.TempFile()</code>和 <code>defer os.Remove()</code>一起使用，避免文件写入中途 worker crash 了使文件不全。</p>
+<p>使用了 CallTask() 递归调用的方式实现了完成一个 Task 后立即请求下一个任务。</p>
+<p>出现报错：<code>gob: type mismatch in decoder: want struct type mr.WorkerId; got non-struct</code>，原因是应该定义结构体WorkerId{}，直接传了 int 型的 Id 就报错了。</p>
+<p>又出现报错，二维数组越界。如果需要通过第一维序号随机访问，需要在定义为 [][]KeyValue{} 之后 append 一些 []KeyValue 。</p>
+<p>输出了一堆 mr-x-10 ，也许 hash 出了一些问题。–只是命名的时候写错了。</p>
+</li>
+<li><p>添加了 wait 状态，分配任务时的条件添加了一条任务类型与 coordinator 当前状态一致才可能分配。map任务数由文件数决定，reduce任务数确定，因此初始化 coordinator 时就可以一起把 map 和 reduce 办了。</p>
+</li>
+<li><p>添加了 CheckDone() 和 Done() ，4s一次，检查是否所有任务都被完成，exit(0)暴力退出，希望程序没事。</p>
+</li>
+<li><p>对 worker crash 的处理：coordinator 不需要辨别 worker ，worker crash 后会导致任务不能完成，因此只要在分配了某任务之后一定时间检查任务是否完成，若未完成，则将该任务的状态改回未分配。</p>
+</li>
+<li><p>锁：为 AllocateTask() 添加锁。</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>mit6.824</category>
       </categories>
   </entry>
   <entry>
@@ -998,90 +1082,6 @@ ordered/unordered
 ]]></content>
       <categories>
         <category>rucbase</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>lab 1 MapReduce</title>
-    <url>/2023/04/01/lab1MapReduce/</url>
-    <content><![CDATA[<p>仅调试记录有少许回忆价值，其他部分抄都没抄完。——写给以后试图回忆起自己写过什么的我。</p>
-<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>实现一个包括 coordinator 和 worker 两个 program 的 distributed mapreduce。</p>
-<p>workers</p>
-<ul>
-<li>通过 RPC 联络 coordinator</li>
-<li>多个 workers 并发</li>
-<li>向 coordinator 请求任务，读取任务输出，执行，输出结果</li>
-</ul>
-<p>coordinator</p>
-<ul>
-<li>只有一个</li>
-<li>如果有 worker 长时间未完成任务(10s)，将任务发给其他 worker</li>
-</ul>
-<h4 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h4><ul>
-<li>nReduce 指定了 reduce 任务的数量，每个 mapper 需要创建 nReduce 个中间文件， worker 完成第 X 个 task 输出的文件为 mr-out-X</li>
-<li>将 worker 输出的中间文件保存到当前文件夹，使其能在 reduce时读到</li>
-<li>Done() 用于完成 mapreduce 后停止 coordinator</li>
-</ul>
-<h3 id="代码路径"><a href="#代码路径" class="headerlink" title="代码路径"></a>代码路径</h3><p>示例代码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main/mrcoordinator.go</span><br><span class="line">main/mrworker.go</span><br></pre></td></tr></table></figure>
-
-<p>实现</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mr/coordinator.go</span><br><span class="line">mr/worker.go</span><br><span class="line">mr/rpc.go</span><br></pre></td></tr></table></figure>
-
-<h3 id="mrsequential-go"><a href="#mrsequential-go" class="headerlink" title="mrsequential.go"></a>mrsequential.go</h3><p><code>ByKey</code>是一个 key-value 结构体数组，有三个方法</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// for sorting by key.</span></span><br><span class="line"><span class="keyword">type</span> ByKey []mr.KeyValue</span><br><span class="line"></span><br><span class="line"><span class="comment">// for sorting by key.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a ByKey)</span></span> Len() <span class="type">int</span>           &#123; <span class="keyword">return</span> <span class="built_in">len</span>(a) &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a ByKey)</span></span> Swap(i, j <span class="type">int</span>)      &#123; a[i], a[j] = a[j], a[i] &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a ByKey)</span></span> Less(i, j <span class="type">int</span>) <span class="type">bool</span> &#123; <span class="keyword">return</span> a[i].Key &lt; a[j].Key &#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>loadPlugin</code>加载了用户定义的map和reduce</p>
-<p>Map() 的输入是一个键值对（例子中为[文章名]-内容），输出是键值对数组。</p>
-<p>Reduce() 的输入是一个键和对应的多个值，输出该键合并后的值。</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Map</span><span class="params">(filename <span class="type">string</span>, contents <span class="type">string</span>)</span></span> []mr.KeyValue</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Reduce</span><span class="params">(key <span class="type">string</span>, values []<span class="type">string</span>)</span></span> <span class="type">string</span></span><br></pre></td></tr></table></figure>
-
-<p>plugin是一种用于编写模块化go程序的特性，可以将go包编译为共享对象**(.so)<strong>文件，然后在运行时动态加载和调用插件中的</strong>函数和变量**</p>
-<p>这段代码中读入了用户编写的map和reduce函数为mapf , reducef</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// load the application Map and Reduce functions</span></span><br><span class="line"><span class="comment">// from a plugin file, e.g. ../mrapps/wc.so</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">loadPlugin</span><span class="params">(filename <span class="type">string</span>)</span></span> (<span class="function"><span class="keyword">func</span><span class="params">(<span class="type">string</span>, <span class="type">string</span>)</span></span> []mr.KeyValue, <span class="function"><span class="keyword">func</span><span class="params">(<span class="type">string</span>, []<span class="type">string</span>)</span></span> <span class="type">string</span>) &#123;</span><br><span class="line">	p, err := plugin.Open(filename)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;cannot load plugin %v&quot;</span>, filename)</span><br><span class="line">	&#125;</span><br><span class="line">	xmapf, err := p.Lookup(<span class="string">&quot;Map&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;cannot find Map in %v&quot;</span>, filename)</span><br><span class="line">	&#125;</span><br><span class="line">	mapf := xmapf.(<span class="function"><span class="keyword">func</span><span class="params">(<span class="type">string</span>, <span class="type">string</span>)</span></span> []mr.KeyValue)</span><br><span class="line">	xreducef, err := p.Lookup(<span class="string">&quot;Reduce&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;cannot find Reduce in %v&quot;</span>, filename)</span><br><span class="line">	&#125;</span><br><span class="line">	reducef := xreducef.(<span class="function"><span class="keyword">func</span><span class="params">(<span class="type">string</span>, []<span class="type">string</span>)</span></span> <span class="type">string</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> mapf, reducef</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>实现了单线程处理 map 和 reduce ，读文件，顺序调用 map ，全部保存到中间状态中，再将所有key排序，按key分组输入reduce。</p>
-<h3 id="mrworker-go"><a href="#mrworker-go" class="headerlink" title="mrworker.go"></a>mrworker.go</h3><p>调用了worker.go</p>
-<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><h4 id="coordinator"><a href="#coordinator" class="headerlink" title="coordinator"></a>coordinator</h4><p>Coordinatro 对象结构</p>
-<p>创建coordinator后监听</p>
-<h4 id="worker"><a href="#worker" class="headerlink" title="worker"></a>worker</h4><h4 id="coordinator和worker的交互流程："><a href="#coordinator和worker的交互流程：" class="headerlink" title="coordinator和worker的交互流程："></a>coordinator和worker的交互流程：</h4><p><strong>1.</strong> coordinator.go 中为 Coordinator 添加 <code>接收到请求后的处理方法 Example()</code>，方法接受的参数 <code>reply的引用</code>，使得 Coordinator 可以对 worker 的值进行修改，等价于进行了信息传递。</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Coordinator)</span></span> Example(args *ExampleArgs, reply *ExampleReply) <span class="type">error</span> &#123;</span><br><span class="line">	reply.Y = args.X + <span class="number">1</span></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>参数的特殊类型定义在 rpc.go 中</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> ExampleArgs <span class="keyword">struct</span> &#123;</span><br><span class="line">	X <span class="type">int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>2.</strong> 创建 Coordinator ，并通过 RPC 开始监听</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// start a thread that listens for RPCs from worker.go</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Coordinator)</span></span> server() &#123;</span><br><span class="line">	rpc.Register(c)</span><br><span class="line">	rpc.HandleHTTP()</span><br><span class="line">	<span class="comment">//l, e := net.Listen(&quot;tcp&quot;, &quot;:1234&quot;)</span></span><br><span class="line">	sockname := coordinatorSock()</span><br><span class="line">	os.Remove(sockname)</span><br><span class="line">	l, e := net.Listen(<span class="string">&quot;unix&quot;</span>, sockname)</span><br><span class="line">	<span class="keyword">if</span> e != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(<span class="string">&quot;listen error:&quot;</span>, e)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">go</span> http.Serve(l, <span class="literal">nil</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在 rpc.go 中添加迫真地址</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">coordinatorSock</span><span class="params">()</span></span> <span class="type">string</span> &#123;</span><br><span class="line">	s := <span class="string">&quot;/var/tmp/5840-mr-&quot;</span></span><br><span class="line">	s += strconv.Itoa(os.Getuid())</span><br><span class="line">	<span class="keyword">return</span> s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>3.</strong> worker 调用 call()， 向 coordinator 发送请求，使 Coordinator 调用指定处理函数。</p>
-<h4 id="调试记录"><a href="#调试记录" class="headerlink" title="调试记录"></a>调试记录</h4><ol>
-<li><p>添加了分配任务函数，功能仅有从coordinator任务列表中传一个文件名。</p>
-</li>
-<li><p>添加Register()，用于给worker分配id，在worker.go中传入参数想填nil，出现报错 <code>gob: cannot encode nil value</code>，原理不明，改成虚空workerid之后能跑了，有空再研究。</p>
-<p>出现报错 <code>panic: assignment to entry in nil map</code>，原因未初始化结构体中的map，被教了make()怎么用</p>
-</li>
-<li><p>为 Allocate 添加了寻找未分配任务的功能，向 Coordinator 中添加了 <code>TasksList []*Task</code>，一开始未使用指针，在循环里复制出的 task 里修改任务状态，导致实际上没改到，略二。考虑到 worker 完成后需要通过 taskid 修改 task 状态，因此选择了数组储存TaskList。考虑到在worker crash后可能需要通过 workerid 找到 task 并修改任务状态，向 Coordinator 中添加了 <code>WorkerTaskMap</code></p>
-</li>
-<li><p>添加了DoMap(). 打开文件读文件调用mapf处理，并保存中间量至中间文件。在内存中使用了二维数组 [][]intermediate 保存 kv .存入文件时，使用了 <code>json.NewEncoder</code>等函数将数据转为二进制格式。<code>ioutil.TempFile()</code>和 <code>defer os.Remove()</code>一起使用，避免文件写入中途 worker crash 了使文件不全。</p>
-<p>使用了 CallTask() 递归调用的方式实现了完成一个 Task 后立即请求下一个任务。</p>
-<p>出现报错：<code>gob: type mismatch in decoder: want struct type mr.WorkerId; got non-struct</code>，原因是应该定义结构体WorkerId{}，直接传了 int 型的 Id 就报错了。</p>
-<p>又出现报错，二维数组越界。如果需要通过第一维序号随机访问，需要在定义为 [][]KeyValue{} 之后 append 一些 []KeyValue 。</p>
-<p>输出了一堆 mr-x-10 ，也许 hash 出了一些问题。–只是命名的时候写错了。</p>
-</li>
-<li><p>添加了 wait 状态，分配任务时的条件添加了一条任务类型与 coordinator 当前状态一致才可能分配。map任务数由文件数决定，reduce任务数确定，因此初始化 coordinator 时就可以一起把 map 和 reduce 办了。</p>
-</li>
-<li><p>添加了 CheckDone() 和 Done() ，4s一次，检查是否所有任务都被完成，exit(0)暴力退出，希望程序没事。</p>
-</li>
-<li><p>对 worker crash 的处理：coordinator 不需要辨别 worker ，worker crash 后会导致任务不能完成，因此只要在分配了某任务之后一定时间检查任务是否完成，若未完成，则将该任务的状态改回未分配。</p>
-</li>
-<li><p>锁：为 AllocateTask() 添加锁。</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>mit6.824</category>
       </categories>
   </entry>
 </search>

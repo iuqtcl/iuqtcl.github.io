@@ -1,33 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>04 Initialization and References</title>
-    <url>/2023/01/19/04_initialization_and_references/</url>
-    <content><![CDATA[<h2 id="initialization"><a href="#initialization" class="headerlink" title="initialization"></a>initialization</h2><h5 id="uniform-initialization"><a href="#uniform-initialization" class="headerlink" title="uniform initialization"></a>uniform initialization</h5><p>大括号初始化，声明完立刻初始化</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::vector&lt;<span class="type">int</span>&gt; vec&#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>&#125;;</span><br><span class="line"><span class="type">int</span> x&#123;<span class="number">5</span>&#125;;</span><br><span class="line">string f&#123;<span class="string">&quot;Sarah&quot;</span>&#125;;</span><br></pre></td></tr></table></figure>
-
-<h5 id="auto"><a href="#auto" class="headerlink" title="auto"></a>auto</h5><p>use it to reduce long type names</p>
-<p>[]的使用</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> [found, solutions] = <span class="built_in">quadratic</span>(a, b, c);</span><br></pre></td></tr></table></figure>
-
-<h2 id="reference-引用-amp"><a href="#reference-引用-amp" class="headerlink" title="reference 引用  &amp;"></a>reference 引用  &amp;</h2><p><strong>引用和copy的区别</strong></p>
-<p>An alias (another name) for a named variable</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; original&#123;<span class="number">1</span>, <span class="number">2</span>&#125;;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; copy = original;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt;&amp; ref = original;</span><br><span class="line">original.<span class="built_in">push_back</span>(<span class="number">3</span>);</span><br><span class="line">copy.<span class="built_in">push_back</span>(<span class="number">4</span>);</span><br><span class="line">ref.<span class="built_in">push_back</span>(<span class="number">5</span>);</span><br><span class="line">cout &lt;&lt; original &lt;&lt; endl; <span class="comment">// &#123;1, 2, 3, 5&#125;</span></span><br><span class="line">cout &lt;&lt; copy &lt;&lt; endl; <span class="comment">// &#123;1, 2, 4&#125;</span></span><br><span class="line">cout &lt;&lt; ref &lt;&lt; endl; <span class="comment">// &#123;1, 2, 3, 5&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>You can only create references to variables</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>&amp; thisWontWork = <span class="number">5</span>; <span class="comment">// This doesn&#x27;t work!</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="const-and-const-references"><a href="#const-and-const-references" class="headerlink" title="const and const references"></a>const and const references</h5><p>const声明变量不会被改变-specify that a variable can’t be modified</p>
-<p>const引用可以引不const的，反之不行</p>
-<h5 id="reference使用场景"><a href="#reference使用场景" class="headerlink" title="reference使用场景"></a>reference使用场景</h5><p>1.variable占空间较大</p>
-<p>2.需要改变变量</p>
-<p>3.不需改变+占空间较大-&gt;用const reference</p>
-]]></content>
-      <categories>
-        <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
     <title>程序语言理论与实践 01 Introduction;语义、解释器和栈式虚拟机</title>
     <url>/2023/01/20/01_introducion_and_rescript_crash_course/</url>
     <content><![CDATA[<p>函数式编程是什么？栈式虚拟机是什么？Rescript是什么？我是什么？</p>
@@ -134,35 +107,6 @@
       </categories>
   </entry>
   <entry>
-    <title>06 Iterators and Pointers</title>
-    <url>/2023/01/19/06_iterators_and_pointers/</url>
-    <content><![CDATA[<p><em>How do we access elements in a container in order?</em></p>
-<p><em>How do we reference existing data in our code?</em></p>
-<h2 id="iterators"><a href="#iterators" class="headerlink" title="iterators"></a>iterators</h2><p><em>访问容器中的元素</em></p>
-<p><strong>作用</strong></p>
-<ol>
-<li>访问容器中所有的数据</li>
-<li>按序访问（找到下一项）</li>
-</ol>
-<p>在不同容器中的<strong>种类</strong></p>
-<p><img src="https://i.imgur.com/EEXNpog.png"></p>
-<p><img src="https://i.imgur.com/bqbw0zU.png"></p>
-<p>取值时使用dereference(*iter)</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="keyword">auto</span>&amp; elem = *iter;</span><br></pre></td></tr></table></figure>
-
-<p>&amp;为引用</p>
-<p>iterators are a type of pointer</p>
-<h2 id="pointers"><a href="#pointers" class="headerlink" title="pointers"></a>pointers</h2><p><em><strong>引用</strong> 现有数据</em></p>
-<p>pointers reference memory addresses</p>
-<p>&amp;+variable 变量地址</p>
-<p>*+pointer   取值</p>
-<p>pointer声明时 type+*</p>
-]]></content>
-      <categories>
-        <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
     <title>05 Containers</title>
     <url>/2023/01/19/05_containers/</url>
     <content><![CDATA[<h2 id="containers"><a href="#containers" class="headerlink" title="containers"></a>containers</h2><h4 id="defining-containers"><a href="#defining-containers" class="headerlink" title="defining containers"></a>defining containers</h4><p><em>vector,stack,queue</em></p>
@@ -179,44 +123,6 @@ ordered/unordered
 <h4 id="container-adaptors"><a href="#container-adaptors" class="headerlink" title="container adaptors"></a>container adaptors</h4><p>在基础容器的基础上实现特定接口&#x2F;操作</p>
 <p>具体实现没太懂</p>
 <p><img src="https://i.imgur.com/PQrSCk9.png"></p>
-]]></content>
-      <categories>
-        <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>08 Template Classes and Const Correctness</title>
-    <url>/2023/01/19/08_template_classes_and_const_correctness/</url>
-    <content><![CDATA[<p><em>How do we make our classes general? How do we make them safe?</em></p>
-<h2 id="Template-Classes"><a href="#Template-Classes" class="headerlink" title="Template Classes"></a>Template Classes</h2><h3 id="member-types"><a href="#member-types" class="headerlink" title="member types"></a>member types</h3><p>成员类型——为某种模板类赋一个名称</p>
-<p><em>例：iterators</em></p>
-<p>定义</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//vector.h</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; <span class="keyword">class</span> <span class="title class_">vector</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="keyword">using</span> iterator = … <span class="comment">// something internal like T*</span></span><br><span class="line">iterator <span class="built_in">begin</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>使用(after class specifier)</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::vector::iterator it = a.<span class="built_in">begin</span>();</span><br></pre></td></tr></table></figure>
-
-
-
-<p>在类接口中使用时（return），定义为嵌套类型(before class specifier)</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//vector.cpp</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">typename</span> vector&lt;T&gt;::iterator vector&lt;T&gt;::<span class="built_in">begin</span>() &#123;...&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>在函数模板中，&lt;&gt;中typename和class无区别</p>
-<p>非类型形参，在模板定义的内部是常量，可以是整型，指针，引用</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">T</span>, <span class="type">int</span> a&gt; <span class="keyword">class</span> <span class="title class_">B</span>&#123;&#125;;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="Const-Correctness"><a href="#Const-Correctness" class="headerlink" title="Const Correctness"></a>Const Correctness</h2><h3 id="const-and-const-references"><a href="#const-and-const-references" class="headerlink" title="const and const references"></a>const and const references</h3><p>const function</p>
-<p>只读iterator</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> const_ iterator = <span class="type">const</span> std::string*;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">const_iterator <span class="title">begin</span><span class="params">()</span><span class="type">const</span></span>;</span><br><span class="line"><span class="function">const_iterator <span class="title">end</span><span class="params">()</span><span class="type">const</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>const iterator 不能改变iterator指向</p>
-<p>const_iterator 不能改变指向地址中的内容</p>
 ]]></content>
       <categories>
         <category>CS106L笔记</category>
@@ -274,6 +180,100 @@ ordered/unordered
       </categories>
   </entry>
   <entry>
+    <title>04 Initialization and References</title>
+    <url>/2023/01/19/04_initialization_and_references/</url>
+    <content><![CDATA[<h2 id="initialization"><a href="#initialization" class="headerlink" title="initialization"></a>initialization</h2><h5 id="uniform-initialization"><a href="#uniform-initialization" class="headerlink" title="uniform initialization"></a>uniform initialization</h5><p>大括号初始化，声明完立刻初始化</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::vector&lt;<span class="type">int</span>&gt; vec&#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>&#125;;</span><br><span class="line"><span class="type">int</span> x&#123;<span class="number">5</span>&#125;;</span><br><span class="line">string f&#123;<span class="string">&quot;Sarah&quot;</span>&#125;;</span><br></pre></td></tr></table></figure>
+
+<h5 id="auto"><a href="#auto" class="headerlink" title="auto"></a>auto</h5><p>use it to reduce long type names</p>
+<p>[]的使用</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> [found, solutions] = <span class="built_in">quadratic</span>(a, b, c);</span><br></pre></td></tr></table></figure>
+
+<h2 id="reference-引用-amp"><a href="#reference-引用-amp" class="headerlink" title="reference 引用  &amp;"></a>reference 引用  &amp;</h2><p><strong>引用和copy的区别</strong></p>
+<p>An alias (another name) for a named variable</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; original&#123;<span class="number">1</span>, <span class="number">2</span>&#125;;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; copy = original;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt;&amp; ref = original;</span><br><span class="line">original.<span class="built_in">push_back</span>(<span class="number">3</span>);</span><br><span class="line">copy.<span class="built_in">push_back</span>(<span class="number">4</span>);</span><br><span class="line">ref.<span class="built_in">push_back</span>(<span class="number">5</span>);</span><br><span class="line">cout &lt;&lt; original &lt;&lt; endl; <span class="comment">// &#123;1, 2, 3, 5&#125;</span></span><br><span class="line">cout &lt;&lt; copy &lt;&lt; endl; <span class="comment">// &#123;1, 2, 4&#125;</span></span><br><span class="line">cout &lt;&lt; ref &lt;&lt; endl; <span class="comment">// &#123;1, 2, 3, 5&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>You can only create references to variables</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>&amp; thisWontWork = <span class="number">5</span>; <span class="comment">// This doesn&#x27;t work!</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="const-and-const-references"><a href="#const-and-const-references" class="headerlink" title="const and const references"></a>const and const references</h5><p>const声明变量不会被改变-specify that a variable can’t be modified</p>
+<p>const引用可以引不const的，反之不行</p>
+<h5 id="reference使用场景"><a href="#reference使用场景" class="headerlink" title="reference使用场景"></a>reference使用场景</h5><p>1.variable占空间较大</p>
+<p>2.需要改变变量</p>
+<p>3.不需改变+占空间较大-&gt;用const reference</p>
+]]></content>
+      <categories>
+        <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>06 Iterators and Pointers</title>
+    <url>/2023/01/19/06_iterators_and_pointers/</url>
+    <content><![CDATA[<p><em>How do we access elements in a container in order?</em></p>
+<p><em>How do we reference existing data in our code?</em></p>
+<h2 id="iterators"><a href="#iterators" class="headerlink" title="iterators"></a>iterators</h2><p><em>访问容器中的元素</em></p>
+<p><strong>作用</strong></p>
+<ol>
+<li>访问容器中所有的数据</li>
+<li>按序访问（找到下一项）</li>
+</ol>
+<p>在不同容器中的<strong>种类</strong></p>
+<p><img src="https://i.imgur.com/EEXNpog.png"></p>
+<p><img src="https://i.imgur.com/bqbw0zU.png"></p>
+<p>取值时使用dereference(*iter)</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="keyword">auto</span>&amp; elem = *iter;</span><br></pre></td></tr></table></figure>
+
+<p>&amp;为引用</p>
+<p>iterators are a type of pointer</p>
+<h2 id="pointers"><a href="#pointers" class="headerlink" title="pointers"></a>pointers</h2><p><em><strong>引用</strong> 现有数据</em></p>
+<p>pointers reference memory addresses</p>
+<p>&amp;+variable 变量地址</p>
+<p>*+pointer   取值</p>
+<p>pointer声明时 type+*</p>
+]]></content>
+      <categories>
+        <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>08 Template Classes and Const Correctness</title>
+    <url>/2023/01/19/08_template_classes_and_const_correctness/</url>
+    <content><![CDATA[<p><em>How do we make our classes general? How do we make them safe?</em></p>
+<h2 id="Template-Classes"><a href="#Template-Classes" class="headerlink" title="Template Classes"></a>Template Classes</h2><h3 id="member-types"><a href="#member-types" class="headerlink" title="member types"></a>member types</h3><p>成员类型——为某种模板类赋一个名称</p>
+<p><em>例：iterators</em></p>
+<p>定义</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//vector.h</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; <span class="keyword">class</span> <span class="title class_">vector</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="keyword">using</span> iterator = … <span class="comment">// something internal like T*</span></span><br><span class="line">iterator <span class="built_in">begin</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用(after class specifier)</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::vector::iterator it = a.<span class="built_in">begin</span>();</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在类接口中使用时（return），定义为嵌套类型(before class specifier)</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//vector.cpp</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">typename</span> vector&lt;T&gt;::iterator vector&lt;T&gt;::<span class="built_in">begin</span>() &#123;...&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在函数模板中，&lt;&gt;中typename和class无区别</p>
+<p>非类型形参，在模板定义的内部是常量，可以是整型，指针，引用</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">T</span>, <span class="type">int</span> a&gt; <span class="keyword">class</span> <span class="title class_">B</span>&#123;&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Const-Correctness"><a href="#Const-Correctness" class="headerlink" title="Const Correctness"></a>Const Correctness</h2><h3 id="const-and-const-references"><a href="#const-and-const-references" class="headerlink" title="const and const references"></a>const and const references</h3><p>const function</p>
+<p>只读iterator</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> const_ iterator = <span class="type">const</span> std::string*;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">const_iterator <span class="title">begin</span><span class="params">()</span><span class="type">const</span></span>;</span><br><span class="line"><span class="function">const_iterator <span class="title">end</span><span class="params">()</span><span class="type">const</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>const iterator 不能改变iterator指向</p>
+<p>const_iterator 不能改变指向地址中的内容</p>
+]]></content>
+      <categories>
+        <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
     <title>09 Template Functions</title>
     <url>/2023/01/19/09_template_functions/</url>
     <content><![CDATA[<p><em>What else in C++ can be generalized? What is the philosophy behind generalization?</em></p>
@@ -288,41 +288,6 @@ ordered/unordered
 <p>an instance</p>
 <p>在任意串中计数某字符的出现次数</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> InputType,<span class="keyword">typename</span> DataType&gt;</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">count_ocur</span><span class="params">(InputType begin,InputType end, DataType d)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> cnt=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(InputType iter=begin; iter!=end; iter++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(*iter==d) cnt++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> cnt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">usage: std::string str= <span class="string">&quot;nsannd&quot;</span>;</span><br><span class="line">		<span class="built_in">count_ocur</span>(str.<span class="built_in">begin</span>(),str.<span class="built_in">end</span>(),<span class="string">&#x27;a&#x27;</span>);</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>11 Operators</title>
-    <url>/2023/01/19/11_operators/</url>
-    <content><![CDATA[<h2 id="operator-overloading"><a href="#operator-overloading" class="headerlink" title="operator overloading"></a>operator overloading</h2><p><img src="https://i.imgur.com/mObcRf8.png"></p>
-<h3 id="examples"><a href="#examples" class="headerlink" title="examples"></a>examples</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//vector&lt;string&gt;增加元素</span></span><br><span class="line">vector&lt;string&gt;&amp; vector&lt;string&gt;::<span class="keyword">operator</span>+=(<span class="type">const</span> std::string&amp; element)&#123;			<span class="comment">//const reference</span></span><br><span class="line">    <span class="built_in">push_back</span>(element);</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    vector&lt;string&gt; vec;</span><br><span class="line">    <span class="type">const</span> string s = <span class="string">&quot;111&quot;</span>;</span><br><span class="line">    vec+= <span class="string">&quot;gggg&quot;</span>;		<span class="comment">//vec.operator+=(&quot;gggg&quot;); </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>concept check</p>
-<ul>
-<li><p>why return a reference</p>
-</li>
-<li><p>why return *this</p>
-<p>another example</p>
-</li>
-</ul>
-<p>修改 class StringVector 的 + 操作符</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">StringVector StringVector::<span class="keyword">operator</span>+(<span class="type">const</span> StringVector other) <span class="type">const</span> &#123;</span><br><span class="line">    StringVector result = *<span class="keyword">this</span>; <span class="comment">//copy constructor</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">const</span> std::string&amp; s : other)&#123;</span><br><span class="line">        result += s;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="General-rule-of-thumb"><a href="#General-rule-of-thumb" class="headerlink" title="General rule of thumb:"></a>General rule of thumb:</h3><h4 id="member-vs-non-member"><a href="#member-vs-non-member" class="headerlink" title="member vs. non-member"></a>member vs. non-member</h4><ol>
-<li>implement as members ( eg. [], (), -&gt;, &#x3D;)</li>
-<li>implement as non-members (eg. &lt;&lt;)</li>
-<li>一元操作符 implement as member (eg. ++)</li>
-<li>处理符号两侧 equally , implement as non-member ( maybe <strong>friend</strong> ) (eg. +, &lt;)</li>
-<li>not both equally, member (eg. +&#x3D;) 修改了某一个的值</li>
-</ol>
-<h4 id="const-vs-non-const-for-member-functions"><a href="#const-vs-non-const-for-member-functions" class="headerlink" title="const vs. non-const for member functions"></a>const vs. non-const for member functions</h4><p>const 对象只能调用 const function</p>
-<p>可申明一个 const 版本</p>
-<h3 id="Principle-of-Least-Astonishment-POLA"><a href="#Principle-of-Least-Astonishment-POLA" class="headerlink" title="Principle of Least Astonishment (POLA)"></a>Principle of Least Astonishment (POLA)</h3><p>参考</p>
-<ol>
-<li><a href="https://www.youtube.com/watch?v=9i_TNfhVvSM&list=PLCgD3ws8aVdolCexlz8f3U-RROA0s5jWA&index=19&ab_channel=AveryWang">https://www.youtube.com/watch?v=9i_TNfhVvSM&amp;list=PLCgD3ws8aVdolCexlz8f3U-RROA0s5jWA&amp;index=19&amp;ab_channel=AveryWang</a></li>
-</ol>
 ]]></content>
       <categories>
         <category>CS106L笔记</category>
@@ -445,6 +410,41 @@ ordered/unordered
       </categories>
   </entry>
   <entry>
+    <title>11 Operators</title>
+    <url>/2023/01/19/11_operators/</url>
+    <content><![CDATA[<h2 id="operator-overloading"><a href="#operator-overloading" class="headerlink" title="operator overloading"></a>operator overloading</h2><p><img src="https://i.imgur.com/mObcRf8.png"></p>
+<h3 id="examples"><a href="#examples" class="headerlink" title="examples"></a>examples</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//vector&lt;string&gt;增加元素</span></span><br><span class="line">vector&lt;string&gt;&amp; vector&lt;string&gt;::<span class="keyword">operator</span>+=(<span class="type">const</span> std::string&amp; element)&#123;			<span class="comment">//const reference</span></span><br><span class="line">    <span class="built_in">push_back</span>(element);</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    vector&lt;string&gt; vec;</span><br><span class="line">    <span class="type">const</span> string s = <span class="string">&quot;111&quot;</span>;</span><br><span class="line">    vec+= <span class="string">&quot;gggg&quot;</span>;		<span class="comment">//vec.operator+=(&quot;gggg&quot;); </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>concept check</p>
+<ul>
+<li><p>why return a reference</p>
+</li>
+<li><p>why return *this</p>
+<p>another example</p>
+</li>
+</ul>
+<p>修改 class StringVector 的 + 操作符</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">StringVector StringVector::<span class="keyword">operator</span>+(<span class="type">const</span> StringVector other) <span class="type">const</span> &#123;</span><br><span class="line">    StringVector result = *<span class="keyword">this</span>; <span class="comment">//copy constructor</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">const</span> std::string&amp; s : other)&#123;</span><br><span class="line">        result += s;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="General-rule-of-thumb"><a href="#General-rule-of-thumb" class="headerlink" title="General rule of thumb:"></a>General rule of thumb:</h3><h4 id="member-vs-non-member"><a href="#member-vs-non-member" class="headerlink" title="member vs. non-member"></a>member vs. non-member</h4><ol>
+<li>implement as members ( eg. [], (), -&gt;, &#x3D;)</li>
+<li>implement as non-members (eg. &lt;&lt;)</li>
+<li>一元操作符 implement as member (eg. ++)</li>
+<li>处理符号两侧 equally , implement as non-member ( maybe <strong>friend</strong> ) (eg. +, &lt;)</li>
+<li>not both equally, member (eg. +&#x3D;) 修改了某一个的值</li>
+</ol>
+<h4 id="const-vs-non-const-for-member-functions"><a href="#const-vs-non-const-for-member-functions" class="headerlink" title="const vs. non-const for member functions"></a>const vs. non-const for member functions</h4><p>const 对象只能调用 const function</p>
+<p>可申明一个 const 版本</p>
+<h3 id="Principle-of-Least-Astonishment-POLA"><a href="#Principle-of-Least-Astonishment-POLA" class="headerlink" title="Principle of Least Astonishment (POLA)"></a>Principle of Least Astonishment (POLA)</h3><p>参考</p>
+<ol>
+<li><a href="https://www.youtube.com/watch?v=9i_TNfhVvSM&list=PLCgD3ws8aVdolCexlz8f3U-RROA0s5jWA&index=19&ab_channel=AveryWang">https://www.youtube.com/watch?v=9i_TNfhVvSM&amp;list=PLCgD3ws8aVdolCexlz8f3U-RROA0s5jWA&amp;index=19&amp;ab_channel=AveryWang</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
     <title>13 Move Semantics</title>
     <url>/2023/01/19/13_move_semantics/</url>
     <content><![CDATA[<p><em>how can we avoid making unnecessary copies of resources</em></p>
@@ -485,88 +485,6 @@ ordered/unordered
       </categories>
   </entry>
   <entry>
-    <title>15 RALL</title>
-    <url>/2023/01/19/15_RAll_smartpointers_buildingprojects/</url>
-    <content><![CDATA[<h2 id="RAll"><a href="#RAll" class="headerlink" title="RAll"></a>RAll</h2><p><em>a coding standard and practice</em></p>
-<h3 id="exceptions"><a href="#exceptions" class="headerlink" title="exceptions"></a>exceptions</h3><p><strong>resources that need to be released</strong></p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Acquire</th>
-<th>Release</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Heap memory</td>
-<td>new</td>
-<td>delete</td>
-</tr>
-<tr>
-<td>Files</td>
-<td>open</td>
-<td>close</td>
-</tr>
-<tr>
-<td>Lock</td>
-<td>try_lock</td>
-<td>unlock</td>
-</tr>
-<tr>
-<td>Sockets</td>
-<td>socket</td>
-<td>close</td>
-</tr>
-</tbody></table>
-<p><strong>exceptions</strong></p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="comment">//code associated with exception handler</span></span><br><span class="line">&#125; <span class="built_in">catch</span>()&#123;</span><br><span class="line">    <span class="comment">//exception handler</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>enforcing exception safety</strong> 抛异常的可能性大小</p>
-<ul>
-<li>Nothrow exception guarantee(destructors, …)</li>
-<li>…</li>
-<li>No exception guarantee (memory corruption, …)</li>
-</ul>
-<p><strong>RAII</strong></p>
-<p>又名</p>
-<p>scope based memory management</p>
-<p>&#x2F; constructor acquires, destructor releases</p>
-<p>目标</p>
-<ul>
-<li>avoid calling <em>new</em> and <em>delete</em> explicitly</li>
-</ul>
-<p>(资源出了scope自动释放)</p>
-<p><img src="https://i.imgur.com/lZxDl9h.png"></p>
-<p><img src="https://i.imgur.com/GzshscC.png"></p>
-<h3 id="Smart-Pointers"><a href="#Smart-Pointers" class="headerlink" title="Smart Pointers"></a>Smart Pointers</h3><p><em>put SMFs to good use</em></p>
-<p>在constructor中acquire，在destructor中release</p>
-<ul>
-<li>std::unique_ptr<ul>
-<li>Uniquely owns its resource, can’t be copied</li>
-</ul>
-</li>
-<li>std::shared_ptr<ul>
-<li>Can make copies, destructed when underlying memory goes out of scope</li>
-</ul>
-</li>
-<li>std::weak_ptr<ul>
-<li>Models temporary ownership: when an object only needs to be accessed if it exists (convert to shared_ptr to access)</li>
-</ul>
-</li>
-</ul>
-<p><strong>In practice</strong></p>
-<p><img src="https://i.imgur.com/ybziOx5.png"></p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//create smart pointers</span></span><br><span class="line">std::unique_ptr&lt;T&gt; up&#123;<span class="keyword">new</span> T&#125;;</span><br><span class="line">std::shared_ptr&lt;T&gt; sp&#123;<span class="keyword">new</span> T&#125;;</span><br><span class="line">std::weak_ptr&lt;T&gt; wp=sp;<span class="comment">//can only be copy/ move constructed</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//better one</span></span><br><span class="line">std::unique_ptr&lt;T&gt; up = std::<span class="built_in">make_unique</span>&lt;T&gt;();</span><br><span class="line">std::unique_ptr&lt;T&gt; sp = std::<span class="built_in">make_shared</span>&lt;T&gt;();</span><br></pre></td></tr></table></figure>
-
-<h3 id="Building-C-Projects"><a href="#Building-C-Projects" class="headerlink" title="Building C++ Projects"></a>Building C++ Projects</h3><p>v</p>
-]]></content>
-      <categories>
-        <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
     <title>14 std Optional and Type Safety</title>
     <url>/2023/01/19/14_std_optional_and_type_safety/</url>
     <content><![CDATA[<p><em>How can we use c++’s type system to prevent errors at compile time?</em></p>
@@ -584,17 +502,6 @@ ordered/unordered
 <h3 id="The-need-for-“sometimes-a-thing”"><a href="#The-need-for-“sometimes-a-thing”" class="headerlink" title="The need for “sometimes-a-thing”"></a>The need for “sometimes-a-thing”</h3>]]></content>
       <categories>
         <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>230401</title>
-    <url>/2023/04/01/230401%E8%AE%B0%E4%BA%8B/</url>
-    <content><![CDATA[<p>今天两点我在想，如果我有不受限的能力，我会有什么愿望。我想到高山流水荒漠远洋，然后问如果我有创造的能力，那我创造出来的东西智力水平是否能超过我。我猜没有这样的好事。后来我想了五分钟，我想这世上从未有过文明，或者没有人能感知到我，或者很多人都爱我，最后的答案是拯救世界。也许这是很多人年轻时做过的狂梦，但我很少有这样的幻想，哪怕是看中二作品时。拯救世界能被爱而不亏欠别人。</p>
-<p>但这个世界是混沌的，它不会有一个更好的状态，至少不会有一个所有人共识中的更好状态。没有人拯救世界。</p>
-<p>昨天母亲发他新拍的照片。他快五十岁了，比年轻的时候更爱拍照。我已忘记很多事，远离很多岁月。</p>
-]]></content>
-      <categories>
-        <category>pieces</category>
       </categories>
   </entry>
   <entry>
@@ -705,6 +612,88 @@ ordered/unordered
 <li><a href="https://stackoverflow.com/questions/2321511/what-is-meant-by-resource-acquisition-is-initialization-raii">What is meant by Resource Acquisition is Initialization (RAII)?</a></li>
 <li></li>
 </ol>
+]]></content>
+      <categories>
+        <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>15 RALL</title>
+    <url>/2023/01/19/15_RAll_smartpointers_buildingprojects/</url>
+    <content><![CDATA[<h2 id="RAll"><a href="#RAll" class="headerlink" title="RAll"></a>RAll</h2><p><em>a coding standard and practice</em></p>
+<h3 id="exceptions"><a href="#exceptions" class="headerlink" title="exceptions"></a>exceptions</h3><p><strong>resources that need to be released</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Acquire</th>
+<th>Release</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Heap memory</td>
+<td>new</td>
+<td>delete</td>
+</tr>
+<tr>
+<td>Files</td>
+<td>open</td>
+<td>close</td>
+</tr>
+<tr>
+<td>Lock</td>
+<td>try_lock</td>
+<td>unlock</td>
+</tr>
+<tr>
+<td>Sockets</td>
+<td>socket</td>
+<td>close</td>
+</tr>
+</tbody></table>
+<p><strong>exceptions</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="comment">//code associated with exception handler</span></span><br><span class="line">&#125; <span class="built_in">catch</span>()&#123;</span><br><span class="line">    <span class="comment">//exception handler</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>enforcing exception safety</strong> 抛异常的可能性大小</p>
+<ul>
+<li>Nothrow exception guarantee(destructors, …)</li>
+<li>…</li>
+<li>No exception guarantee (memory corruption, …)</li>
+</ul>
+<p><strong>RAII</strong></p>
+<p>又名</p>
+<p>scope based memory management</p>
+<p>&#x2F; constructor acquires, destructor releases</p>
+<p>目标</p>
+<ul>
+<li>avoid calling <em>new</em> and <em>delete</em> explicitly</li>
+</ul>
+<p>(资源出了scope自动释放)</p>
+<p><img src="https://i.imgur.com/lZxDl9h.png"></p>
+<p><img src="https://i.imgur.com/GzshscC.png"></p>
+<h3 id="Smart-Pointers"><a href="#Smart-Pointers" class="headerlink" title="Smart Pointers"></a>Smart Pointers</h3><p><em>put SMFs to good use</em></p>
+<p>在constructor中acquire，在destructor中release</p>
+<ul>
+<li>std::unique_ptr<ul>
+<li>Uniquely owns its resource, can’t be copied</li>
+</ul>
+</li>
+<li>std::shared_ptr<ul>
+<li>Can make copies, destructed when underlying memory goes out of scope</li>
+</ul>
+</li>
+<li>std::weak_ptr<ul>
+<li>Models temporary ownership: when an object only needs to be accessed if it exists (convert to shared_ptr to access)</li>
+</ul>
+</li>
+</ul>
+<p><strong>In practice</strong></p>
+<p><img src="https://i.imgur.com/ybziOx5.png"></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//create smart pointers</span></span><br><span class="line">std::unique_ptr&lt;T&gt; up&#123;<span class="keyword">new</span> T&#125;;</span><br><span class="line">std::shared_ptr&lt;T&gt; sp&#123;<span class="keyword">new</span> T&#125;;</span><br><span class="line">std::weak_ptr&lt;T&gt; wp=sp;<span class="comment">//can only be copy/ move constructed</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//better one</span></span><br><span class="line">std::unique_ptr&lt;T&gt; up = std::<span class="built_in">make_unique</span>&lt;T&gt;();</span><br><span class="line">std::unique_ptr&lt;T&gt; sp = std::<span class="built_in">make_shared</span>&lt;T&gt;();</span><br></pre></td></tr></table></figure>
+
+<h3 id="Building-C-Projects"><a href="#Building-C-Projects" class="headerlink" title="Building C++ Projects"></a>Building C++ Projects</h3><p>v</p>
 ]]></content>
       <categories>
         <category>CS106L笔记</category>
@@ -858,6 +847,121 @@ ordered/unordered
       </categories>
   </entry>
   <entry>
+    <title>任务一 缓冲池管理器</title>
+    <url>/2023/01/29/rucbase_storage/</url>
+    <content><![CDATA[<h3 id="1-1-disk-manager"><a href="#1-1-disk-manager" class="headerlink" title="1.1 disk_manager"></a>1.1 disk_manager</h3><p>磁盘管理器主要实现了从磁盘中读写文件，以及创建删除文件。管理内存与磁盘间的交互。</p>
+<p><strong>数据结构</strong></p>
+<p>disk_manager中记录了</p>
+<ol>
+<li>打开文件的文件路径 path 和 fd 码的对应关系，使用 <strong>unordered_map</strong> 储存；</li>
+<li>打开的文件中已分配的页面数量，通过fd索引。</li>
+</ol>
+<p><strong>函数实现</strong></p>
+<p>write_page()：使用 lseek 函数，设置 fd 文件中的偏移量为 <strong>page_no * num_bytes</strong>，即定位到第 page_no 页的页首。通过返回值判断偏移量设置是否成功。使用 write() 从磁盘中读数据到指定位置offset。read_page() 类似。</p>
+<p>AllocatePage():将记录中fd对应的已分配页面数量加1。</p>
+<p>is_file()：使用 struct stat 获取文件信息。</p>
+<p>创建和删除指定路径文件：分别使用了 open 和 unlink 函数。注意 string 类型的变量作为c语言下函数的参数时，需要使用 <strong>c_str()</strong> 函数转换为标准c字符串。</p>
+<p>打开关闭指定路径文件：分别调用 open 和 close 函数。打开时添加 fd 和 path 的对应关系记录。关闭时移除。</p>
+<h3 id="1-2-lru-replacer"><a href="#1-2-lru-replacer" class="headerlink" title="1.2 lru_replacer"></a>1.2 lru_replacer</h3><p>实现了最近最少使用策略的缓冲页面管理。当缓冲池需要替换页面时选择合适的页面。</p>
+<p><strong>数据结构</strong></p>
+<p>lru_replacer中记录了</p>
+<ol>
+<li>latch_ 信号量类型作为互斥锁。使用时采用了 C++17 std::scoped_lock 智能锁，调用构造函数时自动上锁，析构函数自动解锁。</li>
+<li>按加入时间顺序排列的list。元素类型为 frame_id_t。首部表示最近被访问。</li>
+<li>LRUhash_ 快速查找 list 中指定的 frame_id，便于修改列表。</li>
+</ol>
+<p>特殊数据类型：</p>
+<p>frame_id_t 内存中的frame_id类型。用于表示内存中的空间。frame大小与page一致。</p>
+<p><strong>函数实现</strong></p>
+<p>Victim 寻找需要淘汰的页面。将LRUlist末尾的元素取出，从 LRUhash 和 LRUlist 中移除页面。</p>
+<p>Pin&#x2F;Unpin 固定&#x2F;取消固定页面。从 LRUhash 和 LRUlist 中移除&#x2F;添加页面。Unpin 中检查缓冲池内页面数量是否大于最大值，依次从 list 尾部删去过多的页面。</p>
+<p>Size 可以 victim 的数量。返回LRUlist中的元素数量即可。</p>
+<h3 id="1-3-buffer-pool-manager"><a href="#1-3-buffer-pool-manager" class="headerlink" title="1.3 buffer_pool_manager"></a>1.3 buffer_pool_manager</h3><p><strong>数据结构</strong></p>
+<p>bufferpoolmanager中的主要结构有</p>
+<ol>
+<li>*pages 储存页面的位置。可以通过 frame_id 获取指定页面。</li>
+<li>page_table pageid 在缓冲池内的位置 frame_id。unordered_map实现。</li>
+<li>free_list 空闲帧的frame_id构成的列表。需要缓冲池位置时优先从这里查找。</li>
+<li>*disk_manager 和 *replacer</li>
+</ol>
+<p>Page</p>
+<p>pageid作为标识符，data数据，脏页标识，pin数量。</p>
+<p><strong>函数实现</strong></p>
+<p>一开始没看懂辅助函数 updatepage 要做什么，写挺乱，最后没有使用这部分代码。在有replacer封装了淘汰策略的基础上，将页面加入和移除缓冲池的处理仍然较为复杂。debug时冒出了巨量错误。将后两个test内容注释掉，逐步修改函数，过程忘了，在test148行应该获取到新页面的部分返回了null，149行因为所有缓冲池中的页面都在使用中而无法获取到的页面，错误地返回了一串数字。反复修改之后完全重写了fetchpage和newpage，通过测试。怀疑原因为处理数据的顺序不够严谨，导致遇到非法的page_no等情况跳出函数时页面无法正常更新。</p>
+<p>尝试将移入移出的操作逻辑拆解如下</p>
+<p>将一个页面P移出缓冲池时</p>
+<ol>
+<li>检查是否为脏页，是则将页面写回disk，并修改is_dirty</li>
+<li>将页面从page_table中移除。</li>
+<li>清空页面数据。</li>
+</ol>
+<p>向该页面写入新的一页时</p>
+<ol>
+<li>向page_table中加入页面</li>
+<li>更新pageid</li>
+<li>固定页面，修改pin_count值为1</li>
+</ol>
+<p>FindVictimPage 寻找可淘汰页面。优先检查free_list，若空，调用replacer-&gt;Victim()</p>
+<p>Fetchpage 获取页面。</p>
+<p>Newpage 在缓冲池中寻找位置创建新页面。</p>
+<p>UnpinPage 取消固定页面。（取消一个）</p>
+<h2 id="任务二-记录管理器"><a href="#任务二-记录管理器" class="headerlink" title="任务二 记录管理器"></a>任务二 记录管理器</h2><h3 id="2-1-RMFileHandle"><a href="#2-1-RMFileHandle" class="headerlink" title="2.1 RMFileHandle"></a>2.1 RMFileHandle</h3><p>insert_record 在第一个可插入的位置插入一条记录。</p>
+<p>get_record 获取指定位置的slot。</p>
+<p>create_page_handle，创建或获取pagehandle.</p>
+<p>使用 RM_NO_PAGE &#x3D; -1 作为无页面的标识。</p>
+<p>构造page_handle时，需要的参数为file_hdr和page指针。</p>
+<p>Bitmap 用于对当前页面中记录的情况进行表示。函数有指定位置置0置1，以及寻找页面中第一个&#x2F;下一个指定值的位。返回值为slot_no。</p>
+<p>file_hdr.first_free_page_no和page_hdr.next_free_page_no的作用是以链表的方式记录空闲页面的编码，向其中添加新页面时即将新页面设置为file的首个空页面，原链表首个元素变为新页面的next_free_page_no。当页面从满变为不满时，调用的relase函数，以及insert_record函数中正好将页面填满后的操作都据此实现。</p>
+<p>context 不知道是什么，没有动。</p>
+<p><img src="https://i.imgur.com/IDfl5Yb.png"></p>
+<p>get_record中make_unique的参数顺序写反了。return指针的时候使用了std::move然后报错。也许原因是函数的返回值类型不是右值。智能指针有待研究。</p>
+<h3 id="2-2-RmScan"><a href="#2-2-RmScan" class="headerlink" title="2.2 RmScan"></a>2.2 RmScan</h3><p>在文件中扫描记录的位置。本身是一个指针。</p>
+<p>RmScan<br>rid_ 记录指针，记录当前读取的位置，由page_no和slot_no组成。</p>
+<p>构造函数 将rid指向文件内第一条记录的位置。初始化rid，然后调用next()</p>
+<p>next() 找到文件中下一条记录的位置，并更新到rid。使用while遍历file中的页面，在每个页面中，先获取page_handle，然后通过bitmap获取第一个有记录的位置。一旦找到，就返回。若当然页面数大于最大页面数，跳出循环，将page_no赋为非法页面值。</p>
+<p>is_end() 判断是否到达文件末尾。</p>
+<p><strong>通过截图</strong></p>
+<p>1.1</p>
+<p><img src="https://i.imgur.com/DsDgPaN.png"></p>
+<p>1.2</p>
+<p><img src="https://i.imgur.com/mNEBGn8.png"></p>
+<p>1.3</p>
+<p><img src="https://i.imgur.com/Ex5Phio.png"></p>
+<p>2</p>
+<p><img src="https://i.imgur.com/8QgrUvz.png"></p>
+]]></content>
+      <categories>
+        <category>rucbase</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>230401</title>
+    <url>/2023/04/01/230401%E8%AE%B0%E4%BA%8B/</url>
+    <content><![CDATA[<p>今天两点我在想，如果我有不受限的能力，我会有什么愿望。我想到高山流水荒漠远洋，然后问如果我有创造的能力，那我创造出来的东西智力水平是否能超过我。我猜没有这样的好事。后来我想了五分钟，我想这世上从未有过文明，或者没有人能感知到我，或者很多人都爱我，最后的答案是拯救世界。也许这是很多人年轻时做过的狂梦，但我很少有这样的幻想，哪怕是看中二作品时。拯救世界能被爱而不亏欠别人。</p>
+<p>但这个世界是混沌的，它不会有一个更好的状态，至少不会有一个所有人共识中的更好状态。没有人拯救世界。</p>
+<p>昨天母亲发他新拍的照片。他快五十岁了，比年轻的时候更爱拍照。我已忘记很多事，远离很多岁月。</p>
+<p>–</p>
+<p>昨天是跨性别现身日。但不是我的现身日。我甚至不知道该给自己挂什么旗。粉白蓝太正统，别的又太矫情。如果手术不要证我根本不会觉得我可能算trans。这是一个未被统一的概念，我既不典型，问题也在能解构的范围内。我想解决问题，而我曾经不认为身份认同是解决问题的一环。现在我依旧没有明确的答案，但我想我确实偏离“大部分人”的轨道很远了。</p>
+<p>no binary, agender, queer？我到底是什么其实不重要，因为在这里，这些都不存在，不论是社会上还是医学上。</p>
+<p>我确实是想说点东西给除了我以外的人听，但我没有勇气在任何账号发这些。倘若你恰好认识我，，你最好不认识我。以下内容写于两个月前。</p>
+<p>–</p>
+<p>我想我应该享受这片刻的宁静。这是短暂的、自由的日子，不应用焦虑沾满生活。恋旧是我的恶习，当我试着站在未来回看此时，顿感此刻的易碎与闲适。三年前，我写道，我的生活苍白而又繁复，对现在的我而言，大抵同样。</p>
+<p>半个小时前，我吃下这些日子以来的第七片药。xyn 吃雌和孕，我也吃雌和孕，也许我也是xyn。我显然不喜欢被这样称呼，但觉得这个机灵有点地狱笑话。对于xyn来说，这是心理srs。对我来说，又是什么呢。机械飞升？化学改造？</p>
+<p>目前的副作用也许是少量的嗜睡和少量的情绪波动。去年我说，我不吃药，因为他们有目标，而我没有。现在我认可的我的存在、我期望的是百分之九十九的地球人不认为严肃存在的概念。我在理智上一刀又一刀地解剖自己，发现少有方法能在物理上帮助我，少有人能理解我，最后被焦虑推动着吃下拆东墙补西墙的药。我无法接受我再什么都不做，但我也做不了什么。 </p>
+<p>xyn 会做化蝶的梦吗？我确实睡眠时连做了几天我期望的梦。昨天在知乎上刷到一个问题，问为何人们觉得蝴蝶美而蝴蝶幼崽毛毛虫丑陋，那个回答说，有一种美丽的蝴蝶，在幼时也很可爱，图里的毛毛虫有两根蜗牛似的触角。小时候被强迫灌输了破茧化蝶这样的文字，不觉得罕见，又亲手淹死过蝴蝶，我对生物上的蝴蝶没有多少好感，只是蝶这个字代表脆弱和轻盈之美而已。如今才觉得这般生物的变化如同奇迹。可惜人变不得。蝶在生物上的斑斓，在人类引用时变成了抽象固化的美。我也确实害怕副作用。我不知道将来会变成什么样。我所做的、想做的这些，最好是让情况好转而不是延缓我情绪崩溃而已。</p>
+<p>我曾佩服有勇气标新立异的人，也疑惑是什么支撑着激进者和理想主义者。如今我也成了这样的人。温和派与日子人不是理智，只是不够痛。我真的愿意去选那个机械飞升的选项而不是当作笑话，我真的愿意去选那97个选项，或者武装直升机，而不是当作笑话。有些人魔怔是为了找乐子，而有些人用来减缓痛苦。 </p>
+<p>我不知道这是否算出柜，我倒最好是有柜可出，而不是因为偏执和愤世嫉俗。我半年来似乎跟好几个人出了柜，实际上是把自己塞进更深的柜子里。<br>那天我对亲人掩饰流泪、否认、沉默，那天我向大他者说我需要奇迹，那天我从里面关上柜子的门，一片漆黑。当我打下需要奇迹时，我也理解了信教者。宁愿相信执念不是无药可救，于是为那片虚空添上信仰的神，在我这宁愿称其奇迹。我在这无波澜人生的绝望时刻，明白了奇迹一词如何产生。</p>
+<p>我每接近一个少数群体，便发觉我自己过往的误解，而后是漫天的，可怕的，绝大多数人的冷漠和误解。我恨他们，恨自己，恨人类的低能、无知、被激素左右、困在每个人的个人认知中无法理解彼此。恨不得人类没有自我意识。</p>
+<p>我会继续沉默下去吗？</p>
+<p>我存在吗？</p>
+<p>我是癔症，是幽灵，是玩笑，是inexistence。</p>
+<p>所有人都在群体性的癔症中，构建出不存在的孤岛们。</p>
+]]></content>
+      <categories>
+        <category>pieces</category>
+      </categories>
+  </entry>
+  <entry>
     <title>实验三 查询执行</title>
     <url>/2023/02/17/rucbase_execution/</url>
     <content><![CDATA[<h1 id="查询执行"><a href="#查询执行" class="headerlink" title="查询执行"></a>查询执行</h1><h2 id="火山-x2F-迭代模型-Volcano-Model"><a href="#火山-x2F-迭代模型-Volcano-Model" class="headerlink" title="火山&#x2F;迭代模型 Volcano Model"></a>火山&#x2F;迭代模型 Volcano Model</h2><p>是解释计算模型，将关系代数中的每一种操作抽象为一个 Operator ，将整个 SQL 构建成一个 Operator 树，从根结点到叶子结点自上而下递归调用 next() 。</p>
@@ -991,94 +1095,6 @@ ordered/unordered
 <li><a href="https://www.cnblogs.com/wenxuehai/p/13485427.html">DDL基本语法（操作数据库和表结构）</a></li>
 <li></li>
 </ol>
-]]></content>
-      <categories>
-        <category>rucbase</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>任务一 缓冲池管理器</title>
-    <url>/2023/01/29/rucbase_storage/</url>
-    <content><![CDATA[<h3 id="1-1-disk-manager"><a href="#1-1-disk-manager" class="headerlink" title="1.1 disk_manager"></a>1.1 disk_manager</h3><p>磁盘管理器主要实现了从磁盘中读写文件，以及创建删除文件。管理内存与磁盘间的交互。</p>
-<p><strong>数据结构</strong></p>
-<p>disk_manager中记录了</p>
-<ol>
-<li>打开文件的文件路径 path 和 fd 码的对应关系，使用 <strong>unordered_map</strong> 储存；</li>
-<li>打开的文件中已分配的页面数量，通过fd索引。</li>
-</ol>
-<p><strong>函数实现</strong></p>
-<p>write_page()：使用 lseek 函数，设置 fd 文件中的偏移量为 <strong>page_no * num_bytes</strong>，即定位到第 page_no 页的页首。通过返回值判断偏移量设置是否成功。使用 write() 从磁盘中读数据到指定位置offset。read_page() 类似。</p>
-<p>AllocatePage():将记录中fd对应的已分配页面数量加1。</p>
-<p>is_file()：使用 struct stat 获取文件信息。</p>
-<p>创建和删除指定路径文件：分别使用了 open 和 unlink 函数。注意 string 类型的变量作为c语言下函数的参数时，需要使用 <strong>c_str()</strong> 函数转换为标准c字符串。</p>
-<p>打开关闭指定路径文件：分别调用 open 和 close 函数。打开时添加 fd 和 path 的对应关系记录。关闭时移除。</p>
-<h3 id="1-2-lru-replacer"><a href="#1-2-lru-replacer" class="headerlink" title="1.2 lru_replacer"></a>1.2 lru_replacer</h3><p>实现了最近最少使用策略的缓冲页面管理。当缓冲池需要替换页面时选择合适的页面。</p>
-<p><strong>数据结构</strong></p>
-<p>lru_replacer中记录了</p>
-<ol>
-<li>latch_ 信号量类型作为互斥锁。使用时采用了 C++17 std::scoped_lock 智能锁，调用构造函数时自动上锁，析构函数自动解锁。</li>
-<li>按加入时间顺序排列的list。元素类型为 frame_id_t。首部表示最近被访问。</li>
-<li>LRUhash_ 快速查找 list 中指定的 frame_id，便于修改列表。</li>
-</ol>
-<p>特殊数据类型：</p>
-<p>frame_id_t 内存中的frame_id类型。用于表示内存中的空间。frame大小与page一致。</p>
-<p><strong>函数实现</strong></p>
-<p>Victim 寻找需要淘汰的页面。将LRUlist末尾的元素取出，从 LRUhash 和 LRUlist 中移除页面。</p>
-<p>Pin&#x2F;Unpin 固定&#x2F;取消固定页面。从 LRUhash 和 LRUlist 中移除&#x2F;添加页面。Unpin 中检查缓冲池内页面数量是否大于最大值，依次从 list 尾部删去过多的页面。</p>
-<p>Size 可以 victim 的数量。返回LRUlist中的元素数量即可。</p>
-<h3 id="1-3-buffer-pool-manager"><a href="#1-3-buffer-pool-manager" class="headerlink" title="1.3 buffer_pool_manager"></a>1.3 buffer_pool_manager</h3><p><strong>数据结构</strong></p>
-<p>bufferpoolmanager中的主要结构有</p>
-<ol>
-<li>*pages 储存页面的位置。可以通过 frame_id 获取指定页面。</li>
-<li>page_table pageid 在缓冲池内的位置 frame_id。unordered_map实现。</li>
-<li>free_list 空闲帧的frame_id构成的列表。需要缓冲池位置时优先从这里查找。</li>
-<li>*disk_manager 和 *replacer</li>
-</ol>
-<p>Page</p>
-<p>pageid作为标识符，data数据，脏页标识，pin数量。</p>
-<p><strong>函数实现</strong></p>
-<p>一开始没看懂辅助函数 updatepage 要做什么，写挺乱，最后没有使用这部分代码。在有replacer封装了淘汰策略的基础上，将页面加入和移除缓冲池的处理仍然较为复杂。debug时冒出了巨量错误。将后两个test内容注释掉，逐步修改函数，过程忘了，在test148行应该获取到新页面的部分返回了null，149行因为所有缓冲池中的页面都在使用中而无法获取到的页面，错误地返回了一串数字。反复修改之后完全重写了fetchpage和newpage，通过测试。怀疑原因为处理数据的顺序不够严谨，导致遇到非法的page_no等情况跳出函数时页面无法正常更新。</p>
-<p>尝试将移入移出的操作逻辑拆解如下</p>
-<p>将一个页面P移出缓冲池时</p>
-<ol>
-<li>检查是否为脏页，是则将页面写回disk，并修改is_dirty</li>
-<li>将页面从page_table中移除。</li>
-<li>清空页面数据。</li>
-</ol>
-<p>向该页面写入新的一页时</p>
-<ol>
-<li>向page_table中加入页面</li>
-<li>更新pageid</li>
-<li>固定页面，修改pin_count值为1</li>
-</ol>
-<p>FindVictimPage 寻找可淘汰页面。优先检查free_list，若空，调用replacer-&gt;Victim()</p>
-<p>Fetchpage 获取页面。</p>
-<p>Newpage 在缓冲池中寻找位置创建新页面。</p>
-<p>UnpinPage 取消固定页面。（取消一个）</p>
-<h2 id="任务二-记录管理器"><a href="#任务二-记录管理器" class="headerlink" title="任务二 记录管理器"></a>任务二 记录管理器</h2><h3 id="2-1-RMFileHandle"><a href="#2-1-RMFileHandle" class="headerlink" title="2.1 RMFileHandle"></a>2.1 RMFileHandle</h3><p>insert_record 在第一个可插入的位置插入一条记录。</p>
-<p>get_record 获取指定位置的slot。</p>
-<p>create_page_handle，创建或获取pagehandle.</p>
-<p>使用 RM_NO_PAGE &#x3D; -1 作为无页面的标识。</p>
-<p>构造page_handle时，需要的参数为file_hdr和page指针。</p>
-<p>Bitmap 用于对当前页面中记录的情况进行表示。函数有指定位置置0置1，以及寻找页面中第一个&#x2F;下一个指定值的位。返回值为slot_no。</p>
-<p>file_hdr.first_free_page_no和page_hdr.next_free_page_no的作用是以链表的方式记录空闲页面的编码，向其中添加新页面时即将新页面设置为file的首个空页面，原链表首个元素变为新页面的next_free_page_no。当页面从满变为不满时，调用的relase函数，以及insert_record函数中正好将页面填满后的操作都据此实现。</p>
-<p>context 不知道是什么，没有动。</p>
-<p><img src="https://i.imgur.com/IDfl5Yb.png"></p>
-<p>get_record中make_unique的参数顺序写反了。return指针的时候使用了std::move然后报错。也许原因是函数的返回值类型不是右值。智能指针有待研究。</p>
-<h3 id="2-2-RmScan"><a href="#2-2-RmScan" class="headerlink" title="2.2 RmScan"></a>2.2 RmScan</h3><p>在文件中扫描记录的位置。本身是一个指针。</p>
-<p>RmScan<br>rid_ 记录指针，记录当前读取的位置，由page_no和slot_no组成。</p>
-<p>构造函数 将rid指向文件内第一条记录的位置。初始化rid，然后调用next()</p>
-<p>next() 找到文件中下一条记录的位置，并更新到rid。使用while遍历file中的页面，在每个页面中，先获取page_handle，然后通过bitmap获取第一个有记录的位置。一旦找到，就返回。若当然页面数大于最大页面数，跳出循环，将page_no赋为非法页面值。</p>
-<p>is_end() 判断是否到达文件末尾。</p>
-<p><strong>通过截图</strong></p>
-<p>1.1</p>
-<p><img src="https://i.imgur.com/DsDgPaN.png"></p>
-<p>1.2</p>
-<p><img src="https://i.imgur.com/mNEBGn8.png"></p>
-<p>1.3</p>
-<p><img src="https://i.imgur.com/Ex5Phio.png"></p>
-<p>2</p>
-<p><img src="https://i.imgur.com/8QgrUvz.png"></p>
 ]]></content>
       <categories>
         <category>rucbase</category>

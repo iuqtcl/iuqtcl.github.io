@@ -1,6 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>05 Containers</title>
+    <url>/2023/01/19/05_containers/</url>
+    <content><![CDATA[<h2 id="containers"><a href="#containers" class="headerlink" title="containers"></a>containers</h2><h4 id="defining-containers"><a href="#defining-containers" class="headerlink" title="defining containers"></a>defining containers</h4><p><em>vector,stack,queue</em></p>
+<h4 id="two-types"><a href="#two-types" class="headerlink" title="two types"></a>two types</h4><p>1.sequence:</p>
+<pre><code>vector,deque,list
+</code></pre>
+<p>2.associative: 通过key访问数据</p>
+<pre><code>map,set
+
+ordered/unordered
+</code></pre>
+<p><strong>map</strong></p>
+<p>make_pair实现</p>
+<h4 id="container-adaptors"><a href="#container-adaptors" class="headerlink" title="container adaptors"></a>container adaptors</h4><p>在基础容器的基础上实现特定接口&#x2F;操作</p>
+<p>具体实现没太懂</p>
+<p><img src="https://i.imgur.com/PQrSCk9.png"></p>
+]]></content>
+      <categories>
+        <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>06 Iterators and Pointers</title>
+    <url>/2023/01/19/06_iterators_and_pointers/</url>
+    <content><![CDATA[<p><em>How do we access elements in a container in order?</em></p>
+<p><em>How do we reference existing data in our code?</em></p>
+<h2 id="iterators"><a href="#iterators" class="headerlink" title="iterators"></a>iterators</h2><p><em>访问容器中的元素</em></p>
+<p><strong>作用</strong></p>
+<ol>
+<li>访问容器中所有的数据</li>
+<li>按序访问（找到下一项）</li>
+</ol>
+<p>在不同容器中的<strong>种类</strong></p>
+<p><img src="https://i.imgur.com/EEXNpog.png"></p>
+<p><img src="https://i.imgur.com/bqbw0zU.png"></p>
+<p>取值时使用dereference(*iter)</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="keyword">auto</span>&amp; elem = *iter;</span><br></pre></td></tr></table></figure>
+
+<p>&amp;为引用</p>
+<p>iterators are a type of pointer</p>
+<h2 id="pointers"><a href="#pointers" class="headerlink" title="pointers"></a>pointers</h2><p><em><strong>引用</strong> 现有数据</em></p>
+<p>pointers reference memory addresses</p>
+<p>&amp;+variable 变量地址</p>
+<p>*+pointer   取值</p>
+<p>pointer声明时 type+*</p>
+]]></content>
+      <categories>
+        <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>04 Initialization and References</title>
+    <url>/2023/01/19/04_initialization_and_references/</url>
+    <content><![CDATA[<h2 id="initialization"><a href="#initialization" class="headerlink" title="initialization"></a>initialization</h2><h5 id="uniform-initialization"><a href="#uniform-initialization" class="headerlink" title="uniform initialization"></a>uniform initialization</h5><p>大括号初始化，声明完立刻初始化</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::vector&lt;<span class="type">int</span>&gt; vec&#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>&#125;;</span><br><span class="line"><span class="type">int</span> x&#123;<span class="number">5</span>&#125;;</span><br><span class="line">string f&#123;<span class="string">&quot;Sarah&quot;</span>&#125;;</span><br></pre></td></tr></table></figure>
+
+<h5 id="auto"><a href="#auto" class="headerlink" title="auto"></a>auto</h5><p>use it to reduce long type names</p>
+<p>[]的使用</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> [found, solutions] = <span class="built_in">quadratic</span>(a, b, c);</span><br></pre></td></tr></table></figure>
+
+<h2 id="reference-引用-amp"><a href="#reference-引用-amp" class="headerlink" title="reference 引用  &amp;"></a>reference 引用  &amp;</h2><p><strong>引用和copy的区别</strong></p>
+<p>An alias (another name) for a named variable</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; original&#123;<span class="number">1</span>, <span class="number">2</span>&#125;;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; copy = original;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt;&amp; ref = original;</span><br><span class="line">original.<span class="built_in">push_back</span>(<span class="number">3</span>);</span><br><span class="line">copy.<span class="built_in">push_back</span>(<span class="number">4</span>);</span><br><span class="line">ref.<span class="built_in">push_back</span>(<span class="number">5</span>);</span><br><span class="line">cout &lt;&lt; original &lt;&lt; endl; <span class="comment">// &#123;1, 2, 3, 5&#125;</span></span><br><span class="line">cout &lt;&lt; copy &lt;&lt; endl; <span class="comment">// &#123;1, 2, 4&#125;</span></span><br><span class="line">cout &lt;&lt; ref &lt;&lt; endl; <span class="comment">// &#123;1, 2, 3, 5&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>You can only create references to variables</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>&amp; thisWontWork = <span class="number">5</span>; <span class="comment">// This doesn&#x27;t work!</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="const-and-const-references"><a href="#const-and-const-references" class="headerlink" title="const and const references"></a>const and const references</h5><p>const声明变量不会被改变-specify that a variable can’t be modified</p>
+<p>const引用可以引不const的，反之不行</p>
+<h5 id="reference使用场景"><a href="#reference使用场景" class="headerlink" title="reference使用场景"></a>reference使用场景</h5><p>1.variable占空间较大</p>
+<p>2.需要改变变量</p>
+<p>3.不需改变+占空间较大-&gt;用const reference</p>
+]]></content>
+      <categories>
+        <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>07 Classes</title>
+    <url>/2023/01/19/07_classes/</url>
+    <content><![CDATA[<p><em>How to make your own custom types</em></p>
+<h2 id="Classes-Introduction"><a href="#Classes-Introduction" class="headerlink" title="Classes Introduction"></a>Classes Introduction</h2><p><em>Containers are all classes defined in the STL</em></p>
+<h4 id="issues-with-structs"><a href="#issues-with-structs" class="headerlink" title="issues with structs"></a>issues with structs</h4><ol>
+<li>默认可以访问任意内部数据(public)</li>
+<li>需要直接初始化每个 data member</li>
+</ol>
+<p>classes 提供 public interface 和 private implement</p>
+<p><strong>声明结构</strong></p>
+<p>declare in .h  + implement in .cpp</p>
+<p>在 .cpp 中加入 .h 头文件</p>
+<p>.h include .cpp</p>
+<p><strong>namespace</strong></p>
+<ol>
+<li>防止名字冲突</li>
+<li>每个类有单独的namespace</li>
+</ol>
+<p><strong>this</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Student::setName</span><span class="params">(string name)</span></span>&#123;</span><br><span class="line"><span class="keyword">this</span>-&gt;name=name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>构造函数</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Student.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;Student.h&gt;</span></span></span><br><span class="line">Student::<span class="built_in">Student</span>():name&#123;<span class="string">&quot;&quot;</span>&#125;,age&#123;<span class="number">0</span>&#125;,state&#123;<span class="string">&quot;&quot;</span>&#125;</span><br><span class="line">Student::<span class="built_in">Student</span>(string name,<span class="type">int</span> age,string state)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">this</span>-&gt;name=name;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>destructors</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Class_name::~Class_name();</span><br></pre></td></tr></table></figure>
+
+<p><strong>using</strong></p>
+<ol>
+<li><pre><code class="c++">using namespace name;
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2. 指定别名</span><br><span class="line"></span><br><span class="line">```c++</span><br><span class="line">    using iterator = std::string*;</span><br><span class="line">    using size_type = size_t;</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>在派生类中引用基类成员</p>
+</li>
+</ol>
+<h4 id="operator-重载"><a href="#operator-重载" class="headerlink" title="operator 重载"></a>operator 重载</h4><p>重载[]</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::string&amp; StrVector::<span class="keyword">operator</span>[](size_type index) &#123;</span><br><span class="line">    <span class="keyword">return</span> *(<span class="built_in">begin</span>() + index);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="const"><a href="#const" class="headerlink" title="const"></a>const</h4><p>后加const表函数不修改成员数据，可以被const对象引用。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">empty</span><span class="params">()</span> <span class="type">const</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>前加const表示返回值为const类型</p>
+<h2 id="Template-Class"><a href="#Template-Class" class="headerlink" title="Template Class"></a>Template Class</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> First, <span class="keyword">typename</span> Second&gt; <span class="keyword">class</span> <span class="title class_">MyPair</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="function">First <span class="title">getFirst</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function">Second <span class="title">getSecond</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setFirst</span><span class="params">(First f)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setSecond</span><span class="params">(Second f)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">First first;</span><br><span class="line">Second second;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>10 Functions and Lambdas</title>
+    <url>/2023/01/19/10_funcioins_and_lambdas/</url>
+    <content><![CDATA[<p><em>How can we make template functions even more general?</em></p>
+<h1 id="Functions-and-Lambdas"><a href="#Functions-and-Lambdas" class="headerlink" title="Functions and Lambdas"></a>Functions and Lambdas</h1><h2 id="lambda"><a href="#lambda" class="headerlink" title="lambda"></a>lambda</h2><p>将函数作为参数</p>
+<p>instance</p>
+<p><img src="https://i.imgur.com/JTb45Mr.png"></p>
+<p>UniPred is what’s called a function pointer</p>
+<h3 id="function-pointers"><a href="#function-pointers" class="headerlink" title="function pointers"></a>function pointers</h3><ul>
+<li>可当作指针处理</li>
+<li>传参时跟变量一样</li>
+<li>调用时可作普通function</li>
+</ul>
+<p>使用例</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">qsort</span><span class="params">(<span class="type">void</span> *base, <span class="type">size_t</span> nmemb, <span class="type">size_t</span> size,</span></span></span><br><span class="line"><span class="params"><span class="function"><span class="type">int</span>(*compar)(<span class="type">const</span> <span class="type">void</span> *, <span class="type">const</span> <span class="type">void</span> *))</span></span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">my_int_func</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>( <span class="string">&quot;%d\n&quot;</span>, x );</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">void</span> (*foo)(<span class="type">int</span>);</span><br><span class="line">    foo = &amp;my_int_func;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/* call my_int_func (note that you do not need to write (*foo)(2) ) */</span></span><br><span class="line">    <span class="built_in">foo</span>( <span class="number">2</span> );</span><br><span class="line">    <span class="comment">/* but if you want to, you may */</span></span><br><span class="line">    (*foo)( <span class="number">2</span> );</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="use-lambdas"><a href="#use-lambdas" class="headerlink" title="use lambdas"></a>use lambdas</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> car = [capture-clause] (<span class="keyword">auto</span> param) -&gt; <span class="type">bool</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//function body</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>capture clause:</p>
+<p>capture any outside variable by reference&#x2F;value.</p>
+<p><img src="https://i.imgur.com/c9ePu1h.png"></p>
+<p>using</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> limit =<span class="number">5</span>;</span><br><span class="line"><span class="keyword">auto</span> isMoreThan = [limit](<span class="type">int</span> n)&#123;<span class="keyword">return</span> n &gt; limit; &#125;;</span><br><span class="line"><span class="built_in">isMoreThan</span>(<span class="number">6</span>);</span><br></pre></td></tr></table></figure>
+
+<p>适用场景</p>
+<ol>
+<li>简单function</li>
+<li>传局部变量到function</li>
+<li>通过function pointer塞进function来添加更多的花样重载</li>
+</ol>
+<h3 id="functor-仿函数-x2F-函子"><a href="#functor-仿函数-x2F-函子" class="headerlink" title="functor 仿函数&#x2F;函子"></a>functor 仿函数&#x2F;函子</h3><p>是看起来像函数的<strong>类</strong>。通过重载()运算符使类的行为像函数，可以通过()调用。</p>
+<p>lambdas是functors的一个变种。</p>
+<p><img src="https://i.imgur.com/bip6UZ6.png"></p>
+<p>也能用结构体实现</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// this is a functor</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">add_x</span> &#123;</span><br><span class="line">  <span class="built_in">add_x</span>(<span class="type">int</span> val) : <span class="built_in">x</span>(val) &#123;&#125;  <span class="comment">// Constructor</span></span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="type">int</span> y)</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> x + y; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="type">int</span> x;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Now you can use it like this:</span></span><br><span class="line"><span class="function">add_x <span class="title">add42</span><span class="params">(<span class="number">42</span>)</span></span>; <span class="comment">// create an instance of the functor class</span></span><br><span class="line"><span class="type">int</span> i = <span class="built_in">add42</span>(<span class="number">8</span>); <span class="comment">// and &quot;call&quot; it</span></span><br><span class="line"><span class="built_in">assert</span>(i == <span class="number">50</span>); <span class="comment">// and it added 42 to its argument</span></span><br><span class="line"></span><br><span class="line">std::vector&lt;<span class="type">int</span>&gt; in; <span class="comment">// assume this contains a bunch of values)</span></span><br><span class="line"><span class="function">std::vector&lt;<span class="type">int</span>&gt; <span class="title">out</span><span class="params">(in.size())</span></span>;</span><br><span class="line"><span class="comment">// Pass a functor to std::transform, which calls the functor on every element </span></span><br><span class="line"><span class="comment">// in the input sequence, and stores the result to the output sequence</span></span><br><span class="line">std::<span class="built_in">transform</span>(in.<span class="built_in">begin</span>(), in.<span class="built_in">end</span>(), out.<span class="built_in">begin</span>(), <span class="built_in">add_x</span>(<span class="number">1</span>)); </span><br><span class="line"><span class="built_in">assert</span>(out[i] == in[i] + <span class="number">1</span>); <span class="comment">// for all i</span></span><br></pre></td></tr></table></figure>
+
+<p>现成STL</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::function&lt;return_type(param_types)&gt; func;</span><br></pre></td></tr></table></figure>
+
+<p>参考：</p>
+<ol>
+<li><a href="https://stackoverflow.com/questions/356950/what-are-c-functors-and-their-uses">What are C++ functors and their uses?</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
     <title>程序语言理论与实践 01 Introduction;语义、解释器和栈式虚拟机</title>
     <url>/2023/01/20/01_introducion_and_rescript_crash_course/</url>
     <content><![CDATA[<p>函数式编程是什么？栈式虚拟机是什么？Rescript是什么？我是什么？</p>
@@ -107,135 +286,6 @@
       </categories>
   </entry>
   <entry>
-    <title>05 Containers</title>
-    <url>/2023/01/19/05_containers/</url>
-    <content><![CDATA[<h2 id="containers"><a href="#containers" class="headerlink" title="containers"></a>containers</h2><h4 id="defining-containers"><a href="#defining-containers" class="headerlink" title="defining containers"></a>defining containers</h4><p><em>vector,stack,queue</em></p>
-<h4 id="two-types"><a href="#two-types" class="headerlink" title="two types"></a>two types</h4><p>1.sequence:</p>
-<pre><code>vector,deque,list
-</code></pre>
-<p>2.associative: 通过key访问数据</p>
-<pre><code>map,set
-
-ordered/unordered
-</code></pre>
-<p><strong>map</strong></p>
-<p>make_pair实现</p>
-<h4 id="container-adaptors"><a href="#container-adaptors" class="headerlink" title="container adaptors"></a>container adaptors</h4><p>在基础容器的基础上实现特定接口&#x2F;操作</p>
-<p>具体实现没太懂</p>
-<p><img src="https://i.imgur.com/PQrSCk9.png"></p>
-]]></content>
-      <categories>
-        <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>07 Classes</title>
-    <url>/2023/01/19/07_classes/</url>
-    <content><![CDATA[<p><em>How to make your own custom types</em></p>
-<h2 id="Classes-Introduction"><a href="#Classes-Introduction" class="headerlink" title="Classes Introduction"></a>Classes Introduction</h2><p><em>Containers are all classes defined in the STL</em></p>
-<h4 id="issues-with-structs"><a href="#issues-with-structs" class="headerlink" title="issues with structs"></a>issues with structs</h4><ol>
-<li>默认可以访问任意内部数据(public)</li>
-<li>需要直接初始化每个 data member</li>
-</ol>
-<p>classes 提供 public interface 和 private implement</p>
-<p><strong>声明结构</strong></p>
-<p>declare in .h  + implement in .cpp</p>
-<p>在 .cpp 中加入 .h 头文件</p>
-<p>.h include .cpp</p>
-<p><strong>namespace</strong></p>
-<ol>
-<li>防止名字冲突</li>
-<li>每个类有单独的namespace</li>
-</ol>
-<p><strong>this</strong></p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Student::setName</span><span class="params">(string name)</span></span>&#123;</span><br><span class="line"><span class="keyword">this</span>-&gt;name=name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>构造函数</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Student.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;Student.h&gt;</span></span></span><br><span class="line">Student::<span class="built_in">Student</span>():name&#123;<span class="string">&quot;&quot;</span>&#125;,age&#123;<span class="number">0</span>&#125;,state&#123;<span class="string">&quot;&quot;</span>&#125;</span><br><span class="line">Student::<span class="built_in">Student</span>(string name,<span class="type">int</span> age,string state)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">this</span>-&gt;name=name;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<p>destructors</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Class_name::~Class_name();</span><br></pre></td></tr></table></figure>
-
-<p><strong>using</strong></p>
-<ol>
-<li><pre><code class="c++">using namespace name;
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2. 指定别名</span><br><span class="line"></span><br><span class="line">```c++</span><br><span class="line">    using iterator = std::string*;</span><br><span class="line">    using size_type = size_t;</span><br></pre></td></tr></table></figure>
-</code></pre>
-</li>
-<li><p>在派生类中引用基类成员</p>
-</li>
-</ol>
-<h4 id="operator-重载"><a href="#operator-重载" class="headerlink" title="operator 重载"></a>operator 重载</h4><p>重载[]</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::string&amp; StrVector::<span class="keyword">operator</span>[](size_type index) &#123;</span><br><span class="line">    <span class="keyword">return</span> *(<span class="built_in">begin</span>() + index);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="const"><a href="#const" class="headerlink" title="const"></a>const</h4><p>后加const表函数不修改成员数据，可以被const对象引用。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">empty</span><span class="params">()</span> <span class="type">const</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>前加const表示返回值为const类型</p>
-<h2 id="Template-Class"><a href="#Template-Class" class="headerlink" title="Template Class"></a>Template Class</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> First, <span class="keyword">typename</span> Second&gt; <span class="keyword">class</span> <span class="title class_">MyPair</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="function">First <span class="title">getFirst</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function">Second <span class="title">getSecond</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setFirst</span><span class="params">(First f)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setSecond</span><span class="params">(Second f)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">First first;</span><br><span class="line">Second second;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>04 Initialization and References</title>
-    <url>/2023/01/19/04_initialization_and_references/</url>
-    <content><![CDATA[<h2 id="initialization"><a href="#initialization" class="headerlink" title="initialization"></a>initialization</h2><h5 id="uniform-initialization"><a href="#uniform-initialization" class="headerlink" title="uniform initialization"></a>uniform initialization</h5><p>大括号初始化，声明完立刻初始化</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::vector&lt;<span class="type">int</span>&gt; vec&#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>&#125;;</span><br><span class="line"><span class="type">int</span> x&#123;<span class="number">5</span>&#125;;</span><br><span class="line">string f&#123;<span class="string">&quot;Sarah&quot;</span>&#125;;</span><br></pre></td></tr></table></figure>
-
-<h5 id="auto"><a href="#auto" class="headerlink" title="auto"></a>auto</h5><p>use it to reduce long type names</p>
-<p>[]的使用</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> [found, solutions] = <span class="built_in">quadratic</span>(a, b, c);</span><br></pre></td></tr></table></figure>
-
-<h2 id="reference-引用-amp"><a href="#reference-引用-amp" class="headerlink" title="reference 引用  &amp;"></a>reference 引用  &amp;</h2><p><strong>引用和copy的区别</strong></p>
-<p>An alias (another name) for a named variable</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; original&#123;<span class="number">1</span>, <span class="number">2</span>&#125;;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; copy = original;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt;&amp; ref = original;</span><br><span class="line">original.<span class="built_in">push_back</span>(<span class="number">3</span>);</span><br><span class="line">copy.<span class="built_in">push_back</span>(<span class="number">4</span>);</span><br><span class="line">ref.<span class="built_in">push_back</span>(<span class="number">5</span>);</span><br><span class="line">cout &lt;&lt; original &lt;&lt; endl; <span class="comment">// &#123;1, 2, 3, 5&#125;</span></span><br><span class="line">cout &lt;&lt; copy &lt;&lt; endl; <span class="comment">// &#123;1, 2, 4&#125;</span></span><br><span class="line">cout &lt;&lt; ref &lt;&lt; endl; <span class="comment">// &#123;1, 2, 3, 5&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>You can only create references to variables</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>&amp; thisWontWork = <span class="number">5</span>; <span class="comment">// This doesn&#x27;t work!</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="const-and-const-references"><a href="#const-and-const-references" class="headerlink" title="const and const references"></a>const and const references</h5><p>const声明变量不会被改变-specify that a variable can’t be modified</p>
-<p>const引用可以引不const的，反之不行</p>
-<h5 id="reference使用场景"><a href="#reference使用场景" class="headerlink" title="reference使用场景"></a>reference使用场景</h5><p>1.variable占空间较大</p>
-<p>2.需要改变变量</p>
-<p>3.不需改变+占空间较大-&gt;用const reference</p>
-]]></content>
-      <categories>
-        <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>06 Iterators and Pointers</title>
-    <url>/2023/01/19/06_iterators_and_pointers/</url>
-    <content><![CDATA[<p><em>How do we access elements in a container in order?</em></p>
-<p><em>How do we reference existing data in our code?</em></p>
-<h2 id="iterators"><a href="#iterators" class="headerlink" title="iterators"></a>iterators</h2><p><em>访问容器中的元素</em></p>
-<p><strong>作用</strong></p>
-<ol>
-<li>访问容器中所有的数据</li>
-<li>按序访问（找到下一项）</li>
-</ol>
-<p>在不同容器中的<strong>种类</strong></p>
-<p><img src="https://i.imgur.com/EEXNpog.png"></p>
-<p><img src="https://i.imgur.com/bqbw0zU.png"></p>
-<p>取值时使用dereference(*iter)</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="keyword">auto</span>&amp; elem = *iter;</span><br></pre></td></tr></table></figure>
-
-<p>&amp;为引用</p>
-<p>iterators are a type of pointer</p>
-<h2 id="pointers"><a href="#pointers" class="headerlink" title="pointers"></a>pointers</h2><p><em><strong>引用</strong> 现有数据</em></p>
-<p>pointers reference memory addresses</p>
-<p>&amp;+variable 变量地址</p>
-<p>*+pointer   取值</p>
-<p>pointer声明时 type+*</p>
-]]></content>
-      <categories>
-        <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
     <title>08 Template Classes and Const Correctness</title>
     <url>/2023/01/19/08_template_classes_and_const_correctness/</url>
     <content><![CDATA[<p><em>How do we make our classes general? How do we make them safe?</em></p>
@@ -294,49 +344,34 @@ ordered/unordered
       </categories>
   </entry>
   <entry>
-    <title>10 Functions and Lambdas</title>
-    <url>/2023/01/19/10_funcioins_and_lambdas/</url>
-    <content><![CDATA[<p><em>How can we make template functions even more general?</em></p>
-<h1 id="Functions-and-Lambdas"><a href="#Functions-and-Lambdas" class="headerlink" title="Functions and Lambdas"></a>Functions and Lambdas</h1><h2 id="lambda"><a href="#lambda" class="headerlink" title="lambda"></a>lambda</h2><p>将函数作为参数</p>
-<p>instance</p>
-<p><img src="https://i.imgur.com/JTb45Mr.png"></p>
-<p>UniPred is what’s called a function pointer</p>
-<h3 id="function-pointers"><a href="#function-pointers" class="headerlink" title="function pointers"></a>function pointers</h3><ul>
-<li>可当作指针处理</li>
-<li>传参时跟变量一样</li>
-<li>调用时可作普通function</li>
+    <title>11 Operators</title>
+    <url>/2023/01/19/11_operators/</url>
+    <content><![CDATA[<h2 id="operator-overloading"><a href="#operator-overloading" class="headerlink" title="operator overloading"></a>operator overloading</h2><p><img src="https://i.imgur.com/mObcRf8.png"></p>
+<h3 id="examples"><a href="#examples" class="headerlink" title="examples"></a>examples</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//vector&lt;string&gt;增加元素</span></span><br><span class="line">vector&lt;string&gt;&amp; vector&lt;string&gt;::<span class="keyword">operator</span>+=(<span class="type">const</span> std::string&amp; element)&#123;			<span class="comment">//const reference</span></span><br><span class="line">    <span class="built_in">push_back</span>(element);</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    vector&lt;string&gt; vec;</span><br><span class="line">    <span class="type">const</span> string s = <span class="string">&quot;111&quot;</span>;</span><br><span class="line">    vec+= <span class="string">&quot;gggg&quot;</span>;		<span class="comment">//vec.operator+=(&quot;gggg&quot;); </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>concept check</p>
+<ul>
+<li><p>why return a reference</p>
+</li>
+<li><p>why return *this</p>
+<p>another example</p>
+</li>
 </ul>
-<p>使用例</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">qsort</span><span class="params">(<span class="type">void</span> *base, <span class="type">size_t</span> nmemb, <span class="type">size_t</span> size,</span></span></span><br><span class="line"><span class="params"><span class="function"><span class="type">int</span>(*compar)(<span class="type">const</span> <span class="type">void</span> *, <span class="type">const</span> <span class="type">void</span> *))</span></span>;</span><br></pre></td></tr></table></figure>
+<p>修改 class StringVector 的 + 操作符</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">StringVector StringVector::<span class="keyword">operator</span>+(<span class="type">const</span> StringVector other) <span class="type">const</span> &#123;</span><br><span class="line">    StringVector result = *<span class="keyword">this</span>; <span class="comment">//copy constructor</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">const</span> std::string&amp; s : other)&#123;</span><br><span class="line">        result += s;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">my_int_func</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>( <span class="string">&quot;%d\n&quot;</span>, x );</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">void</span> (*foo)(<span class="type">int</span>);</span><br><span class="line">    foo = &amp;my_int_func;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/* call my_int_func (note that you do not need to write (*foo)(2) ) */</span></span><br><span class="line">    <span class="built_in">foo</span>( <span class="number">2</span> );</span><br><span class="line">    <span class="comment">/* but if you want to, you may */</span></span><br><span class="line">    (*foo)( <span class="number">2</span> );</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="use-lambdas"><a href="#use-lambdas" class="headerlink" title="use lambdas"></a>use lambdas</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> car = [capture-clause] (<span class="keyword">auto</span> param) -&gt; <span class="type">bool</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//function body</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>capture clause:</p>
-<p>capture any outside variable by reference&#x2F;value.</p>
-<p><img src="https://i.imgur.com/c9ePu1h.png"></p>
-<p>using</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> limit =<span class="number">5</span>;</span><br><span class="line"><span class="keyword">auto</span> isMoreThan = [limit](<span class="type">int</span> n)&#123;<span class="keyword">return</span> n &gt; limit; &#125;;</span><br><span class="line"><span class="built_in">isMoreThan</span>(<span class="number">6</span>);</span><br></pre></td></tr></table></figure>
-
-<p>适用场景</p>
-<ol>
-<li>简单function</li>
-<li>传局部变量到function</li>
-<li>通过function pointer塞进function来添加更多的花样重载</li>
+<h3 id="General-rule-of-thumb"><a href="#General-rule-of-thumb" class="headerlink" title="General rule of thumb:"></a>General rule of thumb:</h3><h4 id="member-vs-non-member"><a href="#member-vs-non-member" class="headerlink" title="member vs. non-member"></a>member vs. non-member</h4><ol>
+<li>implement as members ( eg. [], (), -&gt;, &#x3D;)</li>
+<li>implement as non-members (eg. &lt;&lt;)</li>
+<li>一元操作符 implement as member (eg. ++)</li>
+<li>处理符号两侧 equally , implement as non-member ( maybe <strong>friend</strong> ) (eg. +, &lt;)</li>
+<li>not both equally, member (eg. +&#x3D;) 修改了某一个的值</li>
 </ol>
-<h3 id="functor-仿函数-x2F-函子"><a href="#functor-仿函数-x2F-函子" class="headerlink" title="functor 仿函数&#x2F;函子"></a>functor 仿函数&#x2F;函子</h3><p>是看起来像函数的<strong>类</strong>。通过重载()运算符使类的行为像函数，可以通过()调用。</p>
-<p>lambdas是functors的一个变种。</p>
-<p><img src="https://i.imgur.com/bip6UZ6.png"></p>
-<p>也能用结构体实现</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// this is a functor</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">add_x</span> &#123;</span><br><span class="line">  <span class="built_in">add_x</span>(<span class="type">int</span> val) : <span class="built_in">x</span>(val) &#123;&#125;  <span class="comment">// Constructor</span></span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="type">int</span> y)</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> x + y; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="type">int</span> x;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Now you can use it like this:</span></span><br><span class="line"><span class="function">add_x <span class="title">add42</span><span class="params">(<span class="number">42</span>)</span></span>; <span class="comment">// create an instance of the functor class</span></span><br><span class="line"><span class="type">int</span> i = <span class="built_in">add42</span>(<span class="number">8</span>); <span class="comment">// and &quot;call&quot; it</span></span><br><span class="line"><span class="built_in">assert</span>(i == <span class="number">50</span>); <span class="comment">// and it added 42 to its argument</span></span><br><span class="line"></span><br><span class="line">std::vector&lt;<span class="type">int</span>&gt; in; <span class="comment">// assume this contains a bunch of values)</span></span><br><span class="line"><span class="function">std::vector&lt;<span class="type">int</span>&gt; <span class="title">out</span><span class="params">(in.size())</span></span>;</span><br><span class="line"><span class="comment">// Pass a functor to std::transform, which calls the functor on every element </span></span><br><span class="line"><span class="comment">// in the input sequence, and stores the result to the output sequence</span></span><br><span class="line">std::<span class="built_in">transform</span>(in.<span class="built_in">begin</span>(), in.<span class="built_in">end</span>(), out.<span class="built_in">begin</span>(), <span class="built_in">add_x</span>(<span class="number">1</span>)); </span><br><span class="line"><span class="built_in">assert</span>(out[i] == in[i] + <span class="number">1</span>); <span class="comment">// for all i</span></span><br></pre></td></tr></table></figure>
-
-<p>现成STL</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::function&lt;return_type(param_types)&gt; func;</span><br></pre></td></tr></table></figure>
-
-<p>参考：</p>
+<h4 id="const-vs-non-const-for-member-functions"><a href="#const-vs-non-const-for-member-functions" class="headerlink" title="const vs. non-const for member functions"></a>const vs. non-const for member functions</h4><p>const 对象只能调用 const function</p>
+<p>可申明一个 const 版本</p>
+<h3 id="Principle-of-Least-Astonishment-POLA"><a href="#Principle-of-Least-Astonishment-POLA" class="headerlink" title="Principle of Least Astonishment (POLA)"></a>Principle of Least Astonishment (POLA)</h3><p>参考</p>
 <ol>
-<li><a href="https://stackoverflow.com/questions/356950/what-are-c-functors-and-their-uses">What are C++ functors and their uses?</a></li>
+<li><a href="https://www.youtube.com/watch?v=9i_TNfhVvSM&list=PLCgD3ws8aVdolCexlz8f3U-RROA0s5jWA&index=19&ab_channel=AveryWang">https://www.youtube.com/watch?v=9i_TNfhVvSM&amp;list=PLCgD3ws8aVdolCexlz8f3U-RROA0s5jWA&amp;index=19&amp;ab_channel=AveryWang</a></li>
 </ol>
 ]]></content>
       <categories>
@@ -410,38 +445,500 @@ ordered/unordered
       </categories>
   </entry>
   <entry>
-    <title>11 Operators</title>
-    <url>/2023/01/19/11_operators/</url>
-    <content><![CDATA[<h2 id="operator-overloading"><a href="#operator-overloading" class="headerlink" title="operator overloading"></a>operator overloading</h2><p><img src="https://i.imgur.com/mObcRf8.png"></p>
-<h3 id="examples"><a href="#examples" class="headerlink" title="examples"></a>examples</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//vector&lt;string&gt;增加元素</span></span><br><span class="line">vector&lt;string&gt;&amp; vector&lt;string&gt;::<span class="keyword">operator</span>+=(<span class="type">const</span> std::string&amp; element)&#123;			<span class="comment">//const reference</span></span><br><span class="line">    <span class="built_in">push_back</span>(element);</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    vector&lt;string&gt; vec;</span><br><span class="line">    <span class="type">const</span> string s = <span class="string">&quot;111&quot;</span>;</span><br><span class="line">    vec+= <span class="string">&quot;gggg&quot;</span>;		<span class="comment">//vec.operator+=(&quot;gggg&quot;); </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    <title>15 RALL</title>
+    <url>/2023/01/19/15_RAll_smartpointers_buildingprojects/</url>
+    <content><![CDATA[<h2 id="RAll"><a href="#RAll" class="headerlink" title="RAll"></a>RAll</h2><p><em>a coding standard and practice</em></p>
+<h3 id="exceptions"><a href="#exceptions" class="headerlink" title="exceptions"></a>exceptions</h3><p><strong>resources that need to be released</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Acquire</th>
+<th>Release</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Heap memory</td>
+<td>new</td>
+<td>delete</td>
+</tr>
+<tr>
+<td>Files</td>
+<td>open</td>
+<td>close</td>
+</tr>
+<tr>
+<td>Lock</td>
+<td>try_lock</td>
+<td>unlock</td>
+</tr>
+<tr>
+<td>Sockets</td>
+<td>socket</td>
+<td>close</td>
+</tr>
+</tbody></table>
+<p><strong>exceptions</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="comment">//code associated with exception handler</span></span><br><span class="line">&#125; <span class="built_in">catch</span>()&#123;</span><br><span class="line">    <span class="comment">//exception handler</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>concept check</p>
+<p><strong>enforcing exception safety</strong> 抛异常的可能性大小</p>
 <ul>
-<li><p>why return a reference</p>
+<li>Nothrow exception guarantee(destructors, …)</li>
+<li>…</li>
+<li>No exception guarantee (memory corruption, …)</li>
+</ul>
+<p><strong>RAII</strong></p>
+<p>又名</p>
+<p>scope based memory management</p>
+<p>&#x2F; constructor acquires, destructor releases</p>
+<p>目标</p>
+<ul>
+<li>avoid calling <em>new</em> and <em>delete</em> explicitly</li>
+</ul>
+<p>(资源出了scope自动释放)</p>
+<p><img src="https://i.imgur.com/lZxDl9h.png"></p>
+<p><img src="https://i.imgur.com/GzshscC.png"></p>
+<h3 id="Smart-Pointers"><a href="#Smart-Pointers" class="headerlink" title="Smart Pointers"></a>Smart Pointers</h3><p><em>put SMFs to good use</em></p>
+<p>在constructor中acquire，在destructor中release</p>
+<ul>
+<li>std::unique_ptr<ul>
+<li>Uniquely owns its resource, can’t be copied</li>
+</ul>
 </li>
-<li><p>why return *this</p>
-<p>another example</p>
+<li>std::shared_ptr<ul>
+<li>Can make copies, destructed when underlying memory goes out of scope</li>
+</ul>
+</li>
+<li>std::weak_ptr<ul>
+<li>Models temporary ownership: when an object only needs to be accessed if it exists (convert to shared_ptr to access)</li>
+</ul>
 </li>
 </ul>
-<p>修改 class StringVector 的 + 操作符</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">StringVector StringVector::<span class="keyword">operator</span>+(<span class="type">const</span> StringVector other) <span class="type">const</span> &#123;</span><br><span class="line">    StringVector result = *<span class="keyword">this</span>; <span class="comment">//copy constructor</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">const</span> std::string&amp; s : other)&#123;</span><br><span class="line">        result += s;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>In practice</strong></p>
+<p><img src="https://i.imgur.com/ybziOx5.png"></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//create smart pointers</span></span><br><span class="line">std::unique_ptr&lt;T&gt; up&#123;<span class="keyword">new</span> T&#125;;</span><br><span class="line">std::shared_ptr&lt;T&gt; sp&#123;<span class="keyword">new</span> T&#125;;</span><br><span class="line">std::weak_ptr&lt;T&gt; wp=sp;<span class="comment">//can only be copy/ move constructed</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="General-rule-of-thumb"><a href="#General-rule-of-thumb" class="headerlink" title="General rule of thumb:"></a>General rule of thumb:</h3><h4 id="member-vs-non-member"><a href="#member-vs-non-member" class="headerlink" title="member vs. non-member"></a>member vs. non-member</h4><ol>
-<li>implement as members ( eg. [], (), -&gt;, &#x3D;)</li>
-<li>implement as non-members (eg. &lt;&lt;)</li>
-<li>一元操作符 implement as member (eg. ++)</li>
-<li>处理符号两侧 equally , implement as non-member ( maybe <strong>friend</strong> ) (eg. +, &lt;)</li>
-<li>not both equally, member (eg. +&#x3D;) 修改了某一个的值</li>
-</ol>
-<h4 id="const-vs-non-const-for-member-functions"><a href="#const-vs-non-const-for-member-functions" class="headerlink" title="const vs. non-const for member functions"></a>const vs. non-const for member functions</h4><p>const 对象只能调用 const function</p>
-<p>可申明一个 const 版本</p>
-<h3 id="Principle-of-Least-Astonishment-POLA"><a href="#Principle-of-Least-Astonishment-POLA" class="headerlink" title="Principle of Least Astonishment (POLA)"></a>Principle of Least Astonishment (POLA)</h3><p>参考</p>
-<ol>
-<li><a href="https://www.youtube.com/watch?v=9i_TNfhVvSM&list=PLCgD3ws8aVdolCexlz8f3U-RROA0s5jWA&index=19&ab_channel=AveryWang">https://www.youtube.com/watch?v=9i_TNfhVvSM&amp;list=PLCgD3ws8aVdolCexlz8f3U-RROA0s5jWA&amp;index=19&amp;ab_channel=AveryWang</a></li>
-</ol>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//better one</span></span><br><span class="line">std::unique_ptr&lt;T&gt; up = std::<span class="built_in">make_unique</span>&lt;T&gt;();</span><br><span class="line">std::unique_ptr&lt;T&gt; sp = std::<span class="built_in">make_shared</span>&lt;T&gt;();</span><br></pre></td></tr></table></figure>
+
+<h3 id="Building-C-Projects"><a href="#Building-C-Projects" class="headerlink" title="Building C++ Projects"></a>Building C++ Projects</h3><p>v</p>
 ]]></content>
       <categories>
         <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>lab 1 MapReduce</title>
+    <url>/2023/04/01/lab1MapReduce/</url>
+    <content><![CDATA[<p>仅调试记录有少许回忆价值，其他部分抄都没抄完。——写给以后试图回忆起自己写过什么的我。</p>
+<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>实现一个包括 coordinator 和 worker 两个 program 的 distributed mapreduce。</p>
+<p>workers</p>
+<ul>
+<li>通过 RPC 联络 coordinator</li>
+<li>多个 workers 并发</li>
+<li>向 coordinator 请求任务，读取任务输出，执行，输出结果</li>
+</ul>
+<p>coordinator</p>
+<ul>
+<li>只有一个</li>
+<li>如果有 worker 长时间未完成任务(10s)，将任务发给其他 worker</li>
+</ul>
+<h4 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h4><ul>
+<li>nReduce 指定了 reduce 任务的数量，每个 mapper 需要创建 nReduce 个中间文件， worker 完成第 X 个 task 输出的文件为 mr-out-X</li>
+<li>将 worker 输出的中间文件保存到当前文件夹，使其能在 reduce时读到</li>
+<li>Done() 用于完成 mapreduce 后停止 coordinator</li>
+</ul>
+<h3 id="代码路径"><a href="#代码路径" class="headerlink" title="代码路径"></a>代码路径</h3><p>示例代码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main/mrcoordinator.go</span><br><span class="line">main/mrworker.go</span><br></pre></td></tr></table></figure>
+
+<p>实现</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mr/coordinator.go</span><br><span class="line">mr/worker.go</span><br><span class="line">mr/rpc.go</span><br></pre></td></tr></table></figure>
+
+<h3 id="mrsequential-go"><a href="#mrsequential-go" class="headerlink" title="mrsequential.go"></a>mrsequential.go</h3><p><code>ByKey</code>是一个 key-value 结构体数组，有三个方法</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// for sorting by key.</span></span><br><span class="line"><span class="keyword">type</span> ByKey []mr.KeyValue</span><br><span class="line"></span><br><span class="line"><span class="comment">// for sorting by key.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a ByKey)</span></span> Len() <span class="type">int</span>           &#123; <span class="keyword">return</span> <span class="built_in">len</span>(a) &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a ByKey)</span></span> Swap(i, j <span class="type">int</span>)      &#123; a[i], a[j] = a[j], a[i] &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a ByKey)</span></span> Less(i, j <span class="type">int</span>) <span class="type">bool</span> &#123; <span class="keyword">return</span> a[i].Key &lt; a[j].Key &#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>loadPlugin</code>加载了用户定义的map和reduce</p>
+<p>Map() 的输入是一个键值对（例子中为[文章名]-内容），输出是键值对数组。</p>
+<p>Reduce() 的输入是一个键和对应的多个值，输出该键合并后的值。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Map</span><span class="params">(filename <span class="type">string</span>, contents <span class="type">string</span>)</span></span> []mr.KeyValue</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Reduce</span><span class="params">(key <span class="type">string</span>, values []<span class="type">string</span>)</span></span> <span class="type">string</span></span><br></pre></td></tr></table></figure>
+
+<p>plugin是一种用于编写模块化go程序的特性，可以将go包编译为共享对象**(.so)<strong>文件，然后在运行时动态加载和调用插件中的</strong>函数和变量**</p>
+<p>这段代码中读入了用户编写的map和reduce函数为mapf , reducef</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// load the application Map and Reduce functions</span></span><br><span class="line"><span class="comment">// from a plugin file, e.g. ../mrapps/wc.so</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">loadPlugin</span><span class="params">(filename <span class="type">string</span>)</span></span> (<span class="function"><span class="keyword">func</span><span class="params">(<span class="type">string</span>, <span class="type">string</span>)</span></span> []mr.KeyValue, <span class="function"><span class="keyword">func</span><span class="params">(<span class="type">string</span>, []<span class="type">string</span>)</span></span> <span class="type">string</span>) &#123;</span><br><span class="line">	p, err := plugin.Open(filename)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;cannot load plugin %v&quot;</span>, filename)</span><br><span class="line">	&#125;</span><br><span class="line">	xmapf, err := p.Lookup(<span class="string">&quot;Map&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;cannot find Map in %v&quot;</span>, filename)</span><br><span class="line">	&#125;</span><br><span class="line">	mapf := xmapf.(<span class="function"><span class="keyword">func</span><span class="params">(<span class="type">string</span>, <span class="type">string</span>)</span></span> []mr.KeyValue)</span><br><span class="line">	xreducef, err := p.Lookup(<span class="string">&quot;Reduce&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;cannot find Reduce in %v&quot;</span>, filename)</span><br><span class="line">	&#125;</span><br><span class="line">	reducef := xreducef.(<span class="function"><span class="keyword">func</span><span class="params">(<span class="type">string</span>, []<span class="type">string</span>)</span></span> <span class="type">string</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> mapf, reducef</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实现了单线程处理 map 和 reduce ，读文件，顺序调用 map ，全部保存到中间状态中，再将所有key排序，按key分组输入reduce。</p>
+<h3 id="mrworker-go"><a href="#mrworker-go" class="headerlink" title="mrworker.go"></a>mrworker.go</h3><p>调用了worker.go</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><h4 id="coordinator"><a href="#coordinator" class="headerlink" title="coordinator"></a>coordinator</h4><p>Coordinatro 对象结构</p>
+<p>创建coordinator后监听</p>
+<h4 id="worker"><a href="#worker" class="headerlink" title="worker"></a>worker</h4><h4 id="coordinator和worker的交互流程："><a href="#coordinator和worker的交互流程：" class="headerlink" title="coordinator和worker的交互流程："></a>coordinator和worker的交互流程：</h4><p><strong>1.</strong> coordinator.go 中为 Coordinator 添加 <code>接收到请求后的处理方法 Example()</code>，方法接受的参数 <code>reply的引用</code>，使得 Coordinator 可以对 worker 的值进行修改，等价于进行了信息传递。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Coordinator)</span></span> Example(args *ExampleArgs, reply *ExampleReply) <span class="type">error</span> &#123;</span><br><span class="line">	reply.Y = args.X + <span class="number">1</span></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参数的特殊类型定义在 rpc.go 中</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> ExampleArgs <span class="keyword">struct</span> &#123;</span><br><span class="line">	X <span class="type">int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>2.</strong> 创建 Coordinator ，并通过 RPC 开始监听</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// start a thread that listens for RPCs from worker.go</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Coordinator)</span></span> server() &#123;</span><br><span class="line">	rpc.Register(c)</span><br><span class="line">	rpc.HandleHTTP()</span><br><span class="line">	<span class="comment">//l, e := net.Listen(&quot;tcp&quot;, &quot;:1234&quot;)</span></span><br><span class="line">	sockname := coordinatorSock()</span><br><span class="line">	os.Remove(sockname)</span><br><span class="line">	l, e := net.Listen(<span class="string">&quot;unix&quot;</span>, sockname)</span><br><span class="line">	<span class="keyword">if</span> e != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(<span class="string">&quot;listen error:&quot;</span>, e)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">go</span> http.Serve(l, <span class="literal">nil</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 rpc.go 中添加迫真地址</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">coordinatorSock</span><span class="params">()</span></span> <span class="type">string</span> &#123;</span><br><span class="line">	s := <span class="string">&quot;/var/tmp/5840-mr-&quot;</span></span><br><span class="line">	s += strconv.Itoa(os.Getuid())</span><br><span class="line">	<span class="keyword">return</span> s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>3.</strong> worker 调用 call()， 向 coordinator 发送请求，使 Coordinator 调用指定处理函数。</p>
+<h4 id="调试记录"><a href="#调试记录" class="headerlink" title="调试记录"></a>调试记录</h4><ol>
+<li><p>添加了分配任务函数，功能仅有从coordinator任务列表中传一个文件名。</p>
+</li>
+<li><p>添加Register()，用于给worker分配id，在worker.go中传入参数想填nil，出现报错 <code>gob: cannot encode nil value</code>，原理不明，改成虚空workerid之后能跑了，有空再研究。</p>
+<p>出现报错 <code>panic: assignment to entry in nil map</code>，原因未初始化结构体中的map，被教了make()怎么用</p>
+</li>
+<li><p>为 Allocate 添加了寻找未分配任务的功能，向 Coordinator 中添加了 <code>TasksList []*Task</code>，一开始未使用指针，在循环里复制出的 task 里修改任务状态，导致实际上没改到，略二。考虑到 worker 完成后需要通过 taskid 修改 task 状态，因此选择了数组储存TaskList。考虑到在worker crash后可能需要通过 workerid 找到 task 并修改任务状态，向 Coordinator 中添加了 <code>WorkerTaskMap</code></p>
+</li>
+<li><p>添加了DoMap(). 打开文件读文件调用mapf处理，并保存中间量至中间文件。在内存中使用了二维数组 [][]intermediate 保存 kv .存入文件时，使用了 <code>json.NewEncoder</code>等函数将数据转为二进制格式。<code>ioutil.TempFile()</code>和 <code>defer os.Remove()</code>一起使用，避免文件写入中途 worker crash 了使文件不全。</p>
+<p>使用了 CallTask() 递归调用的方式实现了完成一个 Task 后立即请求下一个任务。</p>
+<p>出现报错：<code>gob: type mismatch in decoder: want struct type mr.WorkerId; got non-struct</code>，原因是应该定义结构体WorkerId{}，直接传了 int 型的 Id 就报错了。</p>
+<p>又出现报错，二维数组越界。如果需要通过第一维序号随机访问，需要在定义为 [][]KeyValue{} 之后 append 一些 []KeyValue 。</p>
+<p>输出了一堆 mr-x-10 ，也许 hash 出了一些问题。–只是命名的时候写错了。</p>
+</li>
+<li><p>添加了 wait 状态，分配任务时的条件添加了一条任务类型与 coordinator 当前状态一致才可能分配。map任务数由文件数决定，reduce任务数确定，因此初始化 coordinator 时就可以一起把 map 和 reduce 办了。</p>
+</li>
+<li><p>添加了 CheckDone() 和 Done() ，4s一次，检查是否所有任务都被完成，exit(0)暴力退出，希望程序没事。</p>
+</li>
+<li><p>对 worker crash 的处理：coordinator 不需要辨别 worker ，worker crash 后会导致任务不能完成，因此只要在分配了某任务之后一定时间检查任务是否完成，若未完成，则将该任务的状态改回未分配。</p>
+</li>
+<li><p>锁：为 AllocateTask() 添加锁。</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>mit6.824</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>230401</title>
+    <url>/2023/04/01/230401%E8%AE%B0%E4%BA%8B/</url>
+    <content><![CDATA[<p>今天两点我在想，如果我有不受限的能力，我会有什么愿望。我想到高山流水荒漠远洋，然后问如果我有创造的能力，那我创造出来的东西智力水平是否能超过我。我猜没有这样的好事。后来我想了五分钟，我想这世上从未有过文明，或者没有人能感知到我，或者很多人都爱我，最后的答案是拯救世界。也许这是很多人年轻时做过的狂梦，但我很少有这样的幻想，哪怕是看中二作品时。拯救世界能被爱而不亏欠别人。</p>
+<p>但这个世界是混沌的，它不会有一个更好的状态，至少不会有一个所有人共识中的更好状态。没有人拯救世界。</p>
+<p>昨天母亲发他新拍的照片。他快五十岁了，比年轻的时候更爱拍照。我已忘记很多事，远离很多岁月。</p>
+<p>–</p>
+<p>昨天是跨性别现身日。但不是我的现身日。我甚至不知道该给自己挂什么旗。粉白蓝太正统，别的又太矫情。如果手术不要证我根本不会觉得我可能算trans。这是一个未被统一的概念，我既不典型，问题也在能解构的范围内。我想解决问题，而我曾经不认为身份认同是解决问题的一环。现在我依旧没有明确的答案，但我想我确实偏离“大部分人”的轨道很远了。</p>
+<p>no binary, agender, queer？我到底是什么其实不重要，因为在这里，这些都不存在，不论是社会上还是医学上。</p>
+<p>我确实是想说点东西给除了我以外的人听，但我没有勇气在任何账号发这些。倘若你恰好认识我，，你最好不认识我。以下内容写于两个月前。</p>
+<p>–</p>
+<p>我想我应该享受这片刻的宁静。这是短暂的、自由的日子，不应用焦虑沾满生活。恋旧是我的恶习，当我试着站在未来回看此时，顿感此刻的易碎与闲适。三年前，我写道，我的生活苍白而又繁复，对现在的我而言，大抵同样。</p>
+<p>半个小时前，我吃下这些日子以来的第七片药。xyn 吃雌和孕，我也吃雌和孕，也许我也是xyn。我显然不喜欢被这样称呼，但觉得这个机灵有点地狱笑话。对于xyn来说，这是心理srs。对我来说，又是什么呢。机械飞升？化学改造？</p>
+<p>目前的副作用也许是少量的嗜睡和少量的情绪波动。去年我说，我不吃药，因为他们有目标，而我没有。现在我认可的我的存在、我期望的是百分之九十九的地球人不认为严肃存在的概念。我在理智上一刀又一刀地解剖自己，发现少有方法能在物理上帮助我，少有人能理解我，最后被焦虑推动着吃下拆东墙补西墙的药。我无法接受我再什么都不做，但我也做不了什么。 </p>
+<p>xyn 会做化蝶的梦吗？我确实睡眠时连做了几天我期望的梦。昨天在知乎上刷到一个问题，问为何人们觉得蝴蝶美而蝴蝶幼崽毛毛虫丑陋，那个回答说，有一种美丽的蝴蝶，在幼时也很可爱，图里的毛毛虫有两根蜗牛似的触角。小时候被强迫灌输了破茧化蝶这样的文字，不觉得罕见，又亲手淹死过蝴蝶，我对生物上的蝴蝶没有多少好感，只是蝶这个字代表脆弱和轻盈之美而已。如今才觉得这般生物的变化如同奇迹。可惜人变不得。蝶在生物上的斑斓，在人类引用时变成了抽象固化的美。我也确实害怕副作用。我不知道将来会变成什么样。我所做的、想做的这些，最好是让情况好转而不是延缓我情绪崩溃而已。</p>
+<p>我曾佩服有勇气标新立异的人，也疑惑是什么支撑着激进者和理想主义者。如今我也成了这样的人。温和派与日子人不是理智，只是不够痛。我真的愿意去选那个机械飞升的选项而不是当作笑话，我真的愿意去选那97个选项，或者武装直升机，而不是当作笑话。有些人魔怔是为了找乐子，而有些人用来减缓痛苦。 </p>
+<p>我不知道这是否算出柜，我倒最好是有柜可出，而不是因为偏执和愤世嫉俗。我半年来似乎跟好几个人出了柜，实际上是把自己塞进更深的柜子里。<br>那天我对亲人掩饰流泪、否认、沉默，那天我向大他者说我需要奇迹，那天我从里面关上柜子的门，一片漆黑。当我打下需要奇迹时，我也理解了信教者。宁愿相信执念不是无药可救，于是为那片虚空添上信仰的神，在我这宁愿称其奇迹。我在这无波澜人生的绝望时刻，明白了奇迹一词如何产生。</p>
+<p>我每接近一个少数群体，便发觉我自己过往的误解，而后是漫天的，可怕的，绝大多数人的冷漠和误解。我恨他们，恨自己，恨人类的低能、无知、被激素左右、困在每个人的个人认知中无法理解彼此。恨不得人类没有自我意识。</p>
+<p>我会继续沉默下去吗？</p>
+<p>我存在吗？</p>
+<p>我是癔症，是幽灵，是玩笑，是inexistence。</p>
+<p>所有人都在群体性的癔症中，构建出不存在的孤岛们。</p>
+]]></content>
+      <categories>
+        <category>pieces</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>6.824 lecture 简短记录</title>
+    <url>/2023/04/02/lecture/</url>
+    <content><![CDATA[<h2 id="01-mapreduce"><a href="#01-mapreduce" class="headerlink" title="01 mapreduce"></a>01 mapreduce</h2><p>输入：一组键值对</p>
+<p>输出：另一组键值对</p>
+<p>以kv存储为基础。将一个任务分为多个小块 <strong>map()</strong> ，将每个 map 输出聚集 <strong>reduce()</strong> 。</p>
+<p>用户需要使用 mapreduce 实现具体功能时，只需写出 map 和 reduce 的函数内容。</p>
+<p>例：记录字母出现次数</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input1 -&gt; Map -&gt; a,1 b,1</span><br><span class="line">Input2 -&gt; Map -&gt;     b,1</span><br><span class="line">Input3 -&gt; Map -&gt; a,1     c,1</span><br><span class="line">                  |   |   |</span><br><span class="line">                  |   |   -&gt; Reduce -&gt; c,1</span><br><span class="line">                  |   -----&gt; Reduce -&gt; b,2</span><br><span class="line">                  ---------&gt; Reduce -&gt; a,2</span><br></pre></td></tr></table></figure>
+
+<h2 id="02-threads-and-RPC"><a href="#02-threads-and-RPC" class="headerlink" title="02 threads and RPC"></a>02 threads and RPC</h2><h3 id="threads"><a href="#threads" class="headerlink" title="threads"></a>threads</h3><p>多线程的使用原因</p>
+<ul>
+<li>I&#x2F;0 concurrency - 等待磁盘读取等</li>
+<li>parallelism（并行） - 多核</li>
+<li>convenience - 间隔性重复任务</li>
+</ul>
+<p>alternative to threads : event-driven</p>
+<h4 id="threads-challenges"><a href="#threads-challenges" class="headerlink" title="threads challenges"></a>threads challenges</h4><ul>
+<li>race 线程进行相似操作 - 同时调用共享资源 - 锁</li>
+<li>coordination 线程相互等待 - channels waitGroup (in go)</li>
+</ul>
+<h3 id="example-web-crawler"><a href="#example-web-crawler" class="headerlink" title="example: web crawler"></a>example: web crawler</h3><p>抓取得到页面中所有的url，再依次抓取</p>
+<h4 id="共享对象和锁"><a href="#共享对象和锁" class="headerlink" title="共享对象和锁"></a>共享对象和锁</h4><p><strong>WaitGroup</strong></p>
+<p>使主goroutine等待所有goroutine完成其执行来同步多个goroutine。</p>
+<ul>
+<li><code>Add(int)</code>：表示要等待的goroutine的数量。<code>Add()</code>函数以整数作为参数，该整数充当计数器。</li>
+<li><code>Done()</code>：将计数器减一。</li>
+<li><code>Wait()</code>：阻塞一段代码，直到内部计数器减少为零.</li>
+</ul>
+<p><strong>defer</strong></p>
+<p>使用例</p>
+<p>不论这个函数以何种原因结束，都会在退出时执行defer后的语句。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">fs.mu.Lock()</span><br><span class="line"><span class="keyword">defer</span> fs.mu.Unlock()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>fs.fetched表格被所有goroutine共享。</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> fetchState <span class="keyword">struct</span> &#123;</span><br><span class="line">	mu      sync.Mutex</span><br><span class="line">	fetched <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">bool</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(fs *fetchState)</span></span> testAndSet(url <span class="type">string</span>) <span class="type">bool</span> &#123;</span><br><span class="line">	fs.mu.Lock()</span><br><span class="line">	<span class="keyword">defer</span> fs.mu.Unlock()</span><br><span class="line">	r := fs.fetched[url]</span><br><span class="line">	fs.fetched[url] = <span class="literal">true</span></span><br><span class="line">	<span class="keyword">return</span> r</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ConcurrentMutex</span><span class="params">(url <span class="type">string</span>, fetcher Fetcher, fs *fetchState)</span></span> &#123;<span class="comment">//map默认是指针，因此不一定需要在此处写明为引用</span></span><br><span class="line">	<span class="keyword">if</span> fs.testAndSet(url) &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	urls, err := fetcher.Fetch(url)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">var</span> done sync.WaitGroup</span><br><span class="line">	<span class="keyword">for</span> _, u := <span class="keyword">range</span> urls &#123;</span><br><span class="line">		done.Add(<span class="number">1</span>)</span><br><span class="line">		<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">(u <span class="type">string</span>)</span></span> &#123;			<span class="comment">//在闭包中内部函数会访问函数的当前量，此处需要u为其本次循环下的量，因此需要作为参数被传递</span></span><br><span class="line">			<span class="keyword">defer</span> done.Done()</span><br><span class="line">			ConcurrentMutex(u, fetcher, fs)</span><br><span class="line">		&#125;(u)</span><br><span class="line">	&#125;</span><br><span class="line">	done.Wait()</span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>race detector</strong></p>
+<p>基于程序的运行发现可能的race		运行时添加-race参数</p>
+<h4 id="使用channel传递信息"><a href="#使用channel传递信息" class="headerlink" title="使用channel传递信息"></a>使用channel传递信息</h4><h2 id="03-GFS"><a href="#03-GFS" class="headerlink" title="03 GFS"></a>03 GFS</h2><p>分布式存储系统</p>
+<p>接口、内部结构</p>
+<h3 id="Big-storage"><a href="#Big-storage" class="headerlink" title="Big storage"></a>Big storage</h3><ul>
+<li>why hard</li>
+</ul>
+<h3 id="GFS"><a href="#GFS" class="headerlink" title="GFS"></a>GFS</h3><p>一个 master 中记录了 其他机器中储存的 Chunk。同一个 Chunk 可能储存在多个服务器中。当有修改等指令时，master向所有相关服务器发送指令，若有一个服务器回复失败或无回复，则重做。</p>
+<p>gfs存在一致性问题。</p>
+<ul>
+<li>问题</li>
+</ul>
+<p>一致性问题</p>
+<h2 id="04-复制（replication）"><a href="#04-复制（replication）" class="headerlink" title="04 复制（replication）"></a>04 复制（replication）</h2><h3 id="容错和复制"><a href="#容错和复制" class="headerlink" title="容错和复制"></a>容错和复制</h3><ul>
+<li><strong>复制能处理的故障</strong> <strong>fail-stop</strong>故障：单台机器停止运行的故障</li>
+</ul>
+<p>限制：错误互相独立</p>
+<ul>
+<li>不能处理的：软件 bug 和硬件设计的缺陷</li>
+</ul>
+<p>是否需要复制取决于宕机的代价</p>
+<ul>
+<li>状态转移（复制内存）</li>
+<li>复制状态机（请求操作较小，但更复杂，并假设两台机器对外部指令反应一致；在多核情况下可能遇到更多问题）</li>
+</ul>
+<h3 id="什么样的状态需要被复制"><a href="#什么样的状态需要被复制" class="headerlink" title="什么样的状态需要被复制"></a>什么样的状态需要被复制</h3><p>VMware FT：复制了机器的完整状态，包括内存和寄存器。- 通用复制方案，代价是损失了效率。</p>
+<p>GFS等大部分复制方案：复制应用程序级别的 Chunk</p>
+<h3 id="VMware-FT-fault-tolerance-流程"><a href="#VMware-FT-fault-tolerance-流程" class="headerlink" title="VMware FT(fault tolerance) 流程"></a>VMware FT(fault tolerance) 流程</h3><p>一主一从的主从复制（？）</p>
+<ul>
+<li>Primary 收到网络数据包之后，处理拷贝一份发送给 Backup ，处理结束后向客户机发送回复。 Backup 也发送回复，而本机 vmm 会忽略 backup 发的包。</li>
+</ul>
+<p>primary 和 backup 的同步数据流通道 - Log Channel</p>
+<p>primary -&gt; backup 发送的时间 - Log Event&#x2F; Entry</p>
+<ul>
+<li>Primary 发生故障：Backup 接受不到来自 Primary 的定时器中断，不再等待 log channel 事件。VMM会让backup自由执行，不再受 primary 的事件驱动，并使后续客户端请求发往 backup。 backup -&gt; primary</li>
+<li>Primary 执行有随机性的操作： Backup 不执行操作，而是等待 primary 输出的结果。</li>
+</ul>
+<h3 id="非确定性事件"><a href="#非确定性事件" class="headerlink" title="非确定性事件"></a>非确定性事件</h3><ul>
+<li>怪异指令</li>
+<li>中断时机</li>
+<li>多CPU并发 - 指令顺序不可预期</li>
+</ul>
+<h2 id="05-thread-go-raft"><a href="#05-thread-go-raft" class="headerlink" title="05 thread, go, raft"></a>05 thread, go, raft</h2><h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> wg sync.WaitGroup</span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>;i &lt; <span class="number">5</span>;i++ &#123;</span><br><span class="line">        wg.add()</span><br><span class="line">        <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">(x <span class="type">int</span>)</span></span> &#123;</span><br><span class="line">            sendRPC(x)</span><br><span class="line">            wg.Done()</span><br><span class="line">        &#125;(i)</span><br><span class="line">    &#125;</span><br><span class="line">    wg.Wait()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">sendRPC</span><span class="params">(i <span class="type">int</span>)</span></span> &#123;</span><br><span class="line">    <span class="built_in">println</span>(i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以使用 go 跑多个语句</p>
+<h3 id="lock"><a href="#lock" class="headerlink" title="lock"></a>lock</h3><ul>
+<li>共享数据</li>
+<li>需要保持某些值遵守某些规则（原子性）</li>
+</ul>
+<h3 id="condition-variable"><a href="#condition-variable" class="headerlink" title="condition variable"></a>condition variable</h3><p>当共享数据中的某个条件或某些属性变为 true 的时候，通过条件变量进行协调。</p>
+<p>define <code>sync.NewCond(&amp;mu)</code></p>
+<p>进行可能改变变量的操作后 <code>cond.Broadcast</code></p>
+<p>监测的条件语句</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">mu.lock()</span><br><span class="line"><span class="keyword">for</span> count&lt;<span class="number">5</span> &amp;&amp;finished != <span class="number">10</span> &#123;</span><br><span class="line">    cond.Wait()	<span class="comment">// wait until Broadcast() is call</span></span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line">mu.unlock()</span><br></pre></td></tr></table></figure>
+
+<h3 id="channel"><a href="#channel" class="headerlink" title="channel"></a>channel</h3><p>channel 没有存储能力（不使用 buffer channel），如果数据没有接收者，线程会阻塞</p>
+<p>发送 <code>c &lt;- true</code></p>
+<p>接收 <code>&lt;- c</code></p>
+]]></content>
+      <categories>
+        <category>mit6.824</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>实验三 查询执行</title>
+    <url>/2023/02/17/rucbase_execution/</url>
+    <content><![CDATA[<h1 id="查询执行"><a href="#查询执行" class="headerlink" title="查询执行"></a>查询执行</h1><h2 id="火山-x2F-迭代模型-Volcano-Model"><a href="#火山-x2F-迭代模型-Volcano-Model" class="headerlink" title="火山&#x2F;迭代模型 Volcano Model"></a>火山&#x2F;迭代模型 Volcano Model</h2><p>是解释计算模型，将关系代数中的每一种操作抽象为一个 Operator ，将整个 SQL 构建成一个 Operator 树，从根结点到叶子结点自上而下递归调用 next() 。</p>
+<p>与物化模型相对，物化模型将每一步物理操作实体化（全部完成）后，用于下一步输入。</p>
+<ul>
+<li>火山模型将物理操作符的结果元组直接发送给下一个操作符使用。</li>
+<li><strong>每一次传递一批元组</strong>，是向量化模型。（攒够一批传递），更好地利用现代 CPU 的 SIMD 指令。</li>
+</ul>
+<h3 id="火山模型样例"><a href="#火山模型样例" class="headerlink" title="火山模型样例"></a>火山模型样例</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Id, Name, Age, (Age <span class="operator">-</span> <span class="number">30</span>) <span class="operator">*</span> <span class="number">50</span> <span class="keyword">AS</span> Bonus</span><br><span class="line"><span class="keyword">FROM</span> People</span><br><span class="line"><span class="keyword">WHERE</span> Age <span class="operator">&gt;</span> <span class="number">30</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/icZUVDd.png"></p>
+<p>每个Operateor调用子结点，获得子结点的返回值之后进行操作，返回给上游。</p>
+<p>Select Operator 的伪代码：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">Tuple <span class="title function_">Select::next</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">        Tuple candidate = child-&gt;next(); <span class="comment">// 从子节点中获取 next tuple</span></span><br><span class="line">        <span class="keyword">if</span> (candidate == EndOfStream) <span class="comment">// 是否得到结束标记</span></span><br><span class="line">            <span class="keyword">return</span> EndOfStream;</span><br><span class="line">        <span class="keyword">if</span> (condition-&gt;check(candidate)) <span class="comment">// 是否满足过滤条件</span></span><br><span class="line">            <span class="keyword">return</span> candidate; <span class="comment">// 返回 tuple</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="火山模型优缺点"><a href="#火山模型优缺点" class="headerlink" title="火山模型优缺点"></a>火山模型优缺点</h3><p>优点： 每个 Operator 可以单独抽象实现，不需要关心其他 Operator 的逻辑。</p>
+<p>缺点： Tuple-at-a-time ,多次调用 next() ，造成大量的虚函数调用。</p>
+<h3 id="优化方向"><a href="#优化方向" class="headerlink" title="优化方向"></a>优化方向</h3><p>编译执行 &#x2F; 向量化。</p>
+<h2 id="数据库操作语句类型"><a href="#数据库操作语句类型" class="headerlink" title="数据库操作语句类型"></a>数据库操作语句类型</h2><h3 id="DDL-data-definition-language-操作数据库和表结构"><a href="#DDL-data-definition-language-操作数据库和表结构" class="headerlink" title="DDL(data definition language) 操作数据库和表结构"></a>DDL(data definition language) 操作数据库和表结构</h3><p>创建数据库和表、删除数据库和表、修改表结构等。</p>
+<h3 id="DML-data-manipulation-language-数据操纵语言"><a href="#DML-data-manipulation-language-数据操纵语言" class="headerlink" title="DML(data manipulation language) 数据操纵语言"></a>DML(data manipulation language) 数据操纵语言</h3><p>对数据库数据进行一些操作： update , insert , delete</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> 表名称 <span class="keyword">SET</span> 列名称 <span class="operator">=</span> 新值 <span class="keyword">WHERE</span> 列名称 <span class="operator">=</span> 某值</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> table_name (列<span class="number">1</span>, 列<span class="number">2</span>,...) <span class="keyword">VALUES</span> (值<span class="number">1</span>, 值<span class="number">2</span>,....)</span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> 表名称 <span class="keyword">WHERE</span> 列名称 <span class="operator">=</span> 值</span><br></pre></td></tr></table></figure>
+
+<h3 id="DQL-data-query-language-数据查询语言"><a href="#DQL-data-query-language-数据查询语言" class="headerlink" title="DQL(data query language) 数据查询语言"></a>DQL(data query language) 数据查询语言</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">&lt;&gt;</span> <span class="keyword">FROM</span> <span class="operator">&lt;&gt;</span> WEHRE<span class="operator">&lt;&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="任务一-元数据管理和DDL实现"><a href="#任务一-元数据管理和DDL实现" class="headerlink" title="任务一 元数据管理和DDL实现"></a>任务一 元数据管理和DDL实现</h2><p>数据库系统基本的元数据组织与管理。</p>
+<h3 id="元数据管理"><a href="#元数据管理" class="headerlink" title="元数据管理"></a>元数据管理</h3><p>代码目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">src/system/sm_manager.h|.cpp</span><br><span class="line">src/system/sm_meta.h</span><br></pre></td></tr></table></figure>
+
+<p>sm_meta.h 中维护了 <strong>ColMeta</strong> (列元数据)， <strong>TabMeta</strong> (表元数据)， <strong>DbMeta</strong> (数据库元数据)</p>
+<p>表元数据由多个列元数据组成，数据库元数据由多个表元数据组成。列元数据包括了</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">ColMeta</span> &#123;</span><br><span class="line">	std::string tab_name;  <span class="comment">// 字段所属表名称</span></span><br><span class="line">    std::string name;      <span class="comment">// 字段名称</span></span><br><span class="line">    ColType type;          <span class="comment">// 字段类型</span></span><br><span class="line">    <span class="type">int</span> len;               <span class="comment">// 字段长度</span></span><br><span class="line">    <span class="type">int</span> offset;            <span class="comment">// 字段位于记录中的偏移量</span></span><br><span class="line">    <span class="type">bool</span> index;            <span class="comment">// 该字段上是否建立索引</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重载了操作符，ColMeta 中重载&lt;&lt;将col信息变为const类型并塞进 os</p>
+<h4 id="方法实现"><a href="#方法实现" class="headerlink" title="方法实现"></a>方法实现</h4><p><strong>TabMeta</strong></p>
+<ol>
+<li>is_col()</li>
+<li>get_col()</li>
+</ol>
+<p>使用 std::vector&lt;ColMeta&gt;::iterator 遍历 vector&lt;ColMeta&gt;即可。 &#x2F; 可以使用容器方法 find()</p>
+<h3 id="DDL实现"><a href="#DDL实现" class="headerlink" title="DDL实现"></a>DDL实现</h3><p>代码位置： sm_manager.cpp</p>
+<p>实现常见DDL语句 CREAT，DROP 和功能语句 SHOW，DESC 等</p>
+<h4 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h4><p><strong>SmManager</strong>（类似15445中的Catalog)</p>
+<p>管理数据库中的 db,table,index 的元数据。每个 SmManager 对应一个 db</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::unordered_map&lt;std::string, std::unique_ptr&lt;RmFileHandle&gt;&gt; fhs_;<span class="comment">//储存每个文件（数据库元数据，表） &lt;名称，handle&gt;</span></span><br><span class="line">std::unordered_map&lt;std::string, std::unique_ptr&lt;IxIndexHandle&gt;&gt; ihs_;<span class="comment">//&lt;表名，索引handle&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="方法实现-1"><a href="#方法实现-1" class="headerlink" title="方法实现"></a>方法实现</h4><p>create_db() 若目录不存在，创建仓库目录；进入仓库目录；使用输出文件流创建数据库元数据文件。退出仓库目录。</p>
+<p>close_db() 对应 open_db() 。将内存中修改过的数据库数据，包括元数据 db_ ，写回硬盘中；并关闭数据库内所有表文件和索引文件。退出仓库目录。</p>
+<p>drop_table()</p>
+<h4 id="代码实现相关问题"><a href="#代码实现相关问题" class="headerlink" title="代码实现相关问题"></a>代码实现相关问题</h4><h5 id="文件和流"><a href="#文件和流" class="headerlink" title="文件和流"></a>文件和流</h5><table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ofstream</td>
+<td>输出文件流。创建文件；向文件写入信息</td>
+</tr>
+<tr>
+<td>ifstream</td>
+<td>输入文件流。从文件中读取信息</td>
+</tr>
+<tr>
+<td>fstream</td>
+<td>文件流</td>
+</tr>
+</tbody></table>
+<h5 id="unique-ptr-指针内容作为参数传递"><a href="#unique-ptr-指针内容作为参数传递" class="headerlink" title="unique_ptr 指针内容作为参数传递"></a>unique_ptr 指针内容作为参数传递</h5><p>get() 返回内容的引用。 buffer.get() 等价于 &amp;*buffer</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">rm_manager_-&gt;<span class="built_in">close_file</span>(tab.second.<span class="built_in">get</span>());</span><br></pre></td></tr></table></figure>
+
+<h4 id="test"><a href="#test" class="headerlink" title="test"></a>test</h4><p>文件储存结构是以数据库名称命名的文件夹下，有名为 db.meta 的元数据文件，以及每个表的表文件，和按&lt;表-表内索引序号&gt;命名的索引文件。</p>
+<p>create_db() 后未退出仓库目录。创建元数据文件时需要进入仓库目录，结束后退出。open_db() 时进入目录，close_db() 时退出。</p>
+<h2 id="任务二-DQL——select-from-语句和相关算子实现"><a href="#任务二-DQL——select-from-语句和相关算子实现" class="headerlink" title="任务二 DQL——select_from 语句和相关算子实现"></a>任务二 DQL——select_from 语句和相关算子实现</h2><p>代码目录</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">src/execution/executor_index_scan.h</span><br><span class="line">src/execution/executor_seq_scan.h</span><br><span class="line">src/execution/executor_nestedloop_join.h</span><br><span class="line">src/execution/executor_projection.h</span><br></pre></td></tr></table></figure>
+
+<h3 id="扫描算子-（顺序-amp-索引）"><a href="#扫描算子-（顺序-amp-索引）" class="headerlink" title="扫描算子 （顺序 &amp; 索引）"></a>扫描算子 （顺序 &amp; 索引）</h3><h4 id="数据结构-1"><a href="#数据结构-1" class="headerlink" title="数据结构"></a>数据结构</h4><p>顺序扫描算子：读入初始扫描条件 <strong>vector&lt;Condition&gt;</strong> conds_ ，转换为实际扫描条件 fed_conds_ .表的信息：表名、列。通过 RmFileHandle 读取表中记录数据。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">SeqScanExecutor</span> : <span class="keyword">public</span> AbstractExecutor &#123; </span><br><span class="line">   <span class="keyword">private</span>:</span><br><span class="line">    std::string tab_name_;</span><br><span class="line">    std::vector&lt;Condition&gt; conds_;  <span class="comment">// 初始扫描条件(来自SQL)</span></span><br><span class="line">    RmFileHandle *fh_;              <span class="comment">// TableHeap</span></span><br><span class="line">    std::vector&lt;ColMeta&gt; cols_;</span><br><span class="line">    <span class="type">size_t</span> len_;</span><br><span class="line">    std::vector&lt;Condition&gt; fed_conds_;  <span class="comment">// 实际扫描条件(可能由于连接运算动态改变)</span></span><br><span class="line"></span><br><span class="line">    Rid rid_;                        <span class="comment">// 当前扫描到的记录的rid</span></span><br><span class="line">    std::unique_ptr&lt;RecScan&gt; scan_;  <span class="comment">// table_iterator</span></span><br><span class="line"></span><br><span class="line">    SmManager *sm_manager_;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Condition</strong>: 筛选条件</p>
+<p>描述条件的算式，记录了算式左右侧以及比较符号，算式右侧可能为另一列&#x2F;值。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Condition</span> &#123;</span><br><span class="line">    TabCol lhs_col;   <span class="comment">// left-hand side column</span></span><br><span class="line">    CompOp op;        <span class="comment">// comparison operator</span></span><br><span class="line">    <span class="type">bool</span> is_rhs_val;  <span class="comment">// true if right-hand side is a value (not a column)</span></span><br><span class="line">    TabCol rhs_col;   <span class="comment">// right-hand side column</span></span><br><span class="line">    Value rhs_val;    <span class="comment">// right-hand side value</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>value: 带类型的值，类型+指向原记录的指针。</p>
+<h4 id="方法实现-2"><a href="#方法实现-2" class="headerlink" title="方法实现"></a>方法实现</h4><p><strong>beginTuple()</strong>  :构建表迭代器并找到第一个满足谓词条件的 record 。</p>
+<p>构建表迭代器 scan_ ， 并使用 scan_-&gt;next() 跳过无记录的位置迭代扫描，调用 eval_conds() 判断是否满足条件，直到扫描到第一个满足谓词条件的记录，并赋值给算子成员rid_ 。</p>
+<p>现有方法 eval_conds() 用于比较扫描到的数据与过滤条件。eval_conds() 调用了 eval_cond() 函数，增加了是否所有过滤条件都成立的判断。现观察 eval_cond() :</p>
+<p>rec_cols 为现有列，cond 过滤条件，rec 当前元组。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">eval_cond</span><span class="params">(<span class="type">const</span> std::vector&lt;ColMeta&gt; &amp;rec_cols, <span class="type">const</span> Condition &amp;cond, <span class="type">const</span> RmRecord *rec)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>在索引扫描中，找到索引列对应的条件，通过 lower_bound() 等函数找到符合条件的上下限来剪枝，再在上下限范围内建立 scan_ 顺序扫描。</p>
+<p><strong>nextTuple()</strong> : 找到下一个满足谓词条件的 record 。</p>
+<p>类似beginTuple() 。</p>
+<p><strong>Next()</strong> : 找到下一个满足谓词条件的 record ，并返回 record 地址。（分情况调用beginTuple() 和 nextTuple() ）</p>
+<p><strong>IndexScanExecutor()</strong> : 初始化，将传入的参数赋值给对象，并转化 conds_ ，将该表下的列移动为条件的左值。</p>
+<p>feed() (在连接算子任务中实现)</p>
+<h4 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h4><p>何时调用 check_runtime_conds() ，作用是什么</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">check_runtime_conds</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;cond : fed_conds_) &#123;</span><br><span class="line">        <span class="built_in">assert</span>(cond.lhs_col.tab_name == tab_name_);</span><br><span class="line">        <span class="keyword">if</span> (!cond.is_rhs_val) &#123;</span><br><span class="line">            <span class="built_in">assert</span>(cond.rhs_col.tab_name == tab_name_);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="连接算子-Nested-Loop-Join"><a href="#连接算子-Nested-Loop-Join" class="headerlink" title="连接算子 ( Nested Loop Join )"></a>连接算子 ( Nested Loop Join )</h3><p>朴素实现： 对于外表的每条记录，扫一遍内表（比较、条件连接）。默认以左孩子作为 outer table 。</p>
+<h4 id="数据结构-2"><a href="#数据结构-2" class="headerlink" title="数据结构"></a>数据结构</h4><p>多表连接语句</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> [col..] <span class="keyword">from</span> TbName1 <span class="keyword">join</span> TbName2 ... <span class="keyword">where</span> cond;</span><br></pre></td></tr></table></figure>
+
+<p>连接算子中有两个指向左右孩子算子的指针</p>
+<p>**feed()  **</p>
+<p><strong>feed_right()</strong> ：创建复制了 prev_feed_dict 的值的 <code>feed_dict</code> ，向 feed_dict 中插入 left_dict ，然后调用 feed()</p>
+<pre><code>**left_dict** 是 map&lt;TabCol, Value&gt; 类型的变量，调用函数 rec2dict() 返回值为 map&lt;外表中每一列的元数据，表中下一个元组的每一列的值&gt; 。
+
+**prev_feed_dict**
+</code></pre>
+<h4 id="方法实现-3"><a href="#方法实现-3" class="headerlink" title="方法实现"></a>方法实现</h4><p><strong>nextTuple()</strong> :  调用内表的 nextTuple() ，若内表扫描完一遍，则将外表移动到下一个记录，内表调用 beginTuple() 回到第一个记录，并更新 feed 信息。</p>
+<p><strong>Next()</strong> : 分别调用左右算子的 Next() 获取记录，使用 memcpy() 拼接记录的 data 给返回值。</p>
+<h3 id="投影算子"><a href="#投影算子" class="headerlink" title="投影算子"></a>投影算子</h3><p>投影算子调用其要处理的 <code>prev</code>算子的 <code>Next()</code>获得元祖，根据要投影的列进行投影返回投影后的新元祖。</p>
+<h4 id="数据结构-3"><a href="#数据结构-3" class="headerlink" title="数据结构"></a>数据结构</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ProjectionExecutor</span> : <span class="keyword">public</span> AbstractExecutor &#123;</span><br><span class="line">   <span class="keyword">private</span>:</span><br><span class="line">    std::unique_ptr&lt;AbstractExecutor&gt; prev_;</span><br><span class="line">    std::vector&lt;ColMeta&gt; cols_;			<span class="comment">//投影的列的元数据</span></span><br><span class="line">    <span class="type">size_t</span> len_;</span><br><span class="line">    std::vector&lt;<span class="type">size_t</span>&gt; sel_idxs_;		<span class="comment">//储存了需要保留的列在原表中的位置索引</span></span><br><span class="line">    ...&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Next-实现"><a href="#Next-实现" class="headerlink" title="Next() 实现"></a>Next() 实现</h4><p>调用下一层的算子 prev 的 Next() 获得投影前的记录 prev_rec ，按 sel_idxs_ 依次生成投影列，</p>
+<p>是否需要修改列元数据  </p>
+<p>摆烂暂停了，我最好是会去写6.824</p>
+<h2 id="任务三-DML——-insert-x2F-delete-x2F-update-语句和算子实现"><a href="#任务三-DML——-insert-x2F-delete-x2F-update-语句和算子实现" class="headerlink" title="任务三 DML—— insert&#x2F;delete&#x2F;update 语句和算子实现"></a>任务三 DML—— insert&#x2F;delete&#x2F;update 语句和算子实现</h2><h4 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h4><p><strong>lt、le、eq、ne、ge、gt的含义</strong></p>
+<ul>
+<li><strong>lt：less than</strong> 小于</li>
+<li><strong>le：less than or equal to</strong> 小于等于</li>
+<li><strong>eq：equal to</strong> 等于</li>
+<li><strong>ne：not equal to</strong> 不等于</li>
+<li><strong>ge：greater than or equal to</strong> 大于等于</li>
+<li><strong>gt：greater than</strong> 大于</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li>SQL优化之火山模型 <a href="https://zhuanlan.zhihu.com/p/219516250">https://zhuanlan.zhihu.com/p/219516250</a></li>
+<li>Why does std::unique_ptr has a “get()” member function? <a href="https://stackoverflow.com/questions/26664585/why-does-stdunique-ptr-has-a-get-member-function">https://stackoverflow.com/questions/26664585/why-does-stdunique-ptr-has-a-get-member-function</a></li>
+<li><a href="https://www.cnblogs.com/wenxuehai/p/13485427.html">DDL基本语法（操作数据库和表结构）</a></li>
+<li></li>
+</ol>
+]]></content>
+      <categories>
+        <category>rucbase</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>实验二 索引管理器</title>
+    <url>/2023/01/29/rucbase_btree/</url>
+    <content><![CDATA[<h3 id="B-树的查找"><a href="#B-树的查找" class="headerlink" title="B+树的查找"></a>B+树的查找</h3><h4 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h4><p>使用 IxIndexHandle 和 IxNodeHandle 两个类对索引进行文件和结点层次的管理。</p>
+<p>IxFileHdr B+树文件的元数据</p>
+<p>IxPageHdr 页面的元数据</p>
+<p>节点中，索引以键值对形式储存，key_pos等于对应的value_pos</p>
+<ul>
+<li>key 索引所在列数据</li>
+<li>value 该元组的rid</li>
+</ul>
+<h4 id="函数实现"><a href="#函数实现" class="headerlink" title="函数实现"></a>函数实现</h4><p>get_key(pos) 和 get_rid(pos) 可以得到一对键值对的位置。</p>
+<p>lower_bound 使用二分，key_idx的范围为[0,num_key)，使用get_key得到指定key的地址，使用ix_compare()与target中的key值进行比较。</p>
+<p>InternalLookup 查找当前非叶子节点中key所在孩子节点的位置。upper_bound()获取大于key的第一个位置，则key必在 pos 之前一个节点。ValueAt()通过 pos 获取 page_id 。</p>
+<p>FindLeafPage 在树上查找目标 key 值所在的节点。获取根节点，判断是否是叶节点，若不是，调用 InternalLookup()，获取 key 对应的孩子节点，直到找到叶节点。通过 page_id、page_hdr 定位页面。</p>
+<h3 id="B-树的插入"><a href="#B-树的插入" class="headerlink" title="B+树的插入"></a>B+树的插入</h3><h4 id="函数实现-1"><a href="#函数实现-1" class="headerlink" title="函数实现"></a>函数实现</h4><p><strong>节点插入</strong></p>
+<p>insert_pairs 向节点中指定pos插入n个键值对。使用memmove()，先将pos后的键值对后移，然后将新值插入key和rid的对应pos。更新节点的num_key。</p>
+<p>insert_pair 向节点中插入一个键值对。调用insert_pairs，令n&#x3D;1。</p>
+<p>Insert 向结点中插入单个键值对。</p>
+<p>何时需要unpin页面：创建或读取一个页面后，注意避免重复unpin，防止pin_count小于等于零而实际仍在使用。</p>
+<p><strong>B+树的插入</strong></p>
+<p>Split 当Insert()之后索引数大于MaxSize时，建立一个新的结点，将一半的索引转移至新结点。更新原结点、新结点、父结点的信息。</p>
+<p>InsertIntoParent() 分裂后向父结点中插入新结点。分情况讨论。若原结点为根结点，则新建根结点，向新的根结点中插入两结点。若不是，则向parent插入新结点，并进行递归判断。</p>
+<p>insert_entry() 直接向树中插入键值对，返回是否成功插入。若还没有根结点，则创建根结点。否则，先调用FindLeafPage()找到应该插入的结点，然后插入key，并判断是否需要调用Split()拆分结点，InsertIntoParent()将新结点插入parent。</p>
+<p>IxIndexHandle中GetMaxSize()返回了file_hdr-&gt;btree_order + 1</p>
+<h4 id="stl函数使用"><a href="#stl函数使用" class="headerlink" title="stl函数使用"></a>stl函数使用</h4><p><strong>memmove</strong>和<strong>memcpy</strong>，当源储存空间与目标储存空间有重合部分时，使用memmove，其余情况两者都可以使用。</p>
+<h4 id="test"><a href="#test" class="headerlink" title="test"></a>test</h4><p>segmentation fault(core dumped)*n</p>
+<p>简化了结点内查找二分返回最大值的特判；在insert_entry中加入了通过插入前后结点size是否变化判断插入。</p>
+<p>发现IxNodeHandle有现成CreateNode(),遂修改了InsertIntoParent()中新建结点的部分。细化了新结点的初始化，主要是逐条初始化page_hdr。</p>
+<p>新建新的非叶子结点时，插入的孩子的value值应该为(Rid){孩子的page_no}，用于指向孩子页面。</p>
+<p>定位发现段错误是由于buffer_pool_manager中的fetch_page有冗余部分.删除后报错如下</p>
+<p><img src="https://i.imgur.com/morATKI.png"></p>
+<p>输出的图片中,树看起来健康.但key&#x3D;2时出现查找失败的问题.检查GetValue().发现ix_node_handle有用于结点内查找key的函数LeafLookup(),修改后通过测试.修改前keys索引地址错误.</p>
+<p><img src="https://i.imgur.com/whIajTp.png"></p>
+<h3 id="B-树的删除"><a href="#B-树的删除" class="headerlink" title="B+树的删除"></a>B+树的删除</h3><h4 id="函数实现-2"><a href="#函数实现-2" class="headerlink" title="函数实现"></a>函数实现</h4><p><strong>Coalesce()</strong></p>
+<p>将node和兄弟结点合并至前驱结点,并返回是否需要删除parent.</p>
+<p>首先判断node和neighbor_node哪一个是前驱结点.只有在node的index&#x3D;0时,neighbor_node不是前驱结点.</p>
+<p>调用insert_pairs将后面的结点键值对移动到前驱结点,并修改结点信息.</p>
+<p>修改parent中的信息,若index&#x3D;0,则直接删除index+1的键值对.若index!&#x3D;0,删除index的键值对.</p>
+<p>将右侧结点在函数内删除,由于parent的size减小,递归调用CoalesceOrRedistribute()并返回其返回值.</p>
+<p>返回到Coalesce0rRedistribute()的值为<strong>是否需要删除parent</strong>.</p>
+<p><strong>Redistribute()</strong> 重新分配node和兄弟结点neighbor_node的键值对.不需要删除任何结点.</p>
+<p><strong>AdjustRoot()</strong> 当根结点被删除了一个键值对之后调用.返回根结点是否需要被删除至Coalesce0rRedistribute(),也作为其返回值.按原根结点是否是叶子结点讨论.</p>
+<p><strong>CoalesceOrRedistribute()</strong> 对结点进行重分配或合并,返回是否有结点被删除.</p>
+<h4 id="test-1"><a href="#test-1" class="headerlink" title="test"></a>test</h4><p>删除第一条索引后,有叶子结点只有1个值,但未合并.</p>
+<p>检查Coalesce(),添加了对parent中储存的键值对的修改.</p>
+<p>注意到不同于MaxSize,当结点中储存的键值对数量num_key &lt; MinSize时,才需要进行合并或重分配.</p>
+<p>在insert()中插入键值对后已自动修改num_key,去除在合并和重分配函数中重复修改的部分.通过test1.</p>
+<p><img src="https://i.imgur.com/pt7uz2M.png"></p>
+<p>然后出现如下新报错</p>
+<p><img src="https://i.imgur.com/L63j9Wo.png"></p>
+<p>检查图片后为重分配时的错误,检查Redistribute()函数.修改了对于结点keys的索引地址问题.</p>
+<p>在lab2中的大规模随机数中报错.在修改node后添加了maintain_parent(),在释放页面后添加了release_node_handle().</p>
+<p><img src="https://i.imgur.com/PoaQuk0.png"></p>
+<p>叶子结点的双向链表出现错误,修改Split()中新结点链表的插入后通过测试.</p>
+<p><img src="https://i.imgur.com/5xDZxQK.png"></p>
+<h3 id="B-树的并发控制"><a href="#B-树的并发控制" class="headerlink" title="B+树的并发控制"></a>B+树的并发控制</h3><p>使用了Tree级粗粒度并发.即在Getvalue().insert_entry().delete_entry()中加入信号量锁占用root_latch_</p>
+<p><img src="https://i.imgur.com/NXcJz1V.png"></p>
+]]></content>
+      <categories>
+        <category>rucbase</category>
       </categories>
   </entry>
   <entry>
@@ -618,235 +1115,6 @@ ordered/unordered
       </categories>
   </entry>
   <entry>
-    <title>15 RALL</title>
-    <url>/2023/01/19/15_RAll_smartpointers_buildingprojects/</url>
-    <content><![CDATA[<h2 id="RAll"><a href="#RAll" class="headerlink" title="RAll"></a>RAll</h2><p><em>a coding standard and practice</em></p>
-<h3 id="exceptions"><a href="#exceptions" class="headerlink" title="exceptions"></a>exceptions</h3><p><strong>resources that need to be released</strong></p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Acquire</th>
-<th>Release</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Heap memory</td>
-<td>new</td>
-<td>delete</td>
-</tr>
-<tr>
-<td>Files</td>
-<td>open</td>
-<td>close</td>
-</tr>
-<tr>
-<td>Lock</td>
-<td>try_lock</td>
-<td>unlock</td>
-</tr>
-<tr>
-<td>Sockets</td>
-<td>socket</td>
-<td>close</td>
-</tr>
-</tbody></table>
-<p><strong>exceptions</strong></p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="comment">//code associated with exception handler</span></span><br><span class="line">&#125; <span class="built_in">catch</span>()&#123;</span><br><span class="line">    <span class="comment">//exception handler</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>enforcing exception safety</strong> 抛异常的可能性大小</p>
-<ul>
-<li>Nothrow exception guarantee(destructors, …)</li>
-<li>…</li>
-<li>No exception guarantee (memory corruption, …)</li>
-</ul>
-<p><strong>RAII</strong></p>
-<p>又名</p>
-<p>scope based memory management</p>
-<p>&#x2F; constructor acquires, destructor releases</p>
-<p>目标</p>
-<ul>
-<li>avoid calling <em>new</em> and <em>delete</em> explicitly</li>
-</ul>
-<p>(资源出了scope自动释放)</p>
-<p><img src="https://i.imgur.com/lZxDl9h.png"></p>
-<p><img src="https://i.imgur.com/GzshscC.png"></p>
-<h3 id="Smart-Pointers"><a href="#Smart-Pointers" class="headerlink" title="Smart Pointers"></a>Smart Pointers</h3><p><em>put SMFs to good use</em></p>
-<p>在constructor中acquire，在destructor中release</p>
-<ul>
-<li>std::unique_ptr<ul>
-<li>Uniquely owns its resource, can’t be copied</li>
-</ul>
-</li>
-<li>std::shared_ptr<ul>
-<li>Can make copies, destructed when underlying memory goes out of scope</li>
-</ul>
-</li>
-<li>std::weak_ptr<ul>
-<li>Models temporary ownership: when an object only needs to be accessed if it exists (convert to shared_ptr to access)</li>
-</ul>
-</li>
-</ul>
-<p><strong>In practice</strong></p>
-<p><img src="https://i.imgur.com/ybziOx5.png"></p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//create smart pointers</span></span><br><span class="line">std::unique_ptr&lt;T&gt; up&#123;<span class="keyword">new</span> T&#125;;</span><br><span class="line">std::shared_ptr&lt;T&gt; sp&#123;<span class="keyword">new</span> T&#125;;</span><br><span class="line">std::weak_ptr&lt;T&gt; wp=sp;<span class="comment">//can only be copy/ move constructed</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//better one</span></span><br><span class="line">std::unique_ptr&lt;T&gt; up = std::<span class="built_in">make_unique</span>&lt;T&gt;();</span><br><span class="line">std::unique_ptr&lt;T&gt; sp = std::<span class="built_in">make_shared</span>&lt;T&gt;();</span><br></pre></td></tr></table></figure>
-
-<h3 id="Building-C-Projects"><a href="#Building-C-Projects" class="headerlink" title="Building C++ Projects"></a>Building C++ Projects</h3><p>v</p>
-]]></content>
-      <categories>
-        <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>lab 1 MapReduce</title>
-    <url>/2023/04/01/lab1MapReduce/</url>
-    <content><![CDATA[<p>仅调试记录有少许回忆价值，其他部分抄都没抄完。——写给以后试图回忆起自己写过什么的我。</p>
-<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>实现一个包括 coordinator 和 worker 两个 program 的 distributed mapreduce。</p>
-<p>workers</p>
-<ul>
-<li>通过 RPC 联络 coordinator</li>
-<li>多个 workers 并发</li>
-<li>向 coordinator 请求任务，读取任务输出，执行，输出结果</li>
-</ul>
-<p>coordinator</p>
-<ul>
-<li>只有一个</li>
-<li>如果有 worker 长时间未完成任务(10s)，将任务发给其他 worker</li>
-</ul>
-<h4 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h4><ul>
-<li>nReduce 指定了 reduce 任务的数量，每个 mapper 需要创建 nReduce 个中间文件， worker 完成第 X 个 task 输出的文件为 mr-out-X</li>
-<li>将 worker 输出的中间文件保存到当前文件夹，使其能在 reduce时读到</li>
-<li>Done() 用于完成 mapreduce 后停止 coordinator</li>
-</ul>
-<h3 id="代码路径"><a href="#代码路径" class="headerlink" title="代码路径"></a>代码路径</h3><p>示例代码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main/mrcoordinator.go</span><br><span class="line">main/mrworker.go</span><br></pre></td></tr></table></figure>
-
-<p>实现</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mr/coordinator.go</span><br><span class="line">mr/worker.go</span><br><span class="line">mr/rpc.go</span><br></pre></td></tr></table></figure>
-
-<h3 id="mrsequential-go"><a href="#mrsequential-go" class="headerlink" title="mrsequential.go"></a>mrsequential.go</h3><p><code>ByKey</code>是一个 key-value 结构体数组，有三个方法</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// for sorting by key.</span></span><br><span class="line"><span class="keyword">type</span> ByKey []mr.KeyValue</span><br><span class="line"></span><br><span class="line"><span class="comment">// for sorting by key.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a ByKey)</span></span> Len() <span class="type">int</span>           &#123; <span class="keyword">return</span> <span class="built_in">len</span>(a) &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a ByKey)</span></span> Swap(i, j <span class="type">int</span>)      &#123; a[i], a[j] = a[j], a[i] &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(a ByKey)</span></span> Less(i, j <span class="type">int</span>) <span class="type">bool</span> &#123; <span class="keyword">return</span> a[i].Key &lt; a[j].Key &#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>loadPlugin</code>加载了用户定义的map和reduce</p>
-<p>Map() 的输入是一个键值对（例子中为[文章名]-内容），输出是键值对数组。</p>
-<p>Reduce() 的输入是一个键和对应的多个值，输出该键合并后的值。</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Map</span><span class="params">(filename <span class="type">string</span>, contents <span class="type">string</span>)</span></span> []mr.KeyValue</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Reduce</span><span class="params">(key <span class="type">string</span>, values []<span class="type">string</span>)</span></span> <span class="type">string</span></span><br></pre></td></tr></table></figure>
-
-<p>plugin是一种用于编写模块化go程序的特性，可以将go包编译为共享对象**(.so)<strong>文件，然后在运行时动态加载和调用插件中的</strong>函数和变量**</p>
-<p>这段代码中读入了用户编写的map和reduce函数为mapf , reducef</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// load the application Map and Reduce functions</span></span><br><span class="line"><span class="comment">// from a plugin file, e.g. ../mrapps/wc.so</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">loadPlugin</span><span class="params">(filename <span class="type">string</span>)</span></span> (<span class="function"><span class="keyword">func</span><span class="params">(<span class="type">string</span>, <span class="type">string</span>)</span></span> []mr.KeyValue, <span class="function"><span class="keyword">func</span><span class="params">(<span class="type">string</span>, []<span class="type">string</span>)</span></span> <span class="type">string</span>) &#123;</span><br><span class="line">	p, err := plugin.Open(filename)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;cannot load plugin %v&quot;</span>, filename)</span><br><span class="line">	&#125;</span><br><span class="line">	xmapf, err := p.Lookup(<span class="string">&quot;Map&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;cannot find Map in %v&quot;</span>, filename)</span><br><span class="line">	&#125;</span><br><span class="line">	mapf := xmapf.(<span class="function"><span class="keyword">func</span><span class="params">(<span class="type">string</span>, <span class="type">string</span>)</span></span> []mr.KeyValue)</span><br><span class="line">	xreducef, err := p.Lookup(<span class="string">&quot;Reduce&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatalf(<span class="string">&quot;cannot find Reduce in %v&quot;</span>, filename)</span><br><span class="line">	&#125;</span><br><span class="line">	reducef := xreducef.(<span class="function"><span class="keyword">func</span><span class="params">(<span class="type">string</span>, []<span class="type">string</span>)</span></span> <span class="type">string</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> mapf, reducef</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>实现了单线程处理 map 和 reduce ，读文件，顺序调用 map ，全部保存到中间状态中，再将所有key排序，按key分组输入reduce。</p>
-<h3 id="mrworker-go"><a href="#mrworker-go" class="headerlink" title="mrworker.go"></a>mrworker.go</h3><p>调用了worker.go</p>
-<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><h4 id="coordinator"><a href="#coordinator" class="headerlink" title="coordinator"></a>coordinator</h4><p>Coordinatro 对象结构</p>
-<p>创建coordinator后监听</p>
-<h4 id="worker"><a href="#worker" class="headerlink" title="worker"></a>worker</h4><h4 id="coordinator和worker的交互流程："><a href="#coordinator和worker的交互流程：" class="headerlink" title="coordinator和worker的交互流程："></a>coordinator和worker的交互流程：</h4><p><strong>1.</strong> coordinator.go 中为 Coordinator 添加 <code>接收到请求后的处理方法 Example()</code>，方法接受的参数 <code>reply的引用</code>，使得 Coordinator 可以对 worker 的值进行修改，等价于进行了信息传递。</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Coordinator)</span></span> Example(args *ExampleArgs, reply *ExampleReply) <span class="type">error</span> &#123;</span><br><span class="line">	reply.Y = args.X + <span class="number">1</span></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>参数的特殊类型定义在 rpc.go 中</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> ExampleArgs <span class="keyword">struct</span> &#123;</span><br><span class="line">	X <span class="type">int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>2.</strong> 创建 Coordinator ，并通过 RPC 开始监听</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// start a thread that listens for RPCs from worker.go</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Coordinator)</span></span> server() &#123;</span><br><span class="line">	rpc.Register(c)</span><br><span class="line">	rpc.HandleHTTP()</span><br><span class="line">	<span class="comment">//l, e := net.Listen(&quot;tcp&quot;, &quot;:1234&quot;)</span></span><br><span class="line">	sockname := coordinatorSock()</span><br><span class="line">	os.Remove(sockname)</span><br><span class="line">	l, e := net.Listen(<span class="string">&quot;unix&quot;</span>, sockname)</span><br><span class="line">	<span class="keyword">if</span> e != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(<span class="string">&quot;listen error:&quot;</span>, e)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">go</span> http.Serve(l, <span class="literal">nil</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在 rpc.go 中添加迫真地址</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">coordinatorSock</span><span class="params">()</span></span> <span class="type">string</span> &#123;</span><br><span class="line">	s := <span class="string">&quot;/var/tmp/5840-mr-&quot;</span></span><br><span class="line">	s += strconv.Itoa(os.Getuid())</span><br><span class="line">	<span class="keyword">return</span> s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>3.</strong> worker 调用 call()， 向 coordinator 发送请求，使 Coordinator 调用指定处理函数。</p>
-<h4 id="调试记录"><a href="#调试记录" class="headerlink" title="调试记录"></a>调试记录</h4><ol>
-<li><p>添加了分配任务函数，功能仅有从coordinator任务列表中传一个文件名。</p>
-</li>
-<li><p>添加Register()，用于给worker分配id，在worker.go中传入参数想填nil，出现报错 <code>gob: cannot encode nil value</code>，原理不明，改成虚空workerid之后能跑了，有空再研究。</p>
-<p>出现报错 <code>panic: assignment to entry in nil map</code>，原因未初始化结构体中的map，被教了make()怎么用</p>
-</li>
-<li><p>为 Allocate 添加了寻找未分配任务的功能，向 Coordinator 中添加了 <code>TasksList []*Task</code>，一开始未使用指针，在循环里复制出的 task 里修改任务状态，导致实际上没改到，略二。考虑到 worker 完成后需要通过 taskid 修改 task 状态，因此选择了数组储存TaskList。考虑到在worker crash后可能需要通过 workerid 找到 task 并修改任务状态，向 Coordinator 中添加了 <code>WorkerTaskMap</code></p>
-</li>
-<li><p>添加了DoMap(). 打开文件读文件调用mapf处理，并保存中间量至中间文件。在内存中使用了二维数组 [][]intermediate 保存 kv .存入文件时，使用了 <code>json.NewEncoder</code>等函数将数据转为二进制格式。<code>ioutil.TempFile()</code>和 <code>defer os.Remove()</code>一起使用，避免文件写入中途 worker crash 了使文件不全。</p>
-<p>使用了 CallTask() 递归调用的方式实现了完成一个 Task 后立即请求下一个任务。</p>
-<p>出现报错：<code>gob: type mismatch in decoder: want struct type mr.WorkerId; got non-struct</code>，原因是应该定义结构体WorkerId{}，直接传了 int 型的 Id 就报错了。</p>
-<p>又出现报错，二维数组越界。如果需要通过第一维序号随机访问，需要在定义为 [][]KeyValue{} 之后 append 一些 []KeyValue 。</p>
-<p>输出了一堆 mr-x-10 ，也许 hash 出了一些问题。–只是命名的时候写错了。</p>
-</li>
-<li><p>添加了 wait 状态，分配任务时的条件添加了一条任务类型与 coordinator 当前状态一致才可能分配。map任务数由文件数决定，reduce任务数确定，因此初始化 coordinator 时就可以一起把 map 和 reduce 办了。</p>
-</li>
-<li><p>添加了 CheckDone() 和 Done() ，4s一次，检查是否所有任务都被完成，exit(0)暴力退出，希望程序没事。</p>
-</li>
-<li><p>对 worker crash 的处理：coordinator 不需要辨别 worker ，worker crash 后会导致任务不能完成，因此只要在分配了某任务之后一定时间检查任务是否完成，若未完成，则将该任务的状态改回未分配。</p>
-</li>
-<li><p>锁：为 AllocateTask() 添加锁。</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>mit6.824</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>实验二 索引管理器</title>
-    <url>/2023/01/29/rucbase_btree/</url>
-    <content><![CDATA[<h3 id="B-树的查找"><a href="#B-树的查找" class="headerlink" title="B+树的查找"></a>B+树的查找</h3><h4 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h4><p>使用 IxIndexHandle 和 IxNodeHandle 两个类对索引进行文件和结点层次的管理。</p>
-<p>IxFileHdr B+树文件的元数据</p>
-<p>IxPageHdr 页面的元数据</p>
-<p>节点中，索引以键值对形式储存，key_pos等于对应的value_pos</p>
-<ul>
-<li>key 索引所在列数据</li>
-<li>value 该元组的rid</li>
-</ul>
-<h4 id="函数实现"><a href="#函数实现" class="headerlink" title="函数实现"></a>函数实现</h4><p>get_key(pos) 和 get_rid(pos) 可以得到一对键值对的位置。</p>
-<p>lower_bound 使用二分，key_idx的范围为[0,num_key)，使用get_key得到指定key的地址，使用ix_compare()与target中的key值进行比较。</p>
-<p>InternalLookup 查找当前非叶子节点中key所在孩子节点的位置。upper_bound()获取大于key的第一个位置，则key必在 pos 之前一个节点。ValueAt()通过 pos 获取 page_id 。</p>
-<p>FindLeafPage 在树上查找目标 key 值所在的节点。获取根节点，判断是否是叶节点，若不是，调用 InternalLookup()，获取 key 对应的孩子节点，直到找到叶节点。通过 page_id、page_hdr 定位页面。</p>
-<h3 id="B-树的插入"><a href="#B-树的插入" class="headerlink" title="B+树的插入"></a>B+树的插入</h3><h4 id="函数实现-1"><a href="#函数实现-1" class="headerlink" title="函数实现"></a>函数实现</h4><p><strong>节点插入</strong></p>
-<p>insert_pairs 向节点中指定pos插入n个键值对。使用memmove()，先将pos后的键值对后移，然后将新值插入key和rid的对应pos。更新节点的num_key。</p>
-<p>insert_pair 向节点中插入一个键值对。调用insert_pairs，令n&#x3D;1。</p>
-<p>Insert 向结点中插入单个键值对。</p>
-<p>何时需要unpin页面：创建或读取一个页面后，注意避免重复unpin，防止pin_count小于等于零而实际仍在使用。</p>
-<p><strong>B+树的插入</strong></p>
-<p>Split 当Insert()之后索引数大于MaxSize时，建立一个新的结点，将一半的索引转移至新结点。更新原结点、新结点、父结点的信息。</p>
-<p>InsertIntoParent() 分裂后向父结点中插入新结点。分情况讨论。若原结点为根结点，则新建根结点，向新的根结点中插入两结点。若不是，则向parent插入新结点，并进行递归判断。</p>
-<p>insert_entry() 直接向树中插入键值对，返回是否成功插入。若还没有根结点，则创建根结点。否则，先调用FindLeafPage()找到应该插入的结点，然后插入key，并判断是否需要调用Split()拆分结点，InsertIntoParent()将新结点插入parent。</p>
-<p>IxIndexHandle中GetMaxSize()返回了file_hdr-&gt;btree_order + 1</p>
-<h4 id="stl函数使用"><a href="#stl函数使用" class="headerlink" title="stl函数使用"></a>stl函数使用</h4><p><strong>memmove</strong>和<strong>memcpy</strong>，当源储存空间与目标储存空间有重合部分时，使用memmove，其余情况两者都可以使用。</p>
-<h4 id="test"><a href="#test" class="headerlink" title="test"></a>test</h4><p>segmentation fault(core dumped)*n</p>
-<p>简化了结点内查找二分返回最大值的特判；在insert_entry中加入了通过插入前后结点size是否变化判断插入。</p>
-<p>发现IxNodeHandle有现成CreateNode(),遂修改了InsertIntoParent()中新建结点的部分。细化了新结点的初始化，主要是逐条初始化page_hdr。</p>
-<p>新建新的非叶子结点时，插入的孩子的value值应该为(Rid){孩子的page_no}，用于指向孩子页面。</p>
-<p>定位发现段错误是由于buffer_pool_manager中的fetch_page有冗余部分.删除后报错如下</p>
-<p><img src="https://i.imgur.com/morATKI.png"></p>
-<p>输出的图片中,树看起来健康.但key&#x3D;2时出现查找失败的问题.检查GetValue().发现ix_node_handle有用于结点内查找key的函数LeafLookup(),修改后通过测试.修改前keys索引地址错误.</p>
-<p><img src="https://i.imgur.com/whIajTp.png"></p>
-<h3 id="B-树的删除"><a href="#B-树的删除" class="headerlink" title="B+树的删除"></a>B+树的删除</h3><h4 id="函数实现-2"><a href="#函数实现-2" class="headerlink" title="函数实现"></a>函数实现</h4><p><strong>Coalesce()</strong></p>
-<p>将node和兄弟结点合并至前驱结点,并返回是否需要删除parent.</p>
-<p>首先判断node和neighbor_node哪一个是前驱结点.只有在node的index&#x3D;0时,neighbor_node不是前驱结点.</p>
-<p>调用insert_pairs将后面的结点键值对移动到前驱结点,并修改结点信息.</p>
-<p>修改parent中的信息,若index&#x3D;0,则直接删除index+1的键值对.若index!&#x3D;0,删除index的键值对.</p>
-<p>将右侧结点在函数内删除,由于parent的size减小,递归调用CoalesceOrRedistribute()并返回其返回值.</p>
-<p>返回到Coalesce0rRedistribute()的值为<strong>是否需要删除parent</strong>.</p>
-<p><strong>Redistribute()</strong> 重新分配node和兄弟结点neighbor_node的键值对.不需要删除任何结点.</p>
-<p><strong>AdjustRoot()</strong> 当根结点被删除了一个键值对之后调用.返回根结点是否需要被删除至Coalesce0rRedistribute(),也作为其返回值.按原根结点是否是叶子结点讨论.</p>
-<p><strong>CoalesceOrRedistribute()</strong> 对结点进行重分配或合并,返回是否有结点被删除.</p>
-<h4 id="test-1"><a href="#test-1" class="headerlink" title="test"></a>test</h4><p>删除第一条索引后,有叶子结点只有1个值,但未合并.</p>
-<p>检查Coalesce(),添加了对parent中储存的键值对的修改.</p>
-<p>注意到不同于MaxSize,当结点中储存的键值对数量num_key &lt; MinSize时,才需要进行合并或重分配.</p>
-<p>在insert()中插入键值对后已自动修改num_key,去除在合并和重分配函数中重复修改的部分.通过test1.</p>
-<p><img src="https://i.imgur.com/pt7uz2M.png"></p>
-<p>然后出现如下新报错</p>
-<p><img src="https://i.imgur.com/L63j9Wo.png"></p>
-<p>检查图片后为重分配时的错误,检查Redistribute()函数.修改了对于结点keys的索引地址问题.</p>
-<p>在lab2中的大规模随机数中报错.在修改node后添加了maintain_parent(),在释放页面后添加了release_node_handle().</p>
-<p><img src="https://i.imgur.com/PoaQuk0.png"></p>
-<p>叶子结点的双向链表出现错误,修改Split()中新结点链表的插入后通过测试.</p>
-<p><img src="https://i.imgur.com/5xDZxQK.png"></p>
-<h3 id="B-树的并发控制"><a href="#B-树的并发控制" class="headerlink" title="B+树的并发控制"></a>B+树的并发控制</h3><p>使用了Tree级粗粒度并发.即在Getvalue().insert_entry().delete_entry()中加入信号量锁占用root_latch_</p>
-<p><img src="https://i.imgur.com/NXcJz1V.png"></p>
-]]></content>
-      <categories>
-        <category>rucbase</category>
-      </categories>
-  </entry>
-  <entry>
     <title>任务一 缓冲池管理器</title>
     <url>/2023/01/29/rucbase_storage/</url>
     <content><![CDATA[<h3 id="1-1-disk-manager"><a href="#1-1-disk-manager" class="headerlink" title="1.1 disk_manager"></a>1.1 disk_manager</h3><p>磁盘管理器主要实现了从磁盘中读写文件，以及创建删除文件。管理内存与磁盘间的交互。</p>
@@ -929,172 +1197,6 @@ ordered/unordered
 <p><img src="https://i.imgur.com/Ex5Phio.png"></p>
 <p>2</p>
 <p><img src="https://i.imgur.com/8QgrUvz.png"></p>
-]]></content>
-      <categories>
-        <category>rucbase</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>230401</title>
-    <url>/2023/04/01/230401%E8%AE%B0%E4%BA%8B/</url>
-    <content><![CDATA[<p>今天两点我在想，如果我有不受限的能力，我会有什么愿望。我想到高山流水荒漠远洋，然后问如果我有创造的能力，那我创造出来的东西智力水平是否能超过我。我猜没有这样的好事。后来我想了五分钟，我想这世上从未有过文明，或者没有人能感知到我，或者很多人都爱我，最后的答案是拯救世界。也许这是很多人年轻时做过的狂梦，但我很少有这样的幻想，哪怕是看中二作品时。拯救世界能被爱而不亏欠别人。</p>
-<p>但这个世界是混沌的，它不会有一个更好的状态，至少不会有一个所有人共识中的更好状态。没有人拯救世界。</p>
-<p>昨天母亲发他新拍的照片。他快五十岁了，比年轻的时候更爱拍照。我已忘记很多事，远离很多岁月。</p>
-<p>–</p>
-<p>昨天是跨性别现身日。但不是我的现身日。我甚至不知道该给自己挂什么旗。粉白蓝太正统，别的又太矫情。如果手术不要证我根本不会觉得我可能算trans。这是一个未被统一的概念，我既不典型，问题也在能解构的范围内。我想解决问题，而我曾经不认为身份认同是解决问题的一环。现在我依旧没有明确的答案，但我想我确实偏离“大部分人”的轨道很远了。</p>
-<p>no binary, agender, queer？我到底是什么其实不重要，因为在这里，这些都不存在，不论是社会上还是医学上。</p>
-<p>我确实是想说点东西给除了我以外的人听，但我没有勇气在任何账号发这些。倘若你恰好认识我，，你最好不认识我。以下内容写于两个月前。</p>
-<p>–</p>
-<p>我想我应该享受这片刻的宁静。这是短暂的、自由的日子，不应用焦虑沾满生活。恋旧是我的恶习，当我试着站在未来回看此时，顿感此刻的易碎与闲适。三年前，我写道，我的生活苍白而又繁复，对现在的我而言，大抵同样。</p>
-<p>半个小时前，我吃下这些日子以来的第七片药。xyn 吃雌和孕，我也吃雌和孕，也许我也是xyn。我显然不喜欢被这样称呼，但觉得这个机灵有点地狱笑话。对于xyn来说，这是心理srs。对我来说，又是什么呢。机械飞升？化学改造？</p>
-<p>目前的副作用也许是少量的嗜睡和少量的情绪波动。去年我说，我不吃药，因为他们有目标，而我没有。现在我认可的我的存在、我期望的是百分之九十九的地球人不认为严肃存在的概念。我在理智上一刀又一刀地解剖自己，发现少有方法能在物理上帮助我，少有人能理解我，最后被焦虑推动着吃下拆东墙补西墙的药。我无法接受我再什么都不做，但我也做不了什么。 </p>
-<p>xyn 会做化蝶的梦吗？我确实睡眠时连做了几天我期望的梦。昨天在知乎上刷到一个问题，问为何人们觉得蝴蝶美而蝴蝶幼崽毛毛虫丑陋，那个回答说，有一种美丽的蝴蝶，在幼时也很可爱，图里的毛毛虫有两根蜗牛似的触角。小时候被强迫灌输了破茧化蝶这样的文字，不觉得罕见，又亲手淹死过蝴蝶，我对生物上的蝴蝶没有多少好感，只是蝶这个字代表脆弱和轻盈之美而已。如今才觉得这般生物的变化如同奇迹。可惜人变不得。蝶在生物上的斑斓，在人类引用时变成了抽象固化的美。我也确实害怕副作用。我不知道将来会变成什么样。我所做的、想做的这些，最好是让情况好转而不是延缓我情绪崩溃而已。</p>
-<p>我曾佩服有勇气标新立异的人，也疑惑是什么支撑着激进者和理想主义者。如今我也成了这样的人。温和派与日子人不是理智，只是不够痛。我真的愿意去选那个机械飞升的选项而不是当作笑话，我真的愿意去选那97个选项，或者武装直升机，而不是当作笑话。有些人魔怔是为了找乐子，而有些人用来减缓痛苦。 </p>
-<p>我不知道这是否算出柜，我倒最好是有柜可出，而不是因为偏执和愤世嫉俗。我半年来似乎跟好几个人出了柜，实际上是把自己塞进更深的柜子里。<br>那天我对亲人掩饰流泪、否认、沉默，那天我向大他者说我需要奇迹，那天我从里面关上柜子的门，一片漆黑。当我打下需要奇迹时，我也理解了信教者。宁愿相信执念不是无药可救，于是为那片虚空添上信仰的神，在我这宁愿称其奇迹。我在这无波澜人生的绝望时刻，明白了奇迹一词如何产生。</p>
-<p>我每接近一个少数群体，便发觉我自己过往的误解，而后是漫天的，可怕的，绝大多数人的冷漠和误解。我恨他们，恨自己，恨人类的低能、无知、被激素左右、困在每个人的个人认知中无法理解彼此。恨不得人类没有自我意识。</p>
-<p>我会继续沉默下去吗？</p>
-<p>我存在吗？</p>
-<p>我是癔症，是幽灵，是玩笑，是inexistence。</p>
-<p>所有人都在群体性的癔症中，构建出不存在的孤岛们。</p>
-]]></content>
-      <categories>
-        <category>pieces</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>实验三 查询执行</title>
-    <url>/2023/02/17/rucbase_execution/</url>
-    <content><![CDATA[<h1 id="查询执行"><a href="#查询执行" class="headerlink" title="查询执行"></a>查询执行</h1><h2 id="火山-x2F-迭代模型-Volcano-Model"><a href="#火山-x2F-迭代模型-Volcano-Model" class="headerlink" title="火山&#x2F;迭代模型 Volcano Model"></a>火山&#x2F;迭代模型 Volcano Model</h2><p>是解释计算模型，将关系代数中的每一种操作抽象为一个 Operator ，将整个 SQL 构建成一个 Operator 树，从根结点到叶子结点自上而下递归调用 next() 。</p>
-<p>与物化模型相对，物化模型将每一步物理操作实体化（全部完成）后，用于下一步输入。</p>
-<ul>
-<li>火山模型将物理操作符的结果元组直接发送给下一个操作符使用。</li>
-<li><strong>每一次传递一批元组</strong>，是向量化模型。（攒够一批传递），更好地利用现代 CPU 的 SIMD 指令。</li>
-</ul>
-<h3 id="火山模型样例"><a href="#火山模型样例" class="headerlink" title="火山模型样例"></a>火山模型样例</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Id, Name, Age, (Age <span class="operator">-</span> <span class="number">30</span>) <span class="operator">*</span> <span class="number">50</span> <span class="keyword">AS</span> Bonus</span><br><span class="line"><span class="keyword">FROM</span> People</span><br><span class="line"><span class="keyword">WHERE</span> Age <span class="operator">&gt;</span> <span class="number">30</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.imgur.com/icZUVDd.png"></p>
-<p>每个Operateor调用子结点，获得子结点的返回值之后进行操作，返回给上游。</p>
-<p>Select Operator 的伪代码：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">Tuple <span class="title function_">Select::next</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">        Tuple candidate = child-&gt;next(); <span class="comment">// 从子节点中获取 next tuple</span></span><br><span class="line">        <span class="keyword">if</span> (candidate == EndOfStream) <span class="comment">// 是否得到结束标记</span></span><br><span class="line">            <span class="keyword">return</span> EndOfStream;</span><br><span class="line">        <span class="keyword">if</span> (condition-&gt;check(candidate)) <span class="comment">// 是否满足过滤条件</span></span><br><span class="line">            <span class="keyword">return</span> candidate; <span class="comment">// 返回 tuple</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="火山模型优缺点"><a href="#火山模型优缺点" class="headerlink" title="火山模型优缺点"></a>火山模型优缺点</h3><p>优点： 每个 Operator 可以单独抽象实现，不需要关心其他 Operator 的逻辑。</p>
-<p>缺点： Tuple-at-a-time ,多次调用 next() ，造成大量的虚函数调用。</p>
-<h3 id="优化方向"><a href="#优化方向" class="headerlink" title="优化方向"></a>优化方向</h3><p>编译执行 &#x2F; 向量化。</p>
-<h2 id="数据库操作语句类型"><a href="#数据库操作语句类型" class="headerlink" title="数据库操作语句类型"></a>数据库操作语句类型</h2><h3 id="DDL-data-definition-language-操作数据库和表结构"><a href="#DDL-data-definition-language-操作数据库和表结构" class="headerlink" title="DDL(data definition language) 操作数据库和表结构"></a>DDL(data definition language) 操作数据库和表结构</h3><p>创建数据库和表、删除数据库和表、修改表结构等。</p>
-<h3 id="DML-data-manipulation-language-数据操纵语言"><a href="#DML-data-manipulation-language-数据操纵语言" class="headerlink" title="DML(data manipulation language) 数据操纵语言"></a>DML(data manipulation language) 数据操纵语言</h3><p>对数据库数据进行一些操作： update , insert , delete</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> 表名称 <span class="keyword">SET</span> 列名称 <span class="operator">=</span> 新值 <span class="keyword">WHERE</span> 列名称 <span class="operator">=</span> 某值</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> table_name (列<span class="number">1</span>, 列<span class="number">2</span>,...) <span class="keyword">VALUES</span> (值<span class="number">1</span>, 值<span class="number">2</span>,....)</span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> 表名称 <span class="keyword">WHERE</span> 列名称 <span class="operator">=</span> 值</span><br></pre></td></tr></table></figure>
-
-<h3 id="DQL-data-query-language-数据查询语言"><a href="#DQL-data-query-language-数据查询语言" class="headerlink" title="DQL(data query language) 数据查询语言"></a>DQL(data query language) 数据查询语言</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">&lt;&gt;</span> <span class="keyword">FROM</span> <span class="operator">&lt;&gt;</span> WEHRE<span class="operator">&lt;&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="任务一-元数据管理和DDL实现"><a href="#任务一-元数据管理和DDL实现" class="headerlink" title="任务一 元数据管理和DDL实现"></a>任务一 元数据管理和DDL实现</h2><p>数据库系统基本的元数据组织与管理。</p>
-<h3 id="元数据管理"><a href="#元数据管理" class="headerlink" title="元数据管理"></a>元数据管理</h3><p>代码目录：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">src/system/sm_manager.h|.cpp</span><br><span class="line">src/system/sm_meta.h</span><br></pre></td></tr></table></figure>
-
-<p>sm_meta.h 中维护了 <strong>ColMeta</strong> (列元数据)， <strong>TabMeta</strong> (表元数据)， <strong>DbMeta</strong> (数据库元数据)</p>
-<p>表元数据由多个列元数据组成，数据库元数据由多个表元数据组成。列元数据包括了</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">ColMeta</span> &#123;</span><br><span class="line">	std::string tab_name;  <span class="comment">// 字段所属表名称</span></span><br><span class="line">    std::string name;      <span class="comment">// 字段名称</span></span><br><span class="line">    ColType type;          <span class="comment">// 字段类型</span></span><br><span class="line">    <span class="type">int</span> len;               <span class="comment">// 字段长度</span></span><br><span class="line">    <span class="type">int</span> offset;            <span class="comment">// 字段位于记录中的偏移量</span></span><br><span class="line">    <span class="type">bool</span> index;            <span class="comment">// 该字段上是否建立索引</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>重载了操作符，ColMeta 中重载&lt;&lt;将col信息变为const类型并塞进 os</p>
-<h4 id="方法实现"><a href="#方法实现" class="headerlink" title="方法实现"></a>方法实现</h4><p><strong>TabMeta</strong></p>
-<ol>
-<li>is_col()</li>
-<li>get_col()</li>
-</ol>
-<p>使用 std::vector&lt;ColMeta&gt;::iterator 遍历 vector&lt;ColMeta&gt;即可。 &#x2F; 可以使用容器方法 find()</p>
-<h3 id="DDL实现"><a href="#DDL实现" class="headerlink" title="DDL实现"></a>DDL实现</h3><p>代码位置： sm_manager.cpp</p>
-<p>实现常见DDL语句 CREAT，DROP 和功能语句 SHOW，DESC 等</p>
-<h4 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h4><p><strong>SmManager</strong>（类似15445中的Catalog)</p>
-<p>管理数据库中的 db,table,index 的元数据。每个 SmManager 对应一个 db</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::unordered_map&lt;std::string, std::unique_ptr&lt;RmFileHandle&gt;&gt; fhs_;<span class="comment">//储存每个文件（数据库元数据，表） &lt;名称，handle&gt;</span></span><br><span class="line">std::unordered_map&lt;std::string, std::unique_ptr&lt;IxIndexHandle&gt;&gt; ihs_;<span class="comment">//&lt;表名，索引handle&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="方法实现-1"><a href="#方法实现-1" class="headerlink" title="方法实现"></a>方法实现</h4><p>create_db() 若目录不存在，创建仓库目录；进入仓库目录；使用输出文件流创建数据库元数据文件。退出仓库目录。</p>
-<p>close_db() 对应 open_db() 。将内存中修改过的数据库数据，包括元数据 db_ ，写回硬盘中；并关闭数据库内所有表文件和索引文件。退出仓库目录。</p>
-<p>drop_table()</p>
-<h4 id="代码实现相关问题"><a href="#代码实现相关问题" class="headerlink" title="代码实现相关问题"></a>代码实现相关问题</h4><h5 id="文件和流"><a href="#文件和流" class="headerlink" title="文件和流"></a>文件和流</h5><table>
-<thead>
-<tr>
-<th>数据类型</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>ofstream</td>
-<td>输出文件流。创建文件；向文件写入信息</td>
-</tr>
-<tr>
-<td>ifstream</td>
-<td>输入文件流。从文件中读取信息</td>
-</tr>
-<tr>
-<td>fstream</td>
-<td>文件流</td>
-</tr>
-</tbody></table>
-<h5 id="unique-ptr-指针内容作为参数传递"><a href="#unique-ptr-指针内容作为参数传递" class="headerlink" title="unique_ptr 指针内容作为参数传递"></a>unique_ptr 指针内容作为参数传递</h5><p>get() 返回内容的引用。 buffer.get() 等价于 &amp;*buffer</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">rm_manager_-&gt;<span class="built_in">close_file</span>(tab.second.<span class="built_in">get</span>());</span><br></pre></td></tr></table></figure>
-
-<h4 id="test"><a href="#test" class="headerlink" title="test"></a>test</h4><p>文件储存结构是以数据库名称命名的文件夹下，有名为 db.meta 的元数据文件，以及每个表的表文件，和按&lt;表-表内索引序号&gt;命名的索引文件。</p>
-<p>create_db() 后未退出仓库目录。创建元数据文件时需要进入仓库目录，结束后退出。open_db() 时进入目录，close_db() 时退出。</p>
-<h2 id="任务二-DQL——select-from-语句和相关算子实现"><a href="#任务二-DQL——select-from-语句和相关算子实现" class="headerlink" title="任务二 DQL——select_from 语句和相关算子实现"></a>任务二 DQL——select_from 语句和相关算子实现</h2><p>代码目录</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">src/execution/executor_index_scan.h</span><br><span class="line">src/execution/executor_seq_scan.h</span><br><span class="line">src/execution/executor_nestedloop_join.h</span><br><span class="line">src/execution/executor_projection.h</span><br></pre></td></tr></table></figure>
-
-<h3 id="扫描算子-（顺序-amp-索引）"><a href="#扫描算子-（顺序-amp-索引）" class="headerlink" title="扫描算子 （顺序 &amp; 索引）"></a>扫描算子 （顺序 &amp; 索引）</h3><h4 id="数据结构-1"><a href="#数据结构-1" class="headerlink" title="数据结构"></a>数据结构</h4><p>顺序扫描算子：读入初始扫描条件 <strong>vector&lt;Condition&gt;</strong> conds_ ，转换为实际扫描条件 fed_conds_ .表的信息：表名、列。通过 RmFileHandle 读取表中记录数据。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">SeqScanExecutor</span> : <span class="keyword">public</span> AbstractExecutor &#123; </span><br><span class="line">   <span class="keyword">private</span>:</span><br><span class="line">    std::string tab_name_;</span><br><span class="line">    std::vector&lt;Condition&gt; conds_;  <span class="comment">// 初始扫描条件(来自SQL)</span></span><br><span class="line">    RmFileHandle *fh_;              <span class="comment">// TableHeap</span></span><br><span class="line">    std::vector&lt;ColMeta&gt; cols_;</span><br><span class="line">    <span class="type">size_t</span> len_;</span><br><span class="line">    std::vector&lt;Condition&gt; fed_conds_;  <span class="comment">// 实际扫描条件(可能由于连接运算动态改变)</span></span><br><span class="line"></span><br><span class="line">    Rid rid_;                        <span class="comment">// 当前扫描到的记录的rid</span></span><br><span class="line">    std::unique_ptr&lt;RecScan&gt; scan_;  <span class="comment">// table_iterator</span></span><br><span class="line"></span><br><span class="line">    SmManager *sm_manager_;</span><br></pre></td></tr></table></figure>
-
-<p><strong>Condition</strong>: 筛选条件</p>
-<p>描述条件的算式，记录了算式左右侧以及比较符号，算式右侧可能为另一列&#x2F;值。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Condition</span> &#123;</span><br><span class="line">    TabCol lhs_col;   <span class="comment">// left-hand side column</span></span><br><span class="line">    CompOp op;        <span class="comment">// comparison operator</span></span><br><span class="line">    <span class="type">bool</span> is_rhs_val;  <span class="comment">// true if right-hand side is a value (not a column)</span></span><br><span class="line">    TabCol rhs_col;   <span class="comment">// right-hand side column</span></span><br><span class="line">    Value rhs_val;    <span class="comment">// right-hand side value</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>value: 带类型的值，类型+指向原记录的指针。</p>
-<h4 id="方法实现-2"><a href="#方法实现-2" class="headerlink" title="方法实现"></a>方法实现</h4><p><strong>beginTuple()</strong>  :构建表迭代器并找到第一个满足谓词条件的 record 。</p>
-<p>构建表迭代器 scan_ ， 并使用 scan_-&gt;next() 跳过无记录的位置迭代扫描，调用 eval_conds() 判断是否满足条件，直到扫描到第一个满足谓词条件的记录，并赋值给算子成员rid_ 。</p>
-<p>现有方法 eval_conds() 用于比较扫描到的数据与过滤条件。eval_conds() 调用了 eval_cond() 函数，增加了是否所有过滤条件都成立的判断。现观察 eval_cond() :</p>
-<p>rec_cols 为现有列，cond 过滤条件，rec 当前元组。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">eval_cond</span><span class="params">(<span class="type">const</span> std::vector&lt;ColMeta&gt; &amp;rec_cols, <span class="type">const</span> Condition &amp;cond, <span class="type">const</span> RmRecord *rec)</span></span></span><br></pre></td></tr></table></figure>
-
-<p>在索引扫描中，找到索引列对应的条件，通过 lower_bound() 等函数找到符合条件的上下限来剪枝，再在上下限范围内建立 scan_ 顺序扫描。</p>
-<p><strong>nextTuple()</strong> : 找到下一个满足谓词条件的 record 。</p>
-<p>类似beginTuple() 。</p>
-<p><strong>Next()</strong> : 找到下一个满足谓词条件的 record ，并返回 record 地址。（分情况调用beginTuple() 和 nextTuple() ）</p>
-<p><strong>IndexScanExecutor()</strong> : 初始化，将传入的参数赋值给对象，并转化 conds_ ，将该表下的列移动为条件的左值。</p>
-<p>feed() (在连接算子任务中实现)</p>
-<h4 id="遗留问题"><a href="#遗留问题" class="headerlink" title="遗留问题"></a>遗留问题</h4><p>何时调用 check_runtime_conds() ，作用是什么</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">check_runtime_conds</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;cond : fed_conds_) &#123;</span><br><span class="line">        <span class="built_in">assert</span>(cond.lhs_col.tab_name == tab_name_);</span><br><span class="line">        <span class="keyword">if</span> (!cond.is_rhs_val) &#123;</span><br><span class="line">            <span class="built_in">assert</span>(cond.rhs_col.tab_name == tab_name_);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="连接算子-Nested-Loop-Join"><a href="#连接算子-Nested-Loop-Join" class="headerlink" title="连接算子 ( Nested Loop Join )"></a>连接算子 ( Nested Loop Join )</h3><p>朴素实现： 对于外表的每条记录，扫一遍内表（比较、条件连接）。默认以左孩子作为 outer table 。</p>
-<h4 id="数据结构-2"><a href="#数据结构-2" class="headerlink" title="数据结构"></a>数据结构</h4><p>多表连接语句</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> [col..] <span class="keyword">from</span> TbName1 <span class="keyword">join</span> TbName2 ... <span class="keyword">where</span> cond;</span><br></pre></td></tr></table></figure>
-
-<p>连接算子中有两个指向左右孩子算子的指针</p>
-<p>**feed()  **</p>
-<p><strong>feed_right()</strong> ：创建复制了 prev_feed_dict 的值的 <code>feed_dict</code> ，向 feed_dict 中插入 left_dict ，然后调用 feed()</p>
-<pre><code>**left_dict** 是 map&lt;TabCol, Value&gt; 类型的变量，调用函数 rec2dict() 返回值为 map&lt;外表中每一列的元数据，表中下一个元组的每一列的值&gt; 。
-
-**prev_feed_dict**
-</code></pre>
-<h4 id="方法实现-3"><a href="#方法实现-3" class="headerlink" title="方法实现"></a>方法实现</h4><p><strong>nextTuple()</strong> :  调用内表的 nextTuple() ，若内表扫描完一遍，则将外表移动到下一个记录，内表调用 beginTuple() 回到第一个记录，并更新 feed 信息。</p>
-<p><strong>Next()</strong> : 分别调用左右算子的 Next() 获取记录，使用 memcpy() 拼接记录的 data 给返回值。</p>
-<h3 id="投影算子"><a href="#投影算子" class="headerlink" title="投影算子"></a>投影算子</h3><p>投影算子调用其要处理的 <code>prev</code>算子的 <code>Next()</code>获得元祖，根据要投影的列进行投影返回投影后的新元祖。</p>
-<h4 id="数据结构-3"><a href="#数据结构-3" class="headerlink" title="数据结构"></a>数据结构</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ProjectionExecutor</span> : <span class="keyword">public</span> AbstractExecutor &#123;</span><br><span class="line">   <span class="keyword">private</span>:</span><br><span class="line">    std::unique_ptr&lt;AbstractExecutor&gt; prev_;</span><br><span class="line">    std::vector&lt;ColMeta&gt; cols_;			<span class="comment">//投影的列的元数据</span></span><br><span class="line">    <span class="type">size_t</span> len_;</span><br><span class="line">    std::vector&lt;<span class="type">size_t</span>&gt; sel_idxs_;		<span class="comment">//储存了需要保留的列在原表中的位置索引</span></span><br><span class="line">    ...&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="Next-实现"><a href="#Next-实现" class="headerlink" title="Next() 实现"></a>Next() 实现</h4><p>调用下一层的算子 prev 的 Next() 获得投影前的记录 prev_rec ，按 sel_idxs_ 依次生成投影列，</p>
-<p>是否需要修改列元数据  </p>
-<p>摆烂暂停了，我最好是会去写6.824</p>
-<h2 id="任务三-DML——-insert-x2F-delete-x2F-update-语句和算子实现"><a href="#任务三-DML——-insert-x2F-delete-x2F-update-语句和算子实现" class="headerlink" title="任务三 DML—— insert&#x2F;delete&#x2F;update 语句和算子实现"></a>任务三 DML—— insert&#x2F;delete&#x2F;update 语句和算子实现</h2><h4 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h4><p><strong>lt、le、eq、ne、ge、gt的含义</strong></p>
-<ul>
-<li><strong>lt：less than</strong> 小于</li>
-<li><strong>le：less than or equal to</strong> 小于等于</li>
-<li><strong>eq：equal to</strong> 等于</li>
-<li><strong>ne：not equal to</strong> 不等于</li>
-<li><strong>ge：greater than or equal to</strong> 大于等于</li>
-<li><strong>gt：greater than</strong> 大于</li>
-</ul>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
-<li>SQL优化之火山模型 <a href="https://zhuanlan.zhihu.com/p/219516250">https://zhuanlan.zhihu.com/p/219516250</a></li>
-<li>Why does std::unique_ptr has a “get()” member function? <a href="https://stackoverflow.com/questions/26664585/why-does-stdunique-ptr-has-a-get-member-function">https://stackoverflow.com/questions/26664585/why-does-stdunique-ptr-has-a-get-member-function</a></li>
-<li><a href="https://www.cnblogs.com/wenxuehai/p/13485427.html">DDL基本语法（操作数据库和表结构）</a></li>
-<li></li>
-</ol>
 ]]></content>
       <categories>
         <category>rucbase</category>

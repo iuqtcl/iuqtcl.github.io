@@ -186,6 +186,350 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/05/18/rcore-learning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ee2.jpg">
+      <meta itemprop="name" content="iuqtcl">
+      <meta itemprop="description" content="人暂时没remake，blog已经re了">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyber Ghost">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/05/18/rcore-learning/" class="post-title-link" itemprop="url">rcore实验文档阅读 简短记录</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-05-18 22:26:39 / 修改时间：22:27:29" itemprop="dateCreated datePublished" datetime="2023-05-18T22:26:39+08:00">2023-05-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/rcore/" itemprop="url" rel="index"><span itemprop="name">rcore</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>实验文档:<a target="_blank" rel="noopener" href="http://rcore-os.cn/rCore-Tutorial-Book-v3/index.html">http://rcore-os.cn/rCore-Tutorial-Book-v3/index.html</a></p>
+<h2 id="第一章-应用程序与基本执行环境"><a href="#第一章-应用程序与基本执行环境" class="headerlink" title="第一章 应用程序与基本执行环境"></a>第一章 应用程序与基本执行环境</h2><p>基本目标:让应用与硬件隔离</p>
+<p>内容: 讲解如何设计和实现建立在裸机上的执行环境</p>
+<p>生成应用程序二进制执行代码依赖的是以编译器为主的开发环境, 运行应用程序执行码以来的是以操作系统为主的执行环境.</p>
+<p>章节</p>
+<ul>
+<li><p>运行在裸机环境的系统软件首先需要写出不需要标准库的软件.(移除标准库依赖)</p>
+</li>
+<li><p>确认LibOS内核加载到正确的内存位置上, 在 LibOS内核中写入一条汇编指令,并使用GDB工具监控Qemu的执行流程.(内核第一条指令)</p>
+</li>
+<li><p>在跳转到 rust 的入口函数前进行栈的初始化(内核支持函数调用)</p>
+</li>
+<li><p>调用 RustSBI 实现格式化输出和致命错误处理(基于SBI服务完成输出和关机)</p>
+</li>
+</ul>
+<h3 id="应用平台执行环境与平台支持"><a href="#应用平台执行环境与平台支持" class="headerlink" title="应用平台执行环境与平台支持"></a>应用平台执行环境与平台支持</h3><p>现代编译器工具集主要工作流程</p>
+<ol>
+<li>源代码 -&gt; 预处理器 -&gt; 宏展开的源代码</li>
+<li>编译器 -&gt; 汇编程序</li>
+<li>汇编器 -&gt; 目标代码</li>
+<li>链接器 -&gt; 可执行文件</li>
+</ol>
+<p> rust的 core 库不依赖操作系统, 因此在裸机平台上需要将对标准库 std 的引用换成对 core 库的引用.</p>
+<h3 id="移除标准库依赖指令"><a href="#移除标准库依赖指令" class="headerlink" title="移除标准库依赖指令"></a>移除标准库依赖指令</h3><p>构建一个内核最小执行环境使它能在 RV64GC 裸机上运行, 需要添加能够支持应用的裸机级别的库操作系统(LibOS).</p>
+<ul>
+<li>不使用std标记</li>
+<li>提供 panic_handler 应对致命错误</li>
+<li>移除main函数: 缺少 start 语义项(标准库std在执行应用程序前的初始化工作)</li>
+</ul>
+<h3 id="内核第一条指令"><a href="#内核第一条指令" class="headerlink" title="内核第一条指令"></a>内核第一条指令</h3><p>基础知识</p>
+<ul>
+<li>qemu启动流程</li>
+<li>程序内存布局与编译流程</li>
+</ul>
+<p>编写内核第一条指令并嵌入到内核项目中, 指定内核的内存布局使内核正确对接到 qemu 中.</p>
+<ul>
+<li>在config中添加linker设置文件</li>
+<li>添加.asm文件, 引入全局符号_start, 在_start中写入一条汇编指令</li>
+<li>向 main.rs 中引入汇编文件</li>
+<li>去除元数据, 手动向 qemu 加载内核镜像</li>
+</ul>
+<p>基于GDB验证启动流程(待处理qemu-system-riscv64: Unable to load the RISC-V firmware “..&#x2F;bootloader&#x2F;rustsbi-qemu.bin”)</p>
+<h3 id="为内核支持函数调用"><a href="#为内核支持函数调用" class="headerlink" title="为内核支持函数调用"></a>为内核支持函数调用</h3><h2 id="第二章-批处理系统"><a href="#第二章-批处理系统" class="headerlink" title="第二章 批处理系统"></a>第二章 批处理系统</h2><p><strong>特权级机制</strong> 保护计算机系统不受出错程序破坏的机制, 实现用户态和内核态的隔离.</p>
+<h3 id="特权级机制"><a href="#特权级机制" class="headerlink" title="特权级机制"></a>特权级机制</h3><h3 id="实现应用程序"><a href="#实现应用程序" class="headerlink" title="实现应用程序"></a>实现应用程序</h3><p>设计实现被批处理系统逐个加载并运行的程序, 保证应用程序的代码在用户态能正常运行.</p>
+<p>实现要点</p>
+<ul>
+<li>应用程序的内存布局</li>
+<li>应用程序发出的系统调用</li>
+</ul>
+<p>设计一个应用程序和基本的支持功能库</p>
+<h4 id="应用程序设计"><a href="#应用程序设计" class="headerlink" title="应用程序设计"></a>应用程序设计</h4><ul>
+<li><code>user/src/bin/*.rs</code>：各个应用程序</li>
+<li><code>user/src/*.rs</code>：用户库（包括入口函数、初始化函数、I&#x2F;O函数和系统调用接口等）</li>
+<li><code>user/src/linker.ld</code>：应用程序的内存布局说明</li>
+</ul>
+<p>寄存器<code>a0-a6(x10-x16),x17</code>保存系统调用的参数</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="keyword">fn</span> <span class="title function_">syscall</span>(id: <span class="type">usize</span>, args: [<span class="type">usize</span>; <span class="number">3</span>]) <span class="punctuation">-&gt;</span> <span class="type">isize</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">ret</span>: <span class="type">isize</span>;</span><br><span class="line">    <span class="keyword">unsafe</span> &#123;</span><br><span class="line">        core::arch::asm!(						<span class="comment">//绑定变量到寄存器</span></span><br><span class="line">            <span class="string">&quot;ecall&quot;</span>,							</span><br><span class="line">            <span class="title function_ invoke__">inlateout</span>(<span class="string">&quot;x10&quot;</span>) args[<span class="number">0</span>] =&gt; ret,	<span class="comment">//同时作为输入和输出, input =&gt; output</span></span><br><span class="line">            <span class="title function_ invoke__">in</span>(<span class="string">&quot;x11&quot;</span>) args[<span class="number">1</span>],	<span class="comment">// 编译器保证在ecall指令被执行前寄存器a1的值与args[1]相同</span></span><br><span class="line">            <span class="title function_ invoke__">in</span>(<span class="string">&quot;x12&quot;</span>) args[<span class="number">2</span>],</span><br><span class="line">            <span class="title function_ invoke__">in</span>(<span class="string">&quot;x17&quot;</span>) id</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">    ret</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="qemu的用户态模拟和系统级模拟"><a href="#qemu的用户态模拟和系统级模拟" class="headerlink" title="qemu的用户态模拟和系统级模拟"></a>qemu的用户态模拟和系统级模拟</h4><p>用户态模拟: <code>qemu-riscv64</code>模拟器可以模拟一台预装了linux操作系统的riscv计算机, 仅支持载入并执行单个可执行文件. 进行系统调用时, 将调用转换为本机处理器上的linux调用.</p>
+<h3 id="实现批处理操作系统"><a href="#实现批处理操作系统" class="headerlink" title="实现批处理操作系统"></a>实现批处理操作系统</h3><p>静态绑定 动态加载</p>
+<p>由脚本<code>os/build.rs</code>在 cargo build 时生成<code>os/src/link_app.S</code></p>
+<h4 id="找到并加载应用程序二进制码"><a href="#找到并加载应用程序二进制码" class="headerlink" title="找到并加载应用程序二进制码"></a>找到并加载应用程序二进制码</h4><p>在 os 的 batch 子模块中实现一个应用管理器 <code>AppManager</code>, 主要功能:</p>
+<ul>
+<li>保存应用数量和位置信息, 当前执行的应用编号</li>
+<li>根据应用程序位置信息, 初始化应用所需内存空间, 并加载应用执行</li>
+</ul>
+<p> 在 <code>RefCell</code> 的基础上再封装一个 <code>UpSafeCell</code> , 来允许我们在<strong>单核</strong>上安全使用可变全局变量.</p>
+<p><code>RefCell</code>: 运行时借用检查器, 可以在不可变引用的情况下修改值, 因为它会在运行时而不是编译时检查借用规则.</p>
+<h3 id="实现特权级的切换"><a href="#实现特权级的切换" class="headerlink" title="实现特权级的切换"></a>实现特权级的切换</h3><p>批处理操作系统为了建立好应用程序的执行环境，需要在执行应用程序之前进行一些初始化工作，并监控应用程序的执行，具体体现在：</p>
+<ul>
+<li>当启动应用程序的时候，需要初始化应用程序的用户态上下文，并能切换到用户态执行应用程序；</li>
+<li>当应用程序发起系统调用（即发出 Trap）之后，需要到批处理操作系统中进行处理；</li>
+<li>当应用程序执行出错的时候，需要到批处理操作系统中杀死该应用并加载运行下一个应用；</li>
+<li>当应用程序执行结束的时候，需要到批处理操作系统中加载运行下一个应用（实际上也是通过系统调用 <code>sys_exit</code> 来实现的）。</li>
+</ul>
+<h4 id="相关控制状态寄存器"><a href="#相关控制状态寄存器" class="headerlink" title="相关控制状态寄存器"></a>相关控制状态寄存器</h4><p>Trap 机制</p>
+<ul>
+<li>trap 之前运行在哪个特权级</li>
+<li>需要切换到哪个特权级, 操作完成后返回原特权级</li>
+</ul>
+<p>trap到s特权级, 会使用 s 特权级中的控制状态寄存器辅助处理.</p>
+<p><img src="https://i.imgur.com/NVEx6Hm.png"></p>
+<h4 id="特权级切换的硬件控制机制"><a href="#特权级切换的硬件控制机制" class="headerlink" title="特权级切换的硬件控制机制"></a>特权级切换的硬件控制机制</h4><p>当 CPU 执行完一条指令（如 <code>ecall</code> ）并准备从用户特权级 陷入（ <code>Trap</code> ）到 S 特权级的时候，硬件会自动完成如下这些事情：</p>
+<ul>
+<li><code>sstatus</code> 的 <code>SPP</code> 字段会被修改为 CPU 当前的特权级（U&#x2F;S）。</li>
+<li><code>sepc</code> 会被修改为 Trap 处理完成后默认会执行的下一条指令的地址。</li>
+<li><code>scause/stval</code> 分别会被修改成这次 Trap 的原因以及相关的附加信息。</li>
+<li>CPU 会跳转到 <code>stvec</code> 所设置的 Trap 处理入口地址，并将当前特权级设置为 S ，然后从Trap 处理入口地址处开始执行。</li>
+</ul>
+<h4 id="用户栈与内核栈"><a href="#用户栈与内核栈" class="headerlink" title="用户栈与内核栈"></a>用户栈与内核栈</h4><p>trap前通过内核栈保存寄存器状态</p>
+<p>通过修改 sp 寄存器的值换栈</p>
+<p><code>TrapContext</code>中保存了上下文, 包括通用寄存器<code>x0-x31</code>, <code>sstatus</code>, <code>spec</code>.</p>
+<p>保存 sstatus, spec 的原因: trap 嵌套时值会被覆盖</p>
+<h2 id="第三章-多道程序与分时多任务"><a href="#第三章-多道程序与分时多任务" class="headerlink" title="第三章 多道程序与分时多任务"></a>第三章 多道程序与分时多任务</h2><h3 id="任务切换"><a href="#任务切换" class="headerlink" title="任务切换"></a>任务切换</h3><p>应用在运行中主动或被动交出CPU的使用权, 内核选择另一个程序继续执行. 内核需要保证任务上下文一致.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># os/src/task/switch.S 保存CPU的某些寄存器,即任务上下文</span><br></pre></td></tr></table></figure>
+
+<p>寄存器a0指向的地址储存了当前task的上下文, a1指向的地址储存了下一个task的上下文. </p>
+<h3 id="管理多道程序"><a href="#管理多道程序" class="headerlink" title="管理多道程序"></a>管理多道程序</h3>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/05/18/riscv/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ee2.jpg">
+      <meta itemprop="name" content="iuqtcl">
+      <meta itemprop="description" content="人暂时没remake，blog已经re了">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyber Ghost">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/05/18/riscv/" class="post-title-link" itemprop="url">rcore教学视频 简短记录</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-05-18 22:22:38 / 修改时间：22:24:00" itemprop="dateCreated datePublished" datetime="2023-05-18T22:22:38+08:00">2023-05-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/rcore/" itemprop="url" rel="index"><span itemprop="name">rcore</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>refer</p>
+<p><a target="_blank" rel="noopener" href="https://riscv.org/wp-content/uploads/2018/05/riscv-privileged-BCN.v7-2.pdf">手册</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.ideawand.com/2022/11/18/rcore_tutorial/os-camp-2022-winter-riscv/">指导</a></p>
+<p><a target="_blank" rel="noopener" href="https://os2edu.cn/course/108/replay/5585">视频</a></p>
+<h2 id="特权级架构"><a href="#特权级架构" class="headerlink" title="特权级架构"></a>特权级架构</h2><h3 id="为什么需要特权级架构"><a href="#为什么需要特权级架构" class="headerlink" title="为什么需要特权级架构"></a>为什么需要特权级架构</h3><p>管理保护共享资源,对上层用户屏蔽下层实现细节</p>
+<h3 id="特权级架构的层次划分"><a href="#特权级架构的层次划分" class="headerlink" title="特权级架构的层次划分"></a>特权级架构的层次划分</h3><p>下层为上层提供调用接口</p>
+<p><img src="https://i.imgur.com/LFedkQd.png"></p>
+<h3 id="常见配置"><a href="#常见配置" class="headerlink" title="常见配置"></a>常见配置</h3><p><img src="https://i.imgur.com/cJcc2Zv.png"></p>
+<p>M+U: 对某块特别的内存区域进行权限限制（例 U态只读保护操作系统）</p>
+<p>M+S+U: 支持多进程，每个程序有自己的地址空间。</p>
+<h4 id="特权级模式"><a href="#特权级模式" class="headerlink" title="特权级模式"></a>特权级模式</h4><ul>
+<li>User (U mode) 用户态</li>
+<li>Supervisor 中等特权级 内核态&#x2F; 特权态</li>
+<li>Machine 最高特权级 机器态</li>
+</ul>
+<p>更高的特权级</p>
+<ul>
+<li>可以执行更多的指令</li>
+<li>可以操作更多的CSR（control&#x2F; status register）</li>
+</ul>
+<p>一些CSR在不同的特权级有不同的副本(<code>mtvec</code>和<code>stvec</code>)</p>
+<h4 id="各特权态的指令"><a href="#各特权态的指令" class="headerlink" title="各特权态的指令"></a>各特权态的指令</h4><ul>
+<li>ECALL 特权态切换（U-&gt;S, S-&gt;M)</li>
+<li>EBREAK 产生断点异常</li>
+<li>(S)RET 从高特权态返回低特权态</li>
+</ul>
+<p>S 态引入的指令：</p>
+<ul>
+<li>SFENCE.VMA  主要的作用是刷页表</li>
+</ul>
+<p>M 态引入的指令：</p>
+<ul>
+<li>WFI： 让当前处理器核心进入睡眠状态</li>
+</ul>
+<h4 id="CSR"><a href="#CSR" class="headerlink" title="CSR"></a>CSR</h4><p>在不同的模式下有不同的CSR，CSR寄存器有一套独立的地址空间，每个处理器核心有4k CSR，对应4个特权态</p>
+<h3 id="内存地址"><a href="#内存地址" class="headerlink" title="内存地址"></a>内存地址</h3><p>两种内存保护机制</p>
+<ul>
+<li>使用页表</li>
+<li>物理内存保护单元</li>
+</ul>
+<h3 id="trap-handling-exceptions-and-interrupts"><a href="#trap-handling-exceptions-and-interrupts" class="headerlink" title="trap handling: exceptions and interrupts"></a>trap handling: exceptions and interrupts</h3><ul>
+<li>异常：同步事件，发生的原因是明确的</li>
+<li>中断：异步事件，外部事件造成</li>
+</ul>
+<p>和异常处理相关的CSR</p>
+<ul>
+<li>stvec、mtvec(Trap-Vector Base-Address Register): 用于设置事件发生以后的处理函数地址。事件发生以后会跳转到这里所设置的地址上面去执行处理函数</li>
+</ul>
+<h4 id="trap的代理机制"><a href="#trap的代理机制" class="headerlink" title="trap的代理机制"></a>trap的代理机制</h4><p>通常状态下，事件发生时直接陷入到最高特权级M态。通过设置medeleg、mideleg寄存器可以设置。</p>
+<h2 id="虚拟内存、页表"><a href="#虚拟内存、页表" class="headerlink" title="虚拟内存、页表"></a>虚拟内存、页表</h2><p>虚拟内存应用例</p>
+<ol>
+<li>同时多次运行同一个程序，各个程序间不会数据冲突</li>
+<li>fork创建子进程后的写时复制方式</li>
+<li>mmap系统调用，将硬盘上的一个文件映射到内存地址上</li>
+</ol>
+<p>物理地址空间 - 虚拟地址空间</p>
+<p>物理内存有限而对进程的虚拟内存很大 - 特权级架构管理共享资源，程序通常只用到很小一部分，且可以是不连续的。</p>
+<h3 id="映射"><a href="#映射" class="headerlink" title="映射"></a>映射</h3><p>物理地址PA - 虚拟内存地址VA</p>
+<p>虚拟内存即在VA, PA间的映射</p>
+<p> <img src="https://i.imgur.com/vWDxkG0.png"></p>
+<p>物理内存中需要存映射表和存储的内容</p>
+<h3 id="对映射表的维护"><a href="#对映射表的维护" class="headerlink" title="对映射表的维护"></a>对映射表的维护</h3><p>优化</p>
+<p><img src="https://i.imgur.com/oeHMaH3.png"></p>
+<p><strong>1.</strong> (数组)将虚拟空间划分为同样大小的块，按块进行映射。映射表中只存第x个块对应的物理地址, 可以通过一定的映射规则简化地址转换（如位移）。</p>
+<p><strong>2.（多叉树）储存稀疏的地址。</strong>（如果一次性建立整个进程的映射表，数组表格占用空间可能很大）</p>
+<p>多级页表, 申请时不存在则创建对应页表。</p>
+<p>将地址切分为不同的段</p>
+<p>映射时地址低位不变</p>
+<p><img src="https://i.imgur.com/7DwzGC5.png"></p>
+<h3 id="sv39"><a href="#sv39" class="headerlink" title="sv39"></a>sv39</h3><p>对于64位寄存器，可以通过对处理器的配置来控制虚拟地址的长度。</p>
+<p>sv39按照9+9+9+12划分（三级页表，每个页表项为8字节，每个4k大小的页表存放$2^9$个条目，又因为指针必指向4k块的首地址，地址末尾12位必为0，因此在末尾储存空间中替换为其他信息）</p>
+<p>从低位起</p>
+<ul>
+<li>V，表明这个PTE是否可用，为0则空闲</li>
+<li>XWR 表示这个页表项锁指向的内存区域访问权限<ul>
+<li>如果全为0则是中间节点</li>
+</ul>
+</li>
+<li>…</li>
+<li>A上次清零后，如果对应内存区域有过读写或取指令操作，则为1</li>
+</ul>
+<h3 id="satp寄存器"><a href="#satp寄存器" class="headerlink" title="satp寄存器"></a>satp寄存器</h3><p>s态，atp（address translation and protection）切换到不同进程时 atp 内存的页表也会改变。</p>
+<p>tlb寄存器 高速缓存 提前加载页表，切换进程时清空高速缓存</p>
+<h2 id="risc-v汇编指令-rcore代码中汇编相关部分"><a href="#risc-v汇编指令-rcore代码中汇编相关部分" class="headerlink" title="risc-v汇编指令 rcore代码中汇编相关部分"></a>risc-v汇编指令 rcore代码中汇编相关部分</h2><p>函数调用</p>
+<p><img src="https://i.imgur.com/OrjsxEQ.png"></p>
+<p><strong>伪指令</strong>： </p>
+<ul>
+<li><p>以” . “开头的指令，不会产生实质的机器指令	<code>.globl</code></p>
+</li>
+<li><p>会被汇编器拆成多条汇编指令（总是一起出现的多条指令）	<code>la</code>可以拆成两条机器指令，占八个字节</p>
+</li>
+</ul>
+<p><strong>非伪指令</strong></p>
+<ul>
+<li>机器指令</li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">global_asm!(<span class="built_in">include_str!</span>(<span class="string">&quot;entry.asm&quot;</span>));	<span class="comment">//插入一段汇编代码，但是分开编译</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">	.section .text.entry	// 到下一个.section前使地址指令移动产生的空间都要放到.text.entry段中</span><br><span class="line">	.globl _start			// 告诉链接器，使此标签对其他程序可见</span><br><span class="line">_start:</span><br><span class="line">	la sp, boot_stack_top	// 将栈指针加载到sp中（经过链接器调整后）</span><br><span class="line">	call rust_main			// 跳转到rust函数</span><br><span class="line">	</span><br><span class="line">	.section .bss.stack</span><br><span class="line">	.globl boot_stack_lower_bound</span><br><span class="line">boot_stack_lower_bound:</span><br><span class="line">	.space 4096 * 16</span><br><span class="line">	.globl boot_stack_top</span><br><span class="line">boot_stack_top:</span><br></pre></td></tr></table></figure>
+
+<h3 id="段"><a href="#段" class="headerlink" title="段"></a>段</h3><p>将源代码编译时，可能会生成不同的目标文件，链接器会将不同目标文件中的段收集到一起，并重定位。</p>
+<p>.text.entry 是一个二级目录</p>
+<p>通过链接脚本指导链接器排布各个段的内容。</p>
+<p>“.” 是地址计数器，向”.”赋值即向更高地址的地方移动，也可以读出当前”.”的值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">stext = .;		// 起始地址</span><br><span class="line">.text : &#123;*(.text.entry)	// 对所有满足条件的文件进行收集</span><br><span class="line">*(.text .text.*)</span><br><span class="line">&#125;</span><br><span class="line">. = ALIGN(4K); // 到最近的4K整倍数的地址</span><br><span class="line">etext = .;		// 终止地址</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[no_mangle]</span>	<span class="comment">// 编译时不混淆函数名称，保证汇编引用</span></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">fn</span> <span class="title function_">rust_main</span>() <span class="punctuation">-&gt;</span> ! &#123;</span><br><span class="line">    <span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> &#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">stext</span>();		<span class="comment">// 获取段地址</span></span><br><span class="line">    ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="trap"><a href="#trap" class="headerlink" title="trap"></a>trap</h3><p>sscratch 陷入时将上下文保存到栈上</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">	.quad 7				</span><br><span class="line">	.quad app_0_start</span><br><span class="line">	...</span><br><span class="line">	.quad app_6_start</span><br><span class="line">	.quad app_6_end</span><br><span class="line">app_0_start:</span><br><span class="line">	.incbin &quot;path/xx.bin&quot; 	// 将字符（编译好的程序的首地址）复制进地址</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// os/src/batch.rs</span></span><br><span class="line">lazy_static!&#123;		<span class="comment">// 首次调用时才初始化该变量</span></span><br><span class="line">	<span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> &#123;</span><br><span class="line">		<span class="keyword">fn</span> <span class="title function_">_num_app</span>();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">let</span> <span class="variable">num_app_ptr</span> = _num_app <span class="keyword">as</span> <span class="type">usize</span> <span class="keyword">as</span> *count <span class="type">usize</span>;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">num_app</span> = num_app_ptr.<span class="title function_ invoke__">read_volalite</span>();</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">app_start</span>: [<span class="type">usize</span>; MAX_APP_NUM + <span class="number">1</span>] = [<span class="number">0</span>; MAX_APP_NUM + <span class="number">1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="启动及部分内核模块分析"><a href="#启动及部分内核模块分析" class="headerlink" title="启动及部分内核模块分析"></a>启动及部分内核模块分析</h2>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/04/02/lecture/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1314,179 +1658,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/01/19/06_iterators_and_pointers/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/ee2.jpg">
-      <meta itemprop="name" content="iuqtcl">
-      <meta itemprop="description" content="人暂时没remake，blog已经re了">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cyber Ghost">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/01/19/06_iterators_and_pointers/" class="post-title-link" itemprop="url">06 Iterators and Pointers</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2023-01-19 00:57:13 / 修改时间：01:11:47" itemprop="dateCreated datePublished" datetime="2023-01-19T00:57:13+08:00">2023-01-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CS106L%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">CS106L笔记</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><em>How do we access elements in a container in order?</em></p>
-<p><em>How do we reference existing data in our code?</em></p>
-<h2 id="iterators"><a href="#iterators" class="headerlink" title="iterators"></a>iterators</h2><p><em>访问容器中的元素</em></p>
-<p><strong>作用</strong></p>
-<ol>
-<li>访问容器中所有的数据</li>
-<li>按序访问（找到下一项）</li>
-</ol>
-<p>在不同容器中的<strong>种类</strong></p>
-<p><img src="https://i.imgur.com/EEXNpog.png"></p>
-<p><img src="https://i.imgur.com/bqbw0zU.png"></p>
-<p>取值时使用dereference(*iter)</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="keyword">auto</span>&amp; elem = *iter;</span><br></pre></td></tr></table></figure>
-
-<p>&amp;为引用</p>
-<p>iterators are a type of pointer</p>
-<h2 id="pointers"><a href="#pointers" class="headerlink" title="pointers"></a>pointers</h2><p><em><strong>引用</strong> 现有数据</em></p>
-<p>pointers reference memory addresses</p>
-<p>&amp;+variable 变量地址</p>
-<p>*+pointer   取值</p>
-<p>pointer声明时 type+*</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/01/19/05_containers/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/ee2.jpg">
-      <meta itemprop="name" content="iuqtcl">
-      <meta itemprop="description" content="人暂时没remake，blog已经re了">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cyber Ghost">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/01/19/05_containers/" class="post-title-link" itemprop="url">05 Containers</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2023-01-19 00:57:13 / 修改时间：01:10:36" itemprop="dateCreated datePublished" datetime="2023-01-19T00:57:13+08:00">2023-01-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CS106L%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">CS106L笔记</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="containers"><a href="#containers" class="headerlink" title="containers"></a>containers</h2><h4 id="defining-containers"><a href="#defining-containers" class="headerlink" title="defining containers"></a>defining containers</h4><p><em>vector,stack,queue</em></p>
-<h4 id="two-types"><a href="#two-types" class="headerlink" title="two types"></a>two types</h4><p>1.sequence:</p>
-<pre><code>vector,deque,list
-</code></pre>
-<p>2.associative: 通过key访问数据</p>
-<pre><code>map,set
-
-ordered/unordered
-</code></pre>
-<p><strong>map</strong></p>
-<p>make_pair实现</p>
-<h4 id="container-adaptors"><a href="#container-adaptors" class="headerlink" title="container adaptors"></a>container adaptors</h4><p>在基础容器的基础上实现特定接口&#x2F;操作</p>
-<p>具体实现没太懂</p>
-<p><img src="https://i.imgur.com/PQrSCk9.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1554,14 +1729,14 @@ ordered/unordered
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>

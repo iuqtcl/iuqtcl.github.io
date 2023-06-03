@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>04 Initialization and References</title>
+    <url>/2023/01/19/04_initialization_and_references/</url>
+    <content><![CDATA[<h2 id="initialization"><a href="#initialization" class="headerlink" title="initialization"></a>initialization</h2><h5 id="uniform-initialization"><a href="#uniform-initialization" class="headerlink" title="uniform initialization"></a>uniform initialization</h5><p>大括号初始化，声明完立刻初始化</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::vector&lt;<span class="type">int</span>&gt; vec&#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>&#125;;</span><br><span class="line"><span class="type">int</span> x&#123;<span class="number">5</span>&#125;;</span><br><span class="line">string f&#123;<span class="string">&quot;Sarah&quot;</span>&#125;;</span><br></pre></td></tr></table></figure>
+
+<h5 id="auto"><a href="#auto" class="headerlink" title="auto"></a>auto</h5><p>use it to reduce long type names</p>
+<p>[]的使用</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> [found, solutions] = <span class="built_in">quadratic</span>(a, b, c);</span><br></pre></td></tr></table></figure>
+
+<h2 id="reference-引用-amp"><a href="#reference-引用-amp" class="headerlink" title="reference 引用  &amp;"></a>reference 引用  &amp;</h2><p><strong>引用和copy的区别</strong></p>
+<p>An alias (another name) for a named variable</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; original&#123;<span class="number">1</span>, <span class="number">2</span>&#125;;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; copy = original;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt;&amp; ref = original;</span><br><span class="line">original.<span class="built_in">push_back</span>(<span class="number">3</span>);</span><br><span class="line">copy.<span class="built_in">push_back</span>(<span class="number">4</span>);</span><br><span class="line">ref.<span class="built_in">push_back</span>(<span class="number">5</span>);</span><br><span class="line">cout &lt;&lt; original &lt;&lt; endl; <span class="comment">// &#123;1, 2, 3, 5&#125;</span></span><br><span class="line">cout &lt;&lt; copy &lt;&lt; endl; <span class="comment">// &#123;1, 2, 4&#125;</span></span><br><span class="line">cout &lt;&lt; ref &lt;&lt; endl; <span class="comment">// &#123;1, 2, 3, 5&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>You can only create references to variables</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>&amp; thisWontWork = <span class="number">5</span>; <span class="comment">// This doesn&#x27;t work!</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="const-and-const-references"><a href="#const-and-const-references" class="headerlink" title="const and const references"></a>const and const references</h5><p>const声明变量不会被改变-specify that a variable can’t be modified</p>
+<p>const引用可以引不const的，反之不行</p>
+<h5 id="reference使用场景"><a href="#reference使用场景" class="headerlink" title="reference使用场景"></a>reference使用场景</h5><p>1.variable占空间较大</p>
+<p>2.需要改变变量</p>
+<p>3.不需改变+占空间较大-&gt;用const reference</p>
+]]></content>
+      <categories>
+        <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>06 Iterators and Pointers</title>
+    <url>/2023/01/19/06_iterators_and_pointers/</url>
+    <content><![CDATA[<p><em>How do we access elements in a container in order?</em></p>
+<p><em>How do we reference existing data in our code?</em></p>
+<h2 id="iterators"><a href="#iterators" class="headerlink" title="iterators"></a>iterators</h2><p><em>访问容器中的元素</em></p>
+<p><strong>作用</strong></p>
+<ol>
+<li>访问容器中所有的数据</li>
+<li>按序访问（找到下一项）</li>
+</ol>
+<p>在不同容器中的<strong>种类</strong></p>
+<p><img src="https://i.imgur.com/EEXNpog.png"></p>
+<p><img src="https://i.imgur.com/bqbw0zU.png"></p>
+<p>取值时使用dereference(*iter)</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="keyword">auto</span>&amp; elem = *iter;</span><br></pre></td></tr></table></figure>
+
+<p>&amp;为引用</p>
+<p>iterators are a type of pointer</p>
+<h2 id="pointers"><a href="#pointers" class="headerlink" title="pointers"></a>pointers</h2><p><em><strong>引用</strong> 现有数据</em></p>
+<p>pointers reference memory addresses</p>
+<p>&amp;+variable 变量地址</p>
+<p>*+pointer   取值</p>
+<p>pointer声明时 type+*</p>
+]]></content>
+      <categories>
+        <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
     <title>05 Containers</title>
     <url>/2023/01/19/05_containers/</url>
     <content><![CDATA[<h2 id="containers"><a href="#containers" class="headerlink" title="containers"></a>containers</h2><h4 id="defining-containers"><a href="#defining-containers" class="headerlink" title="defining containers"></a>defining containers</h4><p><em>vector,stack,queue</em></p>
@@ -17,6 +73,57 @@ ordered/unordered
 <h4 id="container-adaptors"><a href="#container-adaptors" class="headerlink" title="container adaptors"></a>container adaptors</h4><p>在基础容器的基础上实现特定接口&#x2F;操作</p>
 <p>具体实现没太懂</p>
 <p><img src="https://i.imgur.com/PQrSCk9.png"></p>
+]]></content>
+      <categories>
+        <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>07 Classes</title>
+    <url>/2023/01/19/07_classes/</url>
+    <content><![CDATA[<p><em>How to make your own custom types</em></p>
+<h2 id="Classes-Introduction"><a href="#Classes-Introduction" class="headerlink" title="Classes Introduction"></a>Classes Introduction</h2><p><em>Containers are all classes defined in the STL</em></p>
+<h4 id="issues-with-structs"><a href="#issues-with-structs" class="headerlink" title="issues with structs"></a>issues with structs</h4><ol>
+<li>默认可以访问任意内部数据(public)</li>
+<li>需要直接初始化每个 data member</li>
+</ol>
+<p>classes 提供 public interface 和 private implement</p>
+<p><strong>声明结构</strong></p>
+<p>declare in .h  + implement in .cpp</p>
+<p>在 .cpp 中加入 .h 头文件</p>
+<p>.h include .cpp</p>
+<p><strong>namespace</strong></p>
+<ol>
+<li>防止名字冲突</li>
+<li>每个类有单独的namespace</li>
+</ol>
+<p><strong>this</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Student::setName</span><span class="params">(string name)</span></span>&#123;</span><br><span class="line"><span class="keyword">this</span>-&gt;name=name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>构造函数</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Student.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;Student.h&gt;</span></span></span><br><span class="line">Student::<span class="built_in">Student</span>():name&#123;<span class="string">&quot;&quot;</span>&#125;,age&#123;<span class="number">0</span>&#125;,state&#123;<span class="string">&quot;&quot;</span>&#125;</span><br><span class="line">Student::<span class="built_in">Student</span>(string name,<span class="type">int</span> age,string state)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">this</span>-&gt;name=name;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>destructors</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Class_name::~Class_name();</span><br></pre></td></tr></table></figure>
+
+<p><strong>using</strong></p>
+<ol>
+<li><pre><code class="c++">using namespace name;
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2. 指定别名</span><br><span class="line"></span><br><span class="line">```c++</span><br><span class="line">    using iterator = std::string*;</span><br><span class="line">    using size_type = size_t;</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>在派生类中引用基类成员</p>
+</li>
+</ol>
+<h4 id="operator-重载"><a href="#operator-重载" class="headerlink" title="operator 重载"></a>operator 重载</h4><p>重载[]</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::string&amp; StrVector::<span class="keyword">operator</span>[](size_type index) &#123;</span><br><span class="line">    <span class="keyword">return</span> *(<span class="built_in">begin</span>() + index);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="const"><a href="#const" class="headerlink" title="const"></a>const</h4><p>后加const表函数不修改成员数据，可以被const对象引用。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">empty</span><span class="params">()</span> <span class="type">const</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>前加const表示返回值为const类型</p>
+<h2 id="Template-Class"><a href="#Template-Class" class="headerlink" title="Template Class"></a>Template Class</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> First, <span class="keyword">typename</span> Second&gt; <span class="keyword">class</span> <span class="title class_">MyPair</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="function">First <span class="title">getFirst</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function">Second <span class="title">getSecond</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setFirst</span><span class="params">(First f)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setSecond</span><span class="params">(Second f)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">First first;</span><br><span class="line">Second second;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>CS106L笔记</category>
@@ -129,84 +236,6 @@ ordered/unordered
       </categories>
   </entry>
   <entry>
-    <title>04 Initialization and References</title>
-    <url>/2023/01/19/04_initialization_and_references/</url>
-    <content><![CDATA[<h2 id="initialization"><a href="#initialization" class="headerlink" title="initialization"></a>initialization</h2><h5 id="uniform-initialization"><a href="#uniform-initialization" class="headerlink" title="uniform initialization"></a>uniform initialization</h5><p>大括号初始化，声明完立刻初始化</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::vector&lt;<span class="type">int</span>&gt; vec&#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>&#125;;</span><br><span class="line"><span class="type">int</span> x&#123;<span class="number">5</span>&#125;;</span><br><span class="line">string f&#123;<span class="string">&quot;Sarah&quot;</span>&#125;;</span><br></pre></td></tr></table></figure>
-
-<h5 id="auto"><a href="#auto" class="headerlink" title="auto"></a>auto</h5><p>use it to reduce long type names</p>
-<p>[]的使用</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> [found, solutions] = <span class="built_in">quadratic</span>(a, b, c);</span><br></pre></td></tr></table></figure>
-
-<h2 id="reference-引用-amp"><a href="#reference-引用-amp" class="headerlink" title="reference 引用  &amp;"></a>reference 引用  &amp;</h2><p><strong>引用和copy的区别</strong></p>
-<p>An alias (another name) for a named variable</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; original&#123;<span class="number">1</span>, <span class="number">2</span>&#125;;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; copy = original;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt;&amp; ref = original;</span><br><span class="line">original.<span class="built_in">push_back</span>(<span class="number">3</span>);</span><br><span class="line">copy.<span class="built_in">push_back</span>(<span class="number">4</span>);</span><br><span class="line">ref.<span class="built_in">push_back</span>(<span class="number">5</span>);</span><br><span class="line">cout &lt;&lt; original &lt;&lt; endl; <span class="comment">// &#123;1, 2, 3, 5&#125;</span></span><br><span class="line">cout &lt;&lt; copy &lt;&lt; endl; <span class="comment">// &#123;1, 2, 4&#125;</span></span><br><span class="line">cout &lt;&lt; ref &lt;&lt; endl; <span class="comment">// &#123;1, 2, 3, 5&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>You can only create references to variables</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>&amp; thisWontWork = <span class="number">5</span>; <span class="comment">// This doesn&#x27;t work!</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="const-and-const-references"><a href="#const-and-const-references" class="headerlink" title="const and const references"></a>const and const references</h5><p>const声明变量不会被改变-specify that a variable can’t be modified</p>
-<p>const引用可以引不const的，反之不行</p>
-<h5 id="reference使用场景"><a href="#reference使用场景" class="headerlink" title="reference使用场景"></a>reference使用场景</h5><p>1.variable占空间较大</p>
-<p>2.需要改变变量</p>
-<p>3.不需改变+占空间较大-&gt;用const reference</p>
-]]></content>
-      <categories>
-        <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>07 Classes</title>
-    <url>/2023/01/19/07_classes/</url>
-    <content><![CDATA[<p><em>How to make your own custom types</em></p>
-<h2 id="Classes-Introduction"><a href="#Classes-Introduction" class="headerlink" title="Classes Introduction"></a>Classes Introduction</h2><p><em>Containers are all classes defined in the STL</em></p>
-<h4 id="issues-with-structs"><a href="#issues-with-structs" class="headerlink" title="issues with structs"></a>issues with structs</h4><ol>
-<li>默认可以访问任意内部数据(public)</li>
-<li>需要直接初始化每个 data member</li>
-</ol>
-<p>classes 提供 public interface 和 private implement</p>
-<p><strong>声明结构</strong></p>
-<p>declare in .h  + implement in .cpp</p>
-<p>在 .cpp 中加入 .h 头文件</p>
-<p>.h include .cpp</p>
-<p><strong>namespace</strong></p>
-<ol>
-<li>防止名字冲突</li>
-<li>每个类有单独的namespace</li>
-</ol>
-<p><strong>this</strong></p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Student::setName</span><span class="params">(string name)</span></span>&#123;</span><br><span class="line"><span class="keyword">this</span>-&gt;name=name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>构造函数</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Student.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;Student.h&gt;</span></span></span><br><span class="line">Student::<span class="built_in">Student</span>():name&#123;<span class="string">&quot;&quot;</span>&#125;,age&#123;<span class="number">0</span>&#125;,state&#123;<span class="string">&quot;&quot;</span>&#125;</span><br><span class="line">Student::<span class="built_in">Student</span>(string name,<span class="type">int</span> age,string state)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">this</span>-&gt;name=name;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<p>destructors</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Class_name::~Class_name();</span><br></pre></td></tr></table></figure>
-
-<p><strong>using</strong></p>
-<ol>
-<li><pre><code class="c++">using namespace name;
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2. 指定别名</span><br><span class="line"></span><br><span class="line">```c++</span><br><span class="line">    using iterator = std::string*;</span><br><span class="line">    using size_type = size_t;</span><br></pre></td></tr></table></figure>
-</code></pre>
-</li>
-<li><p>在派生类中引用基类成员</p>
-</li>
-</ol>
-<h4 id="operator-重载"><a href="#operator-重载" class="headerlink" title="operator 重载"></a>operator 重载</h4><p>重载[]</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::string&amp; StrVector::<span class="keyword">operator</span>[](size_type index) &#123;</span><br><span class="line">    <span class="keyword">return</span> *(<span class="built_in">begin</span>() + index);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="const"><a href="#const" class="headerlink" title="const"></a>const</h4><p>后加const表函数不修改成员数据，可以被const对象引用。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">empty</span><span class="params">()</span> <span class="type">const</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>前加const表示返回值为const类型</p>
-<h2 id="Template-Class"><a href="#Template-Class" class="headerlink" title="Template Class"></a>Template Class</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> First, <span class="keyword">typename</span> Second&gt; <span class="keyword">class</span> <span class="title class_">MyPair</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="function">First <span class="title">getFirst</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function">Second <span class="title">getSecond</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setFirst</span><span class="params">(First f)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setSecond</span><span class="params">(Second f)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">First first;</span><br><span class="line">Second second;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
     <title>08 Template Classes and Const Correctness</title>
     <url>/2023/01/19/08_template_classes_and_const_correctness/</url>
     <content><![CDATA[<p><em>How do we make our classes general? How do we make them safe?</em></p>
@@ -245,35 +274,6 @@ ordered/unordered
       </categories>
   </entry>
   <entry>
-    <title>06 Iterators and Pointers</title>
-    <url>/2023/01/19/06_iterators_and_pointers/</url>
-    <content><![CDATA[<p><em>How do we access elements in a container in order?</em></p>
-<p><em>How do we reference existing data in our code?</em></p>
-<h2 id="iterators"><a href="#iterators" class="headerlink" title="iterators"></a>iterators</h2><p><em>访问容器中的元素</em></p>
-<p><strong>作用</strong></p>
-<ol>
-<li>访问容器中所有的数据</li>
-<li>按序访问（找到下一项）</li>
-</ol>
-<p>在不同容器中的<strong>种类</strong></p>
-<p><img src="https://i.imgur.com/EEXNpog.png"></p>
-<p><img src="https://i.imgur.com/bqbw0zU.png"></p>
-<p>取值时使用dereference(*iter)</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="keyword">auto</span>&amp; elem = *iter;</span><br></pre></td></tr></table></figure>
-
-<p>&amp;为引用</p>
-<p>iterators are a type of pointer</p>
-<h2 id="pointers"><a href="#pointers" class="headerlink" title="pointers"></a>pointers</h2><p><em><strong>引用</strong> 现有数据</em></p>
-<p>pointers reference memory addresses</p>
-<p>&amp;+variable 变量地址</p>
-<p>*+pointer   取值</p>
-<p>pointer声明时 type+*</p>
-]]></content>
-      <categories>
-        <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
     <title>09 Template Functions</title>
     <url>/2023/01/19/09_template_functions/</url>
     <content><![CDATA[<p><em>What else in C++ can be generalized? What is the philosophy behind generalization?</em></p>
@@ -288,56 +288,6 @@ ordered/unordered
 <p>an instance</p>
 <p>在任意串中计数某字符的出现次数</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> InputType,<span class="keyword">typename</span> DataType&gt;</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">count_ocur</span><span class="params">(InputType begin,InputType end, DataType d)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> cnt=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(InputType iter=begin; iter!=end; iter++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(*iter==d) cnt++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> cnt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">usage: std::string str= <span class="string">&quot;nsannd&quot;</span>;</span><br><span class="line">		<span class="built_in">count_ocur</span>(str.<span class="built_in">begin</span>(),str.<span class="built_in">end</span>(),<span class="string">&#x27;a&#x27;</span>);</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>10 Functions and Lambdas</title>
-    <url>/2023/01/19/10_funcioins_and_lambdas/</url>
-    <content><![CDATA[<p><em>How can we make template functions even more general?</em></p>
-<h1 id="Functions-and-Lambdas"><a href="#Functions-and-Lambdas" class="headerlink" title="Functions and Lambdas"></a>Functions and Lambdas</h1><h2 id="lambda"><a href="#lambda" class="headerlink" title="lambda"></a>lambda</h2><p>将函数作为参数</p>
-<p>instance</p>
-<p><img src="https://i.imgur.com/JTb45Mr.png"></p>
-<p>UniPred is what’s called a function pointer</p>
-<h3 id="function-pointers"><a href="#function-pointers" class="headerlink" title="function pointers"></a>function pointers</h3><ul>
-<li>可当作指针处理</li>
-<li>传参时跟变量一样</li>
-<li>调用时可作普通function</li>
-</ul>
-<p>使用例</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">qsort</span><span class="params">(<span class="type">void</span> *base, <span class="type">size_t</span> nmemb, <span class="type">size_t</span> size,</span></span></span><br><span class="line"><span class="params"><span class="function"><span class="type">int</span>(*compar)(<span class="type">const</span> <span class="type">void</span> *, <span class="type">const</span> <span class="type">void</span> *))</span></span>;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">my_int_func</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>( <span class="string">&quot;%d\n&quot;</span>, x );</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">void</span> (*foo)(<span class="type">int</span>);</span><br><span class="line">    foo = &amp;my_int_func;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/* call my_int_func (note that you do not need to write (*foo)(2) ) */</span></span><br><span class="line">    <span class="built_in">foo</span>( <span class="number">2</span> );</span><br><span class="line">    <span class="comment">/* but if you want to, you may */</span></span><br><span class="line">    (*foo)( <span class="number">2</span> );</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="use-lambdas"><a href="#use-lambdas" class="headerlink" title="use lambdas"></a>use lambdas</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> car = [capture-clause] (<span class="keyword">auto</span> param) -&gt; <span class="type">bool</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//function body</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>capture clause:</p>
-<p>capture any outside variable by reference&#x2F;value.</p>
-<p><img src="https://i.imgur.com/c9ePu1h.png"></p>
-<p>using</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> limit =<span class="number">5</span>;</span><br><span class="line"><span class="keyword">auto</span> isMoreThan = [limit](<span class="type">int</span> n)&#123;<span class="keyword">return</span> n &gt; limit; &#125;;</span><br><span class="line"><span class="built_in">isMoreThan</span>(<span class="number">6</span>);</span><br></pre></td></tr></table></figure>
-
-<p>适用场景</p>
-<ol>
-<li>简单function</li>
-<li>传局部变量到function</li>
-<li>通过function pointer塞进function来添加更多的花样重载</li>
-</ol>
-<h3 id="functor-仿函数-x2F-函子"><a href="#functor-仿函数-x2F-函子" class="headerlink" title="functor 仿函数&#x2F;函子"></a>functor 仿函数&#x2F;函子</h3><p>是看起来像函数的<strong>类</strong>。通过重载()运算符使类的行为像函数，可以通过()调用。</p>
-<p>lambdas是functors的一个变种。</p>
-<p><img src="https://i.imgur.com/bip6UZ6.png"></p>
-<p>也能用结构体实现</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// this is a functor</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">add_x</span> &#123;</span><br><span class="line">  <span class="built_in">add_x</span>(<span class="type">int</span> val) : <span class="built_in">x</span>(val) &#123;&#125;  <span class="comment">// Constructor</span></span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="type">int</span> y)</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> x + y; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="type">int</span> x;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Now you can use it like this:</span></span><br><span class="line"><span class="function">add_x <span class="title">add42</span><span class="params">(<span class="number">42</span>)</span></span>; <span class="comment">// create an instance of the functor class</span></span><br><span class="line"><span class="type">int</span> i = <span class="built_in">add42</span>(<span class="number">8</span>); <span class="comment">// and &quot;call&quot; it</span></span><br><span class="line"><span class="built_in">assert</span>(i == <span class="number">50</span>); <span class="comment">// and it added 42 to its argument</span></span><br><span class="line"></span><br><span class="line">std::vector&lt;<span class="type">int</span>&gt; in; <span class="comment">// assume this contains a bunch of values)</span></span><br><span class="line"><span class="function">std::vector&lt;<span class="type">int</span>&gt; <span class="title">out</span><span class="params">(in.size())</span></span>;</span><br><span class="line"><span class="comment">// Pass a functor to std::transform, which calls the functor on every element </span></span><br><span class="line"><span class="comment">// in the input sequence, and stores the result to the output sequence</span></span><br><span class="line">std::<span class="built_in">transform</span>(in.<span class="built_in">begin</span>(), in.<span class="built_in">end</span>(), out.<span class="built_in">begin</span>(), <span class="built_in">add_x</span>(<span class="number">1</span>)); </span><br><span class="line"><span class="built_in">assert</span>(out[i] == in[i] + <span class="number">1</span>); <span class="comment">// for all i</span></span><br></pre></td></tr></table></figure>
-
-<p>现成STL</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::function&lt;return_type(param_types)&gt; func;</span><br></pre></td></tr></table></figure>
-
-<p>参考：</p>
-<ol>
-<li><a href="https://stackoverflow.com/questions/356950/what-are-c-functors-and-their-uses">What are C++ functors and their uses?</a></li>
-</ol>
 ]]></content>
       <categories>
         <category>CS106L笔记</category>
@@ -445,6 +395,143 @@ ordered/unordered
       </categories>
   </entry>
   <entry>
+    <title>10 Functions and Lambdas</title>
+    <url>/2023/01/19/10_funcioins_and_lambdas/</url>
+    <content><![CDATA[<p><em>How can we make template functions even more general?</em></p>
+<h1 id="Functions-and-Lambdas"><a href="#Functions-and-Lambdas" class="headerlink" title="Functions and Lambdas"></a>Functions and Lambdas</h1><h2 id="lambda"><a href="#lambda" class="headerlink" title="lambda"></a>lambda</h2><p>将函数作为参数</p>
+<p>instance</p>
+<p><img src="https://i.imgur.com/JTb45Mr.png"></p>
+<p>UniPred is what’s called a function pointer</p>
+<h3 id="function-pointers"><a href="#function-pointers" class="headerlink" title="function pointers"></a>function pointers</h3><ul>
+<li>可当作指针处理</li>
+<li>传参时跟变量一样</li>
+<li>调用时可作普通function</li>
+</ul>
+<p>使用例</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">qsort</span><span class="params">(<span class="type">void</span> *base, <span class="type">size_t</span> nmemb, <span class="type">size_t</span> size,</span></span></span><br><span class="line"><span class="params"><span class="function"><span class="type">int</span>(*compar)(<span class="type">const</span> <span class="type">void</span> *, <span class="type">const</span> <span class="type">void</span> *))</span></span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">my_int_func</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>( <span class="string">&quot;%d\n&quot;</span>, x );</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">void</span> (*foo)(<span class="type">int</span>);</span><br><span class="line">    foo = &amp;my_int_func;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/* call my_int_func (note that you do not need to write (*foo)(2) ) */</span></span><br><span class="line">    <span class="built_in">foo</span>( <span class="number">2</span> );</span><br><span class="line">    <span class="comment">/* but if you want to, you may */</span></span><br><span class="line">    (*foo)( <span class="number">2</span> );</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="use-lambdas"><a href="#use-lambdas" class="headerlink" title="use lambdas"></a>use lambdas</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> car = [capture-clause] (<span class="keyword">auto</span> param) -&gt; <span class="type">bool</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//function body</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>capture clause:</p>
+<p>capture any outside variable by reference&#x2F;value.</p>
+<p><img src="https://i.imgur.com/c9ePu1h.png"></p>
+<p>using</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> limit =<span class="number">5</span>;</span><br><span class="line"><span class="keyword">auto</span> isMoreThan = [limit](<span class="type">int</span> n)&#123;<span class="keyword">return</span> n &gt; limit; &#125;;</span><br><span class="line"><span class="built_in">isMoreThan</span>(<span class="number">6</span>);</span><br></pre></td></tr></table></figure>
+
+<p>适用场景</p>
+<ol>
+<li>简单function</li>
+<li>传局部变量到function</li>
+<li>通过function pointer塞进function来添加更多的花样重载</li>
+</ol>
+<h3 id="functor-仿函数-x2F-函子"><a href="#functor-仿函数-x2F-函子" class="headerlink" title="functor 仿函数&#x2F;函子"></a>functor 仿函数&#x2F;函子</h3><p>是看起来像函数的<strong>类</strong>。通过重载()运算符使类的行为像函数，可以通过()调用。</p>
+<p>lambdas是functors的一个变种。</p>
+<p><img src="https://i.imgur.com/bip6UZ6.png"></p>
+<p>也能用结构体实现</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// this is a functor</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">add_x</span> &#123;</span><br><span class="line">  <span class="built_in">add_x</span>(<span class="type">int</span> val) : <span class="built_in">x</span>(val) &#123;&#125;  <span class="comment">// Constructor</span></span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="type">int</span> y)</span> <span class="type">const</span> </span>&#123; <span class="keyword">return</span> x + y; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="type">int</span> x;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Now you can use it like this:</span></span><br><span class="line"><span class="function">add_x <span class="title">add42</span><span class="params">(<span class="number">42</span>)</span></span>; <span class="comment">// create an instance of the functor class</span></span><br><span class="line"><span class="type">int</span> i = <span class="built_in">add42</span>(<span class="number">8</span>); <span class="comment">// and &quot;call&quot; it</span></span><br><span class="line"><span class="built_in">assert</span>(i == <span class="number">50</span>); <span class="comment">// and it added 42 to its argument</span></span><br><span class="line"></span><br><span class="line">std::vector&lt;<span class="type">int</span>&gt; in; <span class="comment">// assume this contains a bunch of values)</span></span><br><span class="line"><span class="function">std::vector&lt;<span class="type">int</span>&gt; <span class="title">out</span><span class="params">(in.size())</span></span>;</span><br><span class="line"><span class="comment">// Pass a functor to std::transform, which calls the functor on every element </span></span><br><span class="line"><span class="comment">// in the input sequence, and stores the result to the output sequence</span></span><br><span class="line">std::<span class="built_in">transform</span>(in.<span class="built_in">begin</span>(), in.<span class="built_in">end</span>(), out.<span class="built_in">begin</span>(), <span class="built_in">add_x</span>(<span class="number">1</span>)); </span><br><span class="line"><span class="built_in">assert</span>(out[i] == in[i] + <span class="number">1</span>); <span class="comment">// for all i</span></span><br></pre></td></tr></table></figure>
+
+<p>现成STL</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">std::function&lt;return_type(param_types)&gt; func;</span><br></pre></td></tr></table></figure>
+
+<p>参考：</p>
+<ol>
+<li><a href="https://stackoverflow.com/questions/356950/what-are-c-functors-and-their-uses">What are C++ functors and their uses?</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>13 Move Semantics</title>
+    <url>/2023/01/19/13_move_semantics/</url>
+    <content><![CDATA[<p><em>how can we avoid making unnecessary copies of resources</em></p>
+<h2 id="Move-Semantics"><a href="#Move-Semantics" class="headerlink" title="Move Semantics"></a>Move Semantics</h2><p><strong>aside: emplace_back</strong></p>
+<p>vector 的一个 function</p>
+<p><strong>直接</strong>添加元素到vector中 <strong>(no copy)</strong></p>
+<p><img src="https://i.imgur.com/z1WN7m4.png"></p>
+<p>可接受任意数量的参数</p>
+<p><img src="https://i.imgur.com/DHSBykC.png"></p>
+<h3 id="l-values-vs-r-values"><a href="#l-values-vs-r-values" class="headerlink" title="l-values vs. r-values"></a>l-values vs. r-values</h3><p><strong>r-values</strong></p>
+<ul>
+<li>temporary</li>
+<li>don’t have names</li>
+<li>live until the end of the line</li>
+<li>copy</li>
+</ul>
+<p><strong>l-values</strong></p>
+<ul>
+<li>not temporary</li>
+<li>have names</li>
+<li>live until the end of the scope</li>
+<li>copy and move</li>
+</ul>
+<p>only l-values can be referenced using <strong>&amp;</strong></p>
+<p>r-values can be bound to <strong>const &amp;</strong></p>
+<p>r-value reference  <strong>&amp;&amp;</strong> (extend r-value’s lifetime)</p>
+<p><img src="https://i.imgur.com/cGBOXLJ.png"></p>
+<h3 id="move-constructor-and-assignment"><a href="#move-constructor-and-assignment" class="headerlink" title="move constructor and assignment"></a>move constructor and assignment</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//move constructor</span></span><br><span class="line"></span><br><span class="line">StrVector::<span class="built_in">StrVector</span>(StrVector&amp;&amp; other):</span><br><span class="line">	<span class="built_in">elem</span>(other.elems),</span><br><span class="line">	<span class="built_in">logicalSize</span>(other.logicalSize),</span><br><span class="line">	<span class="built_in">allocatedSize</span>(other.allocatedSize)&#123;</span><br><span class="line">        other.elems = <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/TyLVPQG.png"></p>
+<p><strong>std::move</strong> casts a variable to an r-value</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Axess</span>(Axess&amp;&amp; other) : <span class="built_in">students</span>(std::<span class="built_in">move</span>(other.students))&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Axess&amp; <span class="keyword">operator</span>=(Axess&amp;&amp; rhs) &#123;</span><br><span class="line">     students = std::<span class="built_in">move</span>(rhs.students);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="swap"><a href="#swap" class="headerlink" title="swap"></a>swap</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">swap</span><span class="params">(T&amp; a,T&amp; b)</span></span>&#123;</span><br><span class="line">    T temp = std::<span class="built_in">move</span>(a);</span><br><span class="line">    a = std::<span class="built_in">move</span>(b);</span><br><span class="line">    b = std::<span class="built_in">move</span>(temp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>14 std Optional and Type Safety</title>
+    <url>/2023/01/19/14_std_optional_and_type_safety/</url>
+    <content><![CDATA[<p><em>How can we use c++’s type system to prevent errors at compile time?</em></p>
+<h2 id="std-optional-and-Type-Safety"><a href="#std-optional-and-Type-Safety" class="headerlink" title="std::optional and Type Safety"></a>std::optional and Type Safety</h2><h3 id="Type-Safety"><a href="#Type-Safety" class="headerlink" title="Type Safety"></a>Type Safety</h3><p><strong>const-interface</strong>: All member functions marked const in a class definition.</p>
+<p>Objects of type <em>const ClassName</em> may only use the const-interface.</p>
+<p><strong>type safety</strong>: guarantee the behavior of programs</p>
+<p><img src="https://i.imgur.com/Sg91Dlt.png"></p>
+<p><img src="https://i.imgur.com/5t8piRO.png"></p>
+<h4 id="std-optional-lt-T-gt"><a href="#std-optional-lt-T-gt" class="headerlink" title="std::optional&lt;T&gt;"></a>std::optional&lt;T&gt;</h4><p>either contain a value of type T or nothing (nullopt)</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    std::optional&lt;<span class="type">int</span>&gt; num1=&#123;&#125;;<span class="comment">//not have a value</span></span><br><span class="line">    num1 = std::optional&lt;<span class="type">int</span>&gt;&#123;<span class="number">1</span>&#125;;<span class="comment">//has a value</span></span><br><span class="line">    num1 = std::<span class="literal">nullopt</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用例</p>
+<p><img src="https://i.imgur.com/CSR8bVK.png"></p>
+<p>An optional take on realVector</p>
+<h3 id="The-need-for-“sometimes-a-thing”"><a href="#The-need-for-“sometimes-a-thing”" class="headerlink" title="The need for “sometimes-a-thing”"></a>The need for “sometimes-a-thing”</h3>]]></content>
+      <categories>
+        <category>CS106L笔记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>230401</title>
+    <url>/2023/04/01/230401%E8%AE%B0%E4%BA%8B/</url>
+    <content><![CDATA[<p>今天两点我在想，如果我有不受限的能力，我会有什么愿望。我想到高山流水荒漠远洋，然后问如果我有创造的能力，那我创造出来的东西智力水平是否能超过我。我猜没有这样的好事。后来我想了五分钟，我想这世上从未有过文明，或者没有人能感知到我，或者很多人都爱我，最后的答案是拯救世界。也许这是很多人年轻时做过的狂梦，但我很少有这样的幻想，哪怕是看中二作品时。拯救世界能被爱而不亏欠别人。</p>
+<p>但这个世界是混沌的，它不会有一个更好的状态，至少不会有一个所有人共识中的更好状态。没有人拯救世界。</p>
+<p>昨天母亲发他新拍的照片。他快五十岁了，比年轻的时候更爱拍照。我已忘记很多事，远离很多岁月。</p>
+<p>–</p>
+<p>昨天是跨性别现身日。但不是我的现身日。我甚至不知道该给自己挂什么旗。粉白蓝太正统，别的又太矫情。如果手术不要证我根本不会觉得我可能算trans。这是一个未被统一的概念，我既不典型，问题也在能解构的范围内。我想解决问题，而我曾经不认为身份认同是解决问题的一环。现在我依旧没有明确的答案，但我想我确实偏离“大部分人”的轨道很远了。</p>
+<p>no binary, agender, queer？我到底是什么其实不重要，因为在这里，这些都不存在，不论是社会上还是医学上。</p>
+<p>我确实是想说点东西给除了我以外的人听，但我没有勇气在任何账号发这些。倘若你恰好认识我，，你最好不认识我。以下内容写于两个月前。</p>
+<p>–</p>
+<p>我想我应该享受这片刻的宁静。这是短暂的、自由的日子，不应用焦虑沾满生活。恋旧是我的恶习，当我试着站在未来回看此时，顿感此刻的易碎与闲适。三年前，我写道，我的生活苍白而又繁复，对现在的我而言，大抵同样。</p>
+<p>半个小时前，我吃下这些日子以来的第七片药。xyn 吃雌和孕，我也吃雌和孕，也许我也是xyn。我显然不喜欢被这样称呼，但觉得这个机灵有点地狱笑话。对于xyn来说，这是心理srs。对我来说，又是什么呢。机械飞升？化学改造？</p>
+<p>目前的副作用也许是少量的嗜睡和少量的情绪波动。去年我说，我不吃药，因为他们有目标，而我没有。现在我认可的我的存在、我期望的是百分之九十九的地球人不认为严肃存在的概念。我在理智上一刀又一刀地解剖自己，发现少有方法能在物理上帮助我，少有人能理解我，最后被焦虑推动着吃下拆东墙补西墙的药。我无法接受我再什么都不做，但我也做不了什么。 </p>
+<p>xyn 会做化蝶的梦吗？我确实睡眠时连做了几天我期望的梦。昨天在知乎上刷到一个问题，问为何人们觉得蝴蝶美而蝴蝶幼崽毛毛虫丑陋，那个回答说，有一种美丽的蝴蝶，在幼时也很可爱，图里的毛毛虫有两根蜗牛似的触角。小时候被强迫灌输了破茧化蝶这样的文字，不觉得罕见，又亲手淹死过蝴蝶，我对生物上的蝴蝶没有多少好感，只是蝶这个字代表脆弱和轻盈之美而已。如今才觉得这般生物的变化如同奇迹。可惜人变不得。蝶在生物上的斑斓，在人类引用时变成了抽象固化的美。我也确实害怕副作用。我不知道将来会变成什么样。我所做的、想做的这些，最好是让情况好转而不是延缓我情绪崩溃而已。</p>
+<p>我曾佩服有勇气标新立异的人，也疑惑是什么支撑着激进者和理想主义者。如今我也成了这样的人。温和派与日子人不是理智，只是不够痛。我真的愿意去选那个机械飞升的选项而不是当作笑话，我真的愿意去选那97个选项，或者武装直升机，而不是当作笑话。有些人魔怔是为了找乐子，而有些人用来减缓痛苦。 </p>
+<p>我不知道这是否算出柜，我倒最好是有柜可出，而不是因为偏执和愤世嫉俗。我半年来似乎跟好几个人出了柜，实际上是把自己塞进更深的柜子里。<br>那天我对亲人掩饰流泪、否认、沉默，那天我向大他者说我需要奇迹，那天我从里面关上柜子的门，一片漆黑。当我打下需要奇迹时，我也理解了信教者。宁愿相信执念不是无药可救，于是为那片虚空添上信仰的神，在我这宁愿称其奇迹。我在这无波澜人生的绝望时刻，明白了奇迹一词如何产生。</p>
+<p>我每接近一个少数群体，便发觉我自己过往的误解，而后是漫天的，可怕的，绝大多数人的冷漠和误解。我恨他们，恨自己，恨人类的低能、无知、被激素左右、困在每个人的个人认知中无法理解彼此。恨不得人类没有自我意识。</p>
+<p>我会继续沉默下去吗？</p>
+<p>我存在吗？</p>
+<p>我是癔症，是幽灵，是玩笑，是inexistence。</p>
+<p>所有人都在群体性的癔症中，构建出不存在的孤岛们。</p>
+]]></content>
+      <categories>
+        <category>pieces</category>
+      </categories>
+  </entry>
+  <entry>
     <title>15 RALL</title>
     <url>/2023/01/19/15_RAll_smartpointers_buildingprojects/</url>
     <content><![CDATA[<h2 id="RAll"><a href="#RAll" class="headerlink" title="RAll"></a>RAll</h2><p><em>a coding standard and practice</em></p>
@@ -524,73 +611,6 @@ ordered/unordered
 ]]></content>
       <categories>
         <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>13 Move Semantics</title>
-    <url>/2023/01/19/13_move_semantics/</url>
-    <content><![CDATA[<p><em>how can we avoid making unnecessary copies of resources</em></p>
-<h2 id="Move-Semantics"><a href="#Move-Semantics" class="headerlink" title="Move Semantics"></a>Move Semantics</h2><p><strong>aside: emplace_back</strong></p>
-<p>vector 的一个 function</p>
-<p><strong>直接</strong>添加元素到vector中 <strong>(no copy)</strong></p>
-<p><img src="https://i.imgur.com/z1WN7m4.png"></p>
-<p>可接受任意数量的参数</p>
-<p><img src="https://i.imgur.com/DHSBykC.png"></p>
-<h3 id="l-values-vs-r-values"><a href="#l-values-vs-r-values" class="headerlink" title="l-values vs. r-values"></a>l-values vs. r-values</h3><p><strong>r-values</strong></p>
-<ul>
-<li>temporary</li>
-<li>don’t have names</li>
-<li>live until the end of the line</li>
-<li>copy</li>
-</ul>
-<p><strong>l-values</strong></p>
-<ul>
-<li>not temporary</li>
-<li>have names</li>
-<li>live until the end of the scope</li>
-<li>copy and move</li>
-</ul>
-<p>only l-values can be referenced using <strong>&amp;</strong></p>
-<p>r-values can be bound to <strong>const &amp;</strong></p>
-<p>r-value reference  <strong>&amp;&amp;</strong> (extend r-value’s lifetime)</p>
-<p><img src="https://i.imgur.com/cGBOXLJ.png"></p>
-<h3 id="move-constructor-and-assignment"><a href="#move-constructor-and-assignment" class="headerlink" title="move constructor and assignment"></a>move constructor and assignment</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//move constructor</span></span><br><span class="line"></span><br><span class="line">StrVector::<span class="built_in">StrVector</span>(StrVector&amp;&amp; other):</span><br><span class="line">	<span class="built_in">elem</span>(other.elems),</span><br><span class="line">	<span class="built_in">logicalSize</span>(other.logicalSize),</span><br><span class="line">	<span class="built_in">allocatedSize</span>(other.allocatedSize)&#123;</span><br><span class="line">        other.elems = <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.imgur.com/TyLVPQG.png"></p>
-<p><strong>std::move</strong> casts a variable to an r-value</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Axess</span>(Axess&amp;&amp; other) : <span class="built_in">students</span>(std::<span class="built_in">move</span>(other.students))&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Axess&amp; <span class="keyword">operator</span>=(Axess&amp;&amp; rhs) &#123;</span><br><span class="line">     students = std::<span class="built_in">move</span>(rhs.students);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="swap"><a href="#swap" class="headerlink" title="swap"></a>swap</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">swap</span><span class="params">(T&amp; a,T&amp; b)</span></span>&#123;</span><br><span class="line">    T temp = std::<span class="built_in">move</span>(a);</span><br><span class="line">    a = std::<span class="built_in">move</span>(b);</span><br><span class="line">    b = std::<span class="built_in">move</span>(temp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>230401</title>
-    <url>/2023/04/01/230401%E8%AE%B0%E4%BA%8B/</url>
-    <content><![CDATA[<p>今天两点我在想，如果我有不受限的能力，我会有什么愿望。我想到高山流水荒漠远洋，然后问如果我有创造的能力，那我创造出来的东西智力水平是否能超过我。我猜没有这样的好事。后来我想了五分钟，我想这世上从未有过文明，或者没有人能感知到我，或者很多人都爱我，最后的答案是拯救世界。也许这是很多人年轻时做过的狂梦，但我很少有这样的幻想，哪怕是看中二作品时。拯救世界能被爱而不亏欠别人。</p>
-<p>但这个世界是混沌的，它不会有一个更好的状态，至少不会有一个所有人共识中的更好状态。没有人拯救世界。</p>
-<p>昨天母亲发他新拍的照片。他快五十岁了，比年轻的时候更爱拍照。我已忘记很多事，远离很多岁月。</p>
-<p>–</p>
-<p>昨天是跨性别现身日。但不是我的现身日。我甚至不知道该给自己挂什么旗。粉白蓝太正统，别的又太矫情。如果手术不要证我根本不会觉得我可能算trans。这是一个未被统一的概念，我既不典型，问题也在能解构的范围内。我想解决问题，而我曾经不认为身份认同是解决问题的一环。现在我依旧没有明确的答案，但我想我确实偏离“大部分人”的轨道很远了。</p>
-<p>no binary, agender, queer？我到底是什么其实不重要，因为在这里，这些都不存在，不论是社会上还是医学上。</p>
-<p>我确实是想说点东西给除了我以外的人听，但我没有勇气在任何账号发这些。倘若你恰好认识我，，你最好不认识我。以下内容写于两个月前。</p>
-<p>–</p>
-<p>我想我应该享受这片刻的宁静。这是短暂的、自由的日子，不应用焦虑沾满生活。恋旧是我的恶习，当我试着站在未来回看此时，顿感此刻的易碎与闲适。三年前，我写道，我的生活苍白而又繁复，对现在的我而言，大抵同样。</p>
-<p>半个小时前，我吃下这些日子以来的第七片药。xyn 吃雌和孕，我也吃雌和孕，也许我也是xyn。我显然不喜欢被这样称呼，但觉得这个机灵有点地狱笑话。对于xyn来说，这是心理srs。对我来说，又是什么呢。机械飞升？化学改造？</p>
-<p>目前的副作用也许是少量的嗜睡和少量的情绪波动。去年我说，我不吃药，因为他们有目标，而我没有。现在我认可的我的存在、我期望的是百分之九十九的地球人不认为严肃存在的概念。我在理智上一刀又一刀地解剖自己，发现少有方法能在物理上帮助我，少有人能理解我，最后被焦虑推动着吃下拆东墙补西墙的药。我无法接受我再什么都不做，但我也做不了什么。 </p>
-<p>xyn 会做化蝶的梦吗？我确实睡眠时连做了几天我期望的梦。昨天在知乎上刷到一个问题，问为何人们觉得蝴蝶美而蝴蝶幼崽毛毛虫丑陋，那个回答说，有一种美丽的蝴蝶，在幼时也很可爱，图里的毛毛虫有两根蜗牛似的触角。小时候被强迫灌输了破茧化蝶这样的文字，不觉得罕见，又亲手淹死过蝴蝶，我对生物上的蝴蝶没有多少好感，只是蝶这个字代表脆弱和轻盈之美而已。如今才觉得这般生物的变化如同奇迹。可惜人变不得。蝶在生物上的斑斓，在人类引用时变成了抽象固化的美。我也确实害怕副作用。我不知道将来会变成什么样。我所做的、想做的这些，最好是让情况好转而不是延缓我情绪崩溃而已。</p>
-<p>我曾佩服有勇气标新立异的人，也疑惑是什么支撑着激进者和理想主义者。如今我也成了这样的人。温和派与日子人不是理智，只是不够痛。我真的愿意去选那个机械飞升的选项而不是当作笑话，我真的愿意去选那97个选项，或者武装直升机，而不是当作笑话。有些人魔怔是为了找乐子，而有些人用来减缓痛苦。 </p>
-<p>我不知道这是否算出柜，我倒最好是有柜可出，而不是因为偏执和愤世嫉俗。我半年来似乎跟好几个人出了柜，实际上是把自己塞进更深的柜子里。<br>那天我对亲人掩饰流泪、否认、沉默，那天我向大他者说我需要奇迹，那天我从里面关上柜子的门，一片漆黑。当我打下需要奇迹时，我也理解了信教者。宁愿相信执念不是无药可救，于是为那片虚空添上信仰的神，在我这宁愿称其奇迹。我在这无波澜人生的绝望时刻，明白了奇迹一词如何产生。</p>
-<p>我每接近一个少数群体，便发觉我自己过往的误解，而后是漫天的，可怕的，绝大多数人的冷漠和误解。我恨他们，恨自己，恨人类的低能、无知、被激素左右、困在每个人的个人认知中无法理解彼此。恨不得人类没有自我意识。</p>
-<p>我会继续沉默下去吗？</p>
-<p>我存在吗？</p>
-<p>我是癔症，是幽灵，是玩笑，是inexistence。</p>
-<p>所有人都在群体性的癔症中，构建出不存在的孤岛们。</p>
-]]></content>
-      <categories>
-        <category>pieces</category>
       </categories>
   </entry>
   <entry>
@@ -702,26 +722,6 @@ ordered/unordered
 <li></li>
 </ol>
 ]]></content>
-      <categories>
-        <category>CS106L笔记</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>14 std Optional and Type Safety</title>
-    <url>/2023/01/19/14_std_optional_and_type_safety/</url>
-    <content><![CDATA[<p><em>How can we use c++’s type system to prevent errors at compile time?</em></p>
-<h2 id="std-optional-and-Type-Safety"><a href="#std-optional-and-Type-Safety" class="headerlink" title="std::optional and Type Safety"></a>std::optional and Type Safety</h2><h3 id="Type-Safety"><a href="#Type-Safety" class="headerlink" title="Type Safety"></a>Type Safety</h3><p><strong>const-interface</strong>: All member functions marked const in a class definition.</p>
-<p>Objects of type <em>const ClassName</em> may only use the const-interface.</p>
-<p><strong>type safety</strong>: guarantee the behavior of programs</p>
-<p><img src="https://i.imgur.com/Sg91Dlt.png"></p>
-<p><img src="https://i.imgur.com/5t8piRO.png"></p>
-<h4 id="std-optional-lt-T-gt"><a href="#std-optional-lt-T-gt" class="headerlink" title="std::optional&lt;T&gt;"></a>std::optional&lt;T&gt;</h4><p>either contain a value of type T or nothing (nullopt)</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    std::optional&lt;<span class="type">int</span>&gt; num1=&#123;&#125;;<span class="comment">//not have a value</span></span><br><span class="line">    num1 = std::optional&lt;<span class="type">int</span>&gt;&#123;<span class="number">1</span>&#125;;<span class="comment">//has a value</span></span><br><span class="line">    num1 = std::<span class="literal">nullopt</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>使用例</p>
-<p><img src="https://i.imgur.com/CSR8bVK.png"></p>
-<p>An optional take on realVector</p>
-<h3 id="The-need-for-“sometimes-a-thing”"><a href="#The-need-for-“sometimes-a-thing”" class="headerlink" title="The need for “sometimes-a-thing”"></a>The need for “sometimes-a-thing”</h3>]]></content>
       <categories>
         <category>CS106L笔记</category>
       </categories>
@@ -907,6 +907,326 @@ ordered/unordered
 <h3 id="channel"><a href="#channel" class="headerlink" title="channel"></a>channel</h3><p>channel 没有存储能力（不使用 buffer channel），如果数据没有接收者，线程会阻塞</p>
 <p>发送 <code>c &lt;- true</code></p>
 <p>接收 <code>&lt;- c</code></p>
+]]></content>
+      <categories>
+        <category>mit6.824</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>lab 2 Raft</title>
+    <url>/2023/06/03/lab2Raft/</url>
+    <content><![CDATA[<h2 id="implement"><a href="#implement" class="headerlink" title="implement"></a>implement</h2><h3 id="Students’-Guide-to-Raft"><a href="#Students’-Guide-to-Raft" class="headerlink" title="Students’ Guide to Raft"></a>Students’ Guide to Raft</h3><p><a href="https://thesquareplanet.com/blog/students-guide-to-raft/">助教的实验指导</a></p>
+<h4 id="经常出错的细节例"><a href="#经常出错的细节例" class="headerlink" title="经常出错的细节例"></a>经常出错的细节例</h4><ul>
+<li>The ultimate guide to Raft is in Figure 2 of the Raft paper. 指实现上一个字都不能和 figure 2 冲突.</li>
+<li>election timeout 在收到 current leader 的 RPC, 或者给 candidate 投票时(不是收到投票请求)重置</li>
+<li>与需要添加 log 的 AppendEntries RPC 一样, follower 收到心跳包后应该对当前任期与日志条目是否与 leader 一致进行检查, (心跳包只是 log 为空的 AppendEntries RPC) follower 接受 RPC 即是暗示 leader 其日志与 leader 一致.</li>
+<li>如果 follower 拥有 leader 发送的所有条目, 则必须保留 leader 发送条目之后的元素. 若冲突位置的条目没有 leader 的新, 则删除后面所有 log. 因为收到的 AppendEntries RPC 可能是过时的.</li>
+</ul>
+<h4 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h4><p>bug 的主要来源是 livelocks, incorrect or incomplete RPC handlers, failure to follow The Rules, and term confusion.</p>
+<h5 id="Livelocks-注意事项"><a href="#Livelocks-注意事项" class="headerlink" title="Livelocks 注意事项"></a><a href="https://thesquareplanet.com/blog/students-guide-to-raft/#livelocks">Livelocks</a> 注意事项</h5><p>系统仍在工作, 但是反复无效工作. 例: 没有选举出 leader; 选举出的 leader 立即退位.</p>
+<ul>
+<li>确保在正确的时候重置 election timer: 只在以下情况重置 (1) 收到现任 leader 的RPC (如果过时则不重置); (2) 发起选举; (3) <strong>投票给 candidate</strong>, 而不是收到投票请求 (在网络不稳定时第三条很重要, 因为大部分服务器的 log 不同, 只有少量的服务器可以获得一个服务器的选票; 这样做可以使拥有更新 log 的服务器不被打扰, 更可能被选为 leader)</li>
+<li>candidate 正在进行选举时, 如果 election timer 到点, 则 candidate 开始新选举. (前一场选举可能有 RPC 延迟或丢失)</li>
+<li>更新 term 时记得重置 votefor</li>
+</ul>
+<h5 id="Incorrect-RPC-handlers-注意事项"><a href="#Incorrect-RPC-handlers-注意事项" class="headerlink" title="Incorrect RPC handlers 注意事项"></a><a href="https://thesquareplanet.com/blog/students-guide-to-raft/#incorrect-rpc-handlers">Incorrect RPC handlers</a> 注意事项</h5><ul>
+<li><h6 id="如果收到的-prevlogindex-超过当前日志的长度-像处理任期冲突一样处理它"><a href="#如果收到的-prevlogindex-超过当前日志的长度-像处理任期冲突一样处理它" class="headerlink" title="如果收到的 prevlogindex 超过当前日志的长度, 像处理任期冲突一样处理它."></a>如果收到的 prevlogindex 超过当前日志的长度, 像处理任期冲突一样处理它.</h6></li>
+<li>即使发送的消息不包含 log, 也要检查 prevlogindex 的任期信息.</li>
+<li>在 <code>If leaderCommit &gt; commitIndex, set commitIndex = min(leaderCommit, index of last new entry)</code> 中, min 是必要的. 并且它需要用最后一个<strong>新</strong>条目来计算. 且不能简单地 apply 所有 lastapply 到 commitindex. 因为如果 leadercommit 超出了 leader 发送的条目( follower 本身的 log 比 leader 长 ), 可能会 apply 不正确的条目. </li>
+<li>完全按照5.4节中实现 “up-to-date log”.</li>
+</ul>
+<h5 id="Failure-to-follow-The-Rules"><a href="#Failure-to-follow-The-Rules" class="headerlink" title="Failure to follow The Rules"></a><a href="https://thesquareplanet.com/blog/students-guide-to-raft/#failure-to-follow-the-rules">Failure to follow The Rules</a></h5><ul>
+<li>及时检查是否 commitIndex &gt; lastIndex ,是则apply</li>
+<li>如果AppendEntries RPC 被拒绝,但不是因为log冲突时, 则该 log 过时, 不进行任何修改</li>
+<li>leader不能commit之前term的条目</li>
+<li>通常, nextIndex &#x3D; matchIndex + 1但两者用途不同. nextIndex是leader共享给follower前缀的乐观<strong>猜测</strong>, 只有在出现负面回应时才倒退. matchIndex 是为了安全性而设置, 是保守的测量. 只有follower回应是成功添加时,才更新matchIndex.</li>
+</ul>
+<h3 id="Part-2A-leader-election"><a href="#Part-2A-leader-election" class="headerlink" title="Part 2A: leader election"></a>Part 2A: leader election</h3><p>实现领导人选举和心跳</p>
+<h4 id="Hints"><a href="#Hints" class="headerlink" title="Hints"></a>Hints</h4><ul>
+<li><p>run <code>go test -run 2A</code> to test</p>
+</li>
+<li><p>看<strong>论文 Figure 2</strong>. 注意收发请求投票的 RPC，和选举、状态相关的规则</p>
+</li>
+<li><p>添加 Figure 2 中的 state 到 struct Raft. 定义保存 log entry 信息的结构体</p>
+</li>
+<li><p>填写 <code>RequestVoteArgs</code> and <code>RequestVoteReply</code>. 在 <code>Make()</code> 中建立 goroutine 检测是否要选举了(发送 RequesetVote). 完成 <code>RequestVote()</code> .</p>
+</li>
+<li><p>实现 heartbeats：定义一个 <code>AppendEntries</code> RPC struct，leader 周期性发送。</p>
+<p><code>AppendEntries</code> RPC handler method - 重置 election timeout</p>
+<p>leader 每秒发送心跳不超过十次</p>
+</li>
+<li><p>注意 election timeout 的随机性，防止所有 nodes 只给自己投票</p>
+</li>
+<li><p>原 leader crash 之后需要在 5 s 内选出新的</p>
+</li>
+<li><p>go rand</p>
+</li>
+<li><p><strong>周期性或延迟执行</strong>的实现：整个 goroutine 然后 time.Sleep() . 查看<code>Make()</code>创建的<code>ticker()</code>，不要用 go 的  <code>time.Timer</code> or <code>time.Ticker</code></p>
+</li>
+<li><p>rf.Kill() 用于永久停止某个节点。 You may want to do this in all loops, to avoid having dead Raft instances print confusing messages. 没懂什么意思（不使用Kill在断开时打印信息，term会显示为0）</p>
+</li>
+</ul>
+<h4 id="实现记录"><a href="#实现记录" class="headerlink" title="实现记录"></a>实现记录</h4><figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="comment">// create a new Raft server instance:</span></span><br><span class="line">rf := Make(peers, me, persister, applyCh)</span><br><span class="line"><span class="comment">//peer：RPC识别码 </span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>为 raft 结构体添加了 term, state (string类型，似乎使用 State 类型更好，以后试试), electiontimeout（每次随机更新）, tickerstart（甚至拼错了，似乎不用写进结构体，直接放在 ticker()里就好）. 简单判断了收到投票请求后的处理。下一步，修改 ticker() 同时完善 election timeout 的更新</li>
+<li>设定 election timeout 为 300 - 600 ms ，心跳包暂定为 150 ms 一个。</li>
+<li><code>ticker()</code>使用 for 循环间隔检查上一次开始计时到当前的时长是否超过 election timeout，若超过，则 rf.state 切换为 candidate，向其他节点发送投票申请。使用了 for 循环启动 goroutine 来实现并行发送。注意循环到自身时 continue 跳过。</li>
+<li>debug 结论 节点状态需要及时转换，包括选举结束时， candidate 要么变成 follower，要么变成 leader; 心跳包不止用于重置 follower 的 election timout，并且将<strong>过时的 leader（其他 sever 和自身）&#x2F;同时选举的 candidate</strong> 转换为 follower。</li>
+<li>最大收获可能是学到了一种闭包的使用以及go的各种并发原语。。。</li>
+<li>加 - race 测试，狠狠 race，在 sentHeartBeat() 和 ticker() 中每次检测循环条件时添加了锁。（之前没有 else 分支的可能需要添加 else 来 unlock）注意不要将发送 rpc 请求的部分 lock，否则可能会导致线程阻塞。</li>
+</ol>
+<h3 id="Part-2B-log"><a href="#Part-2B-log" class="headerlink" title="Part 2B: log"></a>Part 2B: log</h3><p>实现 leader 和 follower 添加新 log entries</p>
+<p>start(command) 由应用层向 raft 传输命令. </p>
+<p>当每个 peers 成功提交 log entries 时, 应该通过 applyCh 向 Make() 发送一条 ApplyMsg. 在 ApplyMsg 的参数中, <code>commandvalid</code> 表示 applymsg 包含了一条新提交的 log entry.(false则表示发送了其他类型的消息, 比如快照)</p>
+<h4 id="Hints-1"><a href="#Hints-1" class="headerlink" title="Hints"></a>Hints</h4><ul>
+<li>先实现 <code>Start()</code>，然后通过 AppendEntries RPC 发送新的 committed entry。在每个 peer 的 applyCh 上发送每个新提交的条目.</li>
+<li>实现 election restriction (5.4.1 in the paper).</li>
+<li>达成共识失败的原因可能是在 leader 活着的时候重复选举。Look for bugs in election timer management, or not sending out heartbeats immediately after winning an election.</li>
+<li>使用 condition variables 或者每次循环 sleep 一段时间.</li>
+<li>需要时查看 <code>test_test.go</code> 了解需求.</li>
+</ul>
+<h4 id="实现-ver-1"><a href="#实现-ver-1" class="headerlink" title="实现 ver.1"></a>实现 ver.1</h4><p>写了两遍, 重构核心函数一次, 所以以下不一定是对的..</p>
+<ol>
+<li><p>根据 figure 2 为 Raft 添加了 <code>commitIndex</code>(最后 commit 的 log 目录,即 log 数量为 commitindex+1), <code>lastApplied</code> 用于记录当前节点记录 log 的提交和执行情况;<code>log</code> 用于记录所有的 log 内容; <code>nextINdex</code>, <code>matchIndex</code> 用于 leader 记录每个节点的更新状况. 在 make() 中初始化. (实现持久化后需要修改)</p>
+</li>
+<li><p>修改了投票条件. 需要保存每个 log 的 term, 因此为 Raft 添加了 <code>logterm []int</code>.  </p>
+<ul>
+<li>candidate 的 currentterm 不小于 follower 的 term, (若 candidate term 大于 follower term, 则先更新 follower term 并将 votefor 重置为 -1)</li>
+<li>candidate 的 lastlogterm 大于 follower 的 lastlogterm, 或相等而 candidate 更长</li>
+<li>votefor 为 -1</li>
+</ul>
+</li>
+<li><p>raft 对应用层的反馈 ApplyMsg, 通过 <code>ApplyCh</code> 实现. 向 raft 中添加了 ApplyCh, 在 CommitRequest() 中, 当返回请求结果为 true 的 server 数量过半时, 向 applyCh 中传入 <code>ApplyMsg</code>, 并且向已经更新好的 server 发送 ApplyMsg 命令, 如果未更新好, 则等待至更新完成.</p>
+</li>
+<li><p>向<code>AppendEntriesApply</code> 中加入 </p>
+<ul>
+<li>xterm         冲突位置的 follower 任期 </li>
+<li>xindex        xterm 任期中第一条 log 的索引</li>
+<li>xlen             follower 的 log 过短, 需要再向 entries 中添加的 log 数量</li>
+</ul>
+<p><strong>AppendEntry 检测冲突</strong>时首先检测 follower 的 commitIndex 是否小于 args.PreLogIndex, 若小于, 返回 success &#x3D; false, xlen &#x3D; prelogindex - commitindex; 若 follower 最后一条 log 的任期或目录与 args 中 pre 信息不符, 则填入 xterm, xindex 并返回; 若未检测到冲突, 则向 rf.log 中写入新 entries, 并更新 rf.commitindex </p>
+</li>
+<li><p><code>CommitRequest</code> 中添加<strong>对冲突的处理</strong>, 分三种情况, follower 的 log 过短; 冲突条目对应的 follower term 在 leader 中存在&#x2F; 不存在; 更新 args 中的 <code>prelogindex</code>, <code>prelogterm</code>, <code>entries</code>, **<code>entriesterm</code> **以及 <code>rf.nextindex[sever]</code></p>
+</li>
+</ol>
+<p>一些问题</p>
+<p>rf.matchindex目前仅在 commit 成功后更新, 有什么用我尚且蒙古.</p>
+<h4 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h4><p>冲突处理</p>
+<p>向<strong>AE reply</strong>中添加条目</p>
+<ul>
+<li>xTerm	term of conflictiong entry</li>
+<li>xIndex    index of first entry of xTerm</li>
+<li>xLen        log 槽位数, 没有则返回 -1</li>
+</ul>
+<ol>
+<li>follower 记录过短，冲突位置没有条目，xTerm &#x3D; -1, xLen &#x3D; 除了当前项还空白的槽位数，下一次直接发送到 follower 的第一个空槽位</li>
+<li>follower 返回的xterm在leader中有记录，leader将对于该follower的nextindex设置为本地xterm后第一条log的地方</li>
+<li>follower 返回的xterm在leader中无记录，leader将nextindex设置为xindex</li>
+</ol>
+<p><strong>AppendEntry</strong></p>
+<ul>
+<li>冲突对于接收方有两种情况<ol>
+<li>自身记录过短, rf.currentIndex &lt; prelogindex.</li>
+<li>对应index中entry的term与prelogterm不符.</li>
+</ol>
+</li>
+<li>不冲突, 修改follower的log</li>
+<li>判断无需修改的情况, 记为 outofdate, 返回时丢弃</li>
+<li>更新 follower 的 commitIndex</li>
+</ul>
+<p><strong>TryAppendEntry()</strong></p>
+<p>核心函数, 收到应用层命令后主动复制命令和 heartbeat 中都调用该方法, 向 follower 发送 RPC, 并处理 reply, 若遇冲突, 先调用 ConflictProcess() 再递归调用自身.</p>
+<p>细节: 多次发送 RPC 时不要复用 reply.</p>
+<p><strong>Apply的时机</strong></p>
+<p>使用channel,一旦commitIndex更新,则触发rf.commitIndex&gt;rf.applyIndex的检查</p>
+<p><strong>heartbeat</strong></p>
+<p>发送一条log为空的AppendEntry, 其中 PreLogIndex &#x3D; rf.currentIndex.</p>
+<p>如果follower的最后一条log与leader一致,则无需更新log,仅检查commit更新.</p>
+<p><strong>debug记录</strong></p>
+<ol>
+<li>处理killed的服务器:获取rpc的返回值,失败则重发rpc.对于sendHeartBeat,如果失败则不做处理;对于AppendEntry和VoteRequest,如果失败则立即重发.修改后可通过2B前四个test(无冲突).</li>
+<li>rf.currentIndex计算错误.改为rf.currentIndex &#x3D; args.prelogindex + len(args.Entries).</li>
+<li>增加 leader 对 commit 的更新, 维持常驻线程,检测 matchindex <code>LeaderCheckCommit()</code></li>
+</ol>
+<p>当前问题: killed的server不知为何会自己开启一轮选举;heartbeat需要和replicateEntries合并;replicateEntries中的细节问题.包括每次发送的log目录和重发逻辑.</p>
+<ol start="4">
+<li>test4, leader 断开后选不出新的leader, log相同的follower互相拒绝,怀疑 leaderelection问题. 修改 leaderelection, 未连接的server不计数,candidate超时可以开始下一次选举. 发现在leaderelection中未设置候选人commitindex信息,因此导致选举错误.</li>
+<li>follower断开后, leader尝试发log后会卡住,无法给别的发log. 解决:向heartbeat中增加了冲突处理, 新增了<code>TryAppendEntry()</code>,合并了ReplicateEntries()和HeartBeat()的处理.</li>
+<li>增加对过时Entries的判断,若过时,则直接丢弃</li>
+<li>某些情况下选不出新leader.根据论文中对<strong>more up-to-date</strong>的定义,先比较最后一条log的term,大者新;若一样,比较log长度.修改requestvote()中投票条件.</li>
+<li>TestConcurrentStarts2B和最后一个test运行到某处后只剩leader不断发heartbeat.<strong>[原因:commit到apply的channel加锁了,去锁后健康]</strong> debug几小时才发现, 头大.</li>
+<li>将不冲突的心跳记为outofdate,导致matchindex不能更新. 解决: 为outofdate加一个logindex与matchindex比大小的判断.</li>
+</ol>
+<h3 id="Part-2C-persistence"><a href="#Part-2C-persistence" class="headerlink" title="Part 2C: persistence"></a>Part 2C: persistence</h3><p>将 raft state 写入 persister 对象，每次 reboot 时 make() 读取 persister。包括了保存和读取。</p>
+<h4 id="怎样读取和保存"><a href="#怎样读取和保存" class="headerlink" title="怎样读取和保存"></a>怎样读取和保存</h4><p>完成<code>persist()</code>(存)和<code>readPersist()</code>(取).</p>
+<p>使用<code>labgob</code>编码, 将信息编码为bytes串传递到Persister对象中.</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> Persister <span class="keyword">struct</span> &#123;</span><br><span class="line">	mu        sync.Mutex</span><br><span class="line">	raftstate []<span class="type">byte</span></span><br><span class="line">	snapshot  []<span class="type">byte</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="何时读取-x2F-保存持久化"><a href="#何时读取-x2F-保存持久化" class="headerlink" title="何时读取&#x2F;保存持久化"></a>何时读取&#x2F;保存持久化</h4><p>在更改 persistent state 时, 保存.</p>
+<ol>
+<li>candidate发起选举时, 收到选举请求term更新&#x2F;投票时</li>
+<li>leader收到用户层apply, follower接受append修改log</li>
+</ol>
+<p>在 raft.Make() 中读取.</p>
+<h4 id="持久化的内容"><a href="#持久化的内容" class="headerlink" title="持久化的内容"></a>持久化的内容</h4><p>raftstate :</p>
+<ul>
+<li>currentTerm</li>
+<li>voteFor</li>
+<li>log[]</li>
+</ul>
+<p>snapshot实现2D时再写.</p>
+<p><strong>debug记录</strong></p>
+<ol>
+<li>basic persistence: server间未达成共识.可能原因: 读取时未根据恢复server的其他记录.**在readPersist()**中使用了len(rf.log),2D时需修改.</li>
+<li>test: more persistence. 出现term交错问题. 更低的 term 被添加成功.term神秘回退.原因:persist()中手误给currentTerm存了currentIndex</li>
+</ol>
+<h3 id="Part-2D-log-compaction"><a href="#Part-2D-log-compaction" class="headerlink" title="Part 2D: log compaction"></a>Part 2D: log compaction</h3><p>论文 section7</p>
+<p>在长期运行的服务器上, 储存快照并丢弃之前的条目.</p>
+<p>hints:</p>
+<ul>
+<li>在单个InstallSnapshot RPC中发送整个快照,不需要实现论文中拆分快照的偏移机制.</li>
+<li></li>
+</ul>
+<h4 id="快照更新与持久化"><a href="#快照更新与持久化" class="headerlink" title="快照更新与持久化"></a>快照更新与持久化</h4><p>实现 raft.snapshot(). snapshot 是一个被应用主动唤起的方法. 功能是制作返回快照, 并且trim掉尽量多的log.持久化新的快照和log.</p>
+<p>index参数代表snapshot中反映的最高log</p>
+<p><strong>leader发送消息更新follower</strong></p>
+<p>实现<code>InstallSnapshot</code> RPC</p>
+<p>(?)根据已经记录的follower的matchindex分情况处理</p>
+<h4 id="快照储存的内容"><a href="#快照储存的内容" class="headerlink" title="快照储存的内容"></a>快照储存的内容</h4><p>每个server独立储存,只覆盖committed entries</p>
+<h4 id="使用已储存的快照"><a href="#使用已储存的快照" class="headerlink" title="使用已储存的快照"></a>使用已储存的快照</h4><ol>
+<li><p>服务器重启时, 读取persistence中的快照和log.</p>
+</li>
+<li><p>当follower更新过于慢, 需要的log已经被leader丢弃时, leader向follower发送快照.</p>
+</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> ApplyMsg <span class="keyword">struct</span> &#123;</span><br><span class="line">	CommandValid <span class="type">bool</span></span><br><span class="line">	Command      <span class="keyword">interface</span>&#123;&#125;</span><br><span class="line">	CommandIndex <span class="type">int</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// For 2D:</span></span><br><span class="line">	SnapshotValid <span class="type">bool</span></span><br><span class="line">	Snapshot      []<span class="type">byte</span></span><br><span class="line">	SnapshotTerm  <span class="type">int</span></span><br><span class="line">	SnapshotIndex <span class="type">int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="raft-snapshot-实现"><a href="#raft-snapshot-实现" class="headerlink" title="raft.snapshot()实现"></a>raft.snapshot()实现</h4><p>snapshot是每个server独立运行的,只有当follower落后过多时才</p>
+<ol>
+<li>将log中[x,lastincludeindex]删除,剩余log在数组切片中的索引是<code>index - LastIncludeIndex</code></li>
+<li>更新log[0]中的snapshotinfo</li>
+<li>更新rf.snapshot</li>
+<li>持久化</li>
+</ol>
+<h4 id="persist-和readPersist-的修改"><a href="#persist-和readPersist-的修改" class="headerlink" title="persist()和readPersist()的修改"></a>persist()和readPersist()的修改</h4><p>persist()将save时的nil项改为snapshotstate, snapshotstate由rf.snapshot编码直接生成.</p>
+<p>readPersist()增加判断压缩的数据类型.rf.currentIndex改为lastincludedindex+len(rf.log) - 1</p>
+<p>问题: log不能再用currentIndex下标取</p>
+<h4 id="InstallSnapshot"><a href="#InstallSnapshot" class="headerlink" title="InstallSnapshot()"></a>InstallSnapshot()</h4><p>不需要实现分块发送RPC,因此将论文中Args结构体中删去offset和done.</p>
+<h4 id="debug记录"><a href="#debug记录" class="headerlink" title="debug记录"></a>debug记录</h4><ol>
+<li>试图installsnapshot之后一个follower一直试图leader election. 解决: 锁套锁了.</li>
+<li>数组越界.发现当要发送的log是切片中的第一条时, preTerm取了log[0].Term&#x3D;0. (snapshot的信息存在了log[0].command中),改为log[0].Term也同步更新.</li>
+<li>install snapshot 后, apply entry时由于lastApplied小于, 数组越界.解决:install snapshot后, 应该立即提交 snapshot并修改apply index.</li>
+<li>log[] 在某处data race了.</li>
+</ol>
+<p>锁排查: </p>
+<p>AppendEntry() 函数级锁</p>
+<p>RequestVote() 函数级锁</p>
+<p>InstallSnapshot() 向<code>rf.applyCh</code>发送snapshot时未锁,其余锁.检查出一个返回前未unlock.为保险将生成msg也放入锁中.</p>
+<p>Start() 函数级锁</p>
+<p>ReplicateEntries 由于发送请求和条件变量分成了三个锁,但除发送RPC都锁.</p>
+<p>… 发现TryInstallSnapshot() 请求之后的后半段完全没锁</p>
+<ol start="5">
+<li>installsnapshot() 中当需要保留一部分log时数组向上越界.原因 索引未减去原来的snapshotindex.</li>
+<li>conflictprocess()中数组越界,猜测由于索引变动appendentry的返回值reply.xindex有问题.修改reply.XIndex &#x3D; i+snapshotindex, i 为log索引.</li>
+<li>复制log时若遇到logindex&lt;snapshotindex,则放弃复制.-&gt;尝试复制snapshot.(?)</li>
+<li>某个follower在某次添加完log后死了. 怀疑 AppendEntry()中 rf.commitCh 阻塞. 修改AppendEntry()中的锁.</li>
+<li>snapshot decode error. persist &#x2F; read persist 出错. snapshot 持久化时不需要编码,,</li>
+<li>snapshotinfo 导致的编码错误. 由于rf.log[0].term中已经储存了lastincludedterm,因此删除snapshotinfo结构,在rf.log[0].command中储存lastincludeindex. 修改后 2D crash test 通过,2C及之前无snapshot的部分无法通过.</li>
+<li>snapshot 数组越界. 原因 先修改了log再读原term. </li>
+<li>readPersist时将commit和apply都设为snapshot</li>
+<li>无尽conflict,原因: 查找同一任期log时将log[0]也算进去了, 然后自动尝试并没有用的installsnapshot.(两者snapshot相同)</li>
+<li>服务器可能发送过时的snapshot,忽略即可.</li>
+<li>神秘datarace:原因,发送RPC时使用的args.Entries使用了错误的切片复制方式.取了地址.</li>
+</ol>
+<p>go切片的最佳复制方式</p>
+<p>newNums :&#x3D; make([]int, len(nums))</p>
+<p>copy(newNums,nums)</p>
+<h2 id="Paper"><a href="#Paper" class="headerlink" title="Paper"></a>Paper</h2><h3 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h3><p>管理复制日志的<strong>一致性算法</strong>（状态机转移）</p>
+<p>关键模块</p>
+<ul>
+<li>领导人选举：旧 leader 宕机选举新 leader</li>
+<li>日志复制</li>
+<li>安全性</li>
+</ul>
+<p>特性</p>
+<ul>
+<li><strong>强领导者</strong>：例如⽇志条⽬只从领导者发送给其他的服务器，简化了对复制⽇志的管理并好理解。</li>
+<li><strong>领导选举</strong>：用随机计时器来选举领导者，基于心跳机制实现，用于解决冲突。</li>
+<li><strong>成员关系调整</strong>：使得集群在成员变换的时候依然可以继续⼯作。</li>
+</ul>
+<h3 id="复制状态机"><a href="#复制状态机" class="headerlink" title="复制状态机"></a>复制状态机</h3><p>通常基于复制日志实现</p>
+<h3 id="Raft-流程"><a href="#Raft-流程" class="headerlink" title="Raft 流程"></a>Raft 流程</h3><p><a href="https://zhuanlan.zhihu.com/p/514512060">论文翻译</a>, <a href="https://pdos.csail.mit.edu/6.824/papers/raft-extended.pdf">raft(extend)论文</a>, <a href="http://thesecretlivesofdata.com/raft/">raft演示动画</a>,<a href="https://pdos.csail.mit.edu/6.824/notes/raft_diagram.pdf">各函数交互示意图</a></p>
+<p>每个 node 有三种可能状态：follower, candidate, leader</p>
+<p>选举一个 <strong>Leader</strong> ，响应所有客户端请求。</p>
+<p>节点间通信使用两种 RPC</p>
+<ul>
+<li>请求投票（Request Vote）：选举时</li>
+<li>追加条目（Append Entries）：复制日志和心跳</li>
+</ul>
+<h4 id="leader-election"><a href="#leader-election" class="headerlink" title="leader election"></a>leader election</h4><ol>
+<li><p>当一个 node 不再收到 leader 的消息**(election timeout)** -&gt; 成为candidate -&gt; 开启新任期（给自己的 term 加一)，并给自己投票</p>
+</li>
+<li><p>请求其他 nodes 的投票 - 接收其他 nodes 的回应</p>
+</li>
+</ol>
+<p>​		若得票超过半数 -&gt; 成为 leader</p>
+<ol start="3">
+<li>接收到请求的节点如果在 candidate 的这个任期没有投过票（term 小于 candidate 的 term），那么它会投票，更新 term，切换状态为 follower ，并重置 election timeout</li>
+</ol>
+<p>election timeout: <strong>random</strong> between 150 ms ~ 300 ms（在 heartbeats 发送间隔小于 150 ms 的情况下）</p>
+<p>heartbeat timeout: leader 每隔 heartbeat timeout 向所有节点发送心跳包，节点收到后会回应</p>
+<p><strong>term (任期) :</strong></p>
+<ul>
+<li>每开始一次选举，为一个新的任期</li>
+<li>当前任期号比其他节点小，更新自己的任期号</li>
+<li>Leader 或 Candidate 发现自己任期号过期，立即转为 Follower</li>
+<li>收到过期的任期号请求，拒绝请求。</li>
+</ul>
+<p><strong>split vote</strong> 两个节点同时成为 candidate：若没有节点得票过半，则自然流动到下一个任期。</p>
+<h4 id="log-replication"><a href="#log-replication" class="headerlink" title="log replication"></a>log replication</h4><h5 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h5><p>一条日志包括<strong>任期号</strong>，一条<strong>指令</strong>，一个整数<strong>索引</strong></p>
+<p>根据论文，AppendEntries RPC 的结构为</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> AppendEnrtriesArgs <span class="keyword">struct</span> &#123;</span><br><span class="line">	Term     <span class="type">int</span></span><br><span class="line">	LeaderId <span class="type">int</span></span><br><span class="line">    PrevLogIndex <span class="type">int</span></span><br><span class="line">    PrevLogTerm  <span class="type">int</span></span><br><span class="line">    []Entries	<span class="comment">//empty for heartbeat</span></span><br><span class="line">    LeaderCommit <span class="type">int</span>	<span class="comment">//应用指令到状态机的索引</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">type</span> AppendEnrtriesReply <span class="keyword">struct</span> &#123;</span><br><span class="line">	Term    <span class="type">int</span>	</span><br><span class="line">	Success <span class="type">bool</span>		<span class="comment">//if contain entry matching prevLogIndex and preLogTerm </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h5><ol>
+<li>leader 收到 client 请求，将请求 append entries 复制发送到所有 nodes，让其追加日志</li>
+<li>leader 等待至大部分节点回应（<strong>安全复制</strong>），leader 根据 entry 修改自己的数据，Leader 应用该指令到状态机并返回结果给客户端（通过下次 AE RPC，包括心跳，附加 <code>commitIndex</code>来通知 follower），回应 client</li>
+</ol>
+<h5 id="日志一致性"><a href="#日志一致性" class="headerlink" title="日志一致性"></a>日志一致性</h5><ul>
+<li>在不同的日志中的两个条目拥有<strong>相同的索引和任期号</strong>，那么他们<strong>存储了相同的指令</strong>。</li>
+<li>在不同的日志中的两个条目拥有<strong>相同的索引和任期号</strong>，那么他们<strong>之前的所有日志条目也全部相同</strong>。</li>
+</ul>
+<p><strong>追加日志的一致性检查</strong>：每次新条目 AE RPC 给 Follower，如果上一条索引任期不一致，则拒收新条目。所以<strong>一旦 AE RPC 返回成功，说明 Follower 所有日志和 Leader 相同</strong>。</p>
+<h5 id="日志不一致的情况"><a href="#日志不一致的情况" class="headerlink" title="日志不一致的情况"></a>日志不一致的情况</h5><p>leader 未完全复制日志时宕机会使日志不一致。Follower 可能没有新Leader 有的条目，也可能有新 Leader 没有的条目。</p>
+<p><strong>Leader 强制 Follower 复制自己的日志，即覆盖 Follower 中所有冲突日志</strong>。</p>
+<p>Leader 找到最后和 Follower 一致的地方，删除 Follower 之后的冲突日志，发送自己的日志附加给 Follower。这些操作<strong>在 AE RPCs 一致性检查时完成</strong>：</p>
+<ul>
+<li>Leader 对每个 Follower 维护下一个需发送的条目索引<code>nextIndex</code>，在刚上任时初始化为最新日志索引加一（图 7 中 11）。</li>
+<li><strong>Follower 日志不一致则拒绝 AE PRC</strong>，Leader <strong>减小</strong><code>nextIndex</code><strong>重试直到成功</strong>，Follower 删除冲突日志并追加 Leader 日志。日志即保持一致。<br>这里可以优化，Follower 拒绝时返回冲突任期号的最早地址，Leader 下次就可以越过同任期号的冲突。但是此优化不一定有必要，因为实际很少发生。</li>
+</ul>
+<h4 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h4><ul>
+<li>需要保证 follower 包含所有已提交日志条目。-&gt; 方法：<strong>增加选举限制</strong></li>
+</ul>
+<p>选举时投票人比较<strong>最后一条日志的索引值和任期号</strong>，投票人会拒绝日志没有自己新的投票请求。</p>
+<p>任期号不同，则任期号大的新；任期号相同，索引值大的比较新</p>
+<ul>
+<li>某日志被复制到多数节点也不代表它被提交。 -&gt; <strong>增加日志提交条件</strong></li>
+</ul>
+<p><strong>Leader 在当前任期至少有一条日志被提交</strong></p>
+<p>新上任的 Leader 在接受客户写入命令前先提交一个 no-op（空命令），携带自己任期号的日志复制到多数节点</p>
+<h2 id="refer"><a href="#refer" class="headerlink" title="refer"></a>refer</h2><ol>
+<li><a href="https://thesquareplanet.com/blog/students-guide-to-raft/">助教的实验指导</a></li>
+<li><a href="http://thesecretlivesofdata.com/raft/">raft演示动画</a></li>
+<li><a href="https://pdos.csail.mit.edu/6.824/papers/raft-extended.pdf">raft(extend)论文</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/514512060">论文翻译</a></li>
+<li><a href="https://pdos.csail.mit.edu/6.824/labs/lab-raft.html">课程实验指导</a> 包括锁, debug 等指导</li>
+<li>20年lecture5, 讲了各种并发原语，很有帮助</li>
+<li>20年lecture6.7 raft 讲解</li>
+</ol>
 ]]></content>
       <categories>
         <category>mit6.824</category>

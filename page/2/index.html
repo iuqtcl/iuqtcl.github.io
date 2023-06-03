@@ -186,6 +186,116 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/01/19/07_classes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/ee2.jpg">
+      <meta itemprop="name" content="iuqtcl">
+      <meta itemprop="description" content="人暂时没remake，blog已经re了">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cyber Ghost">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/19/07_classes/" class="post-title-link" itemprop="url">07 Classes</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-01-19 00:57:13 / 修改时间：01:00:55" itemprop="dateCreated datePublished" datetime="2023-01-19T00:57:13+08:00">2023-01-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CS106L%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">CS106L笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><em>How to make your own custom types</em></p>
+<h2 id="Classes-Introduction"><a href="#Classes-Introduction" class="headerlink" title="Classes Introduction"></a>Classes Introduction</h2><p><em>Containers are all classes defined in the STL</em></p>
+<h4 id="issues-with-structs"><a href="#issues-with-structs" class="headerlink" title="issues with structs"></a>issues with structs</h4><ol>
+<li>默认可以访问任意内部数据(public)</li>
+<li>需要直接初始化每个 data member</li>
+</ol>
+<p>classes 提供 public interface 和 private implement</p>
+<p><strong>声明结构</strong></p>
+<p>declare in .h  + implement in .cpp</p>
+<p>在 .cpp 中加入 .h 头文件</p>
+<p>.h include .cpp</p>
+<p><strong>namespace</strong></p>
+<ol>
+<li>防止名字冲突</li>
+<li>每个类有单独的namespace</li>
+</ol>
+<p><strong>this</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Student::setName</span><span class="params">(string name)</span></span>&#123;</span><br><span class="line"><span class="keyword">this</span>-&gt;name=name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>构造函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Student.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;Student.h&gt;</span></span></span><br><span class="line">Student::<span class="built_in">Student</span>():name&#123;<span class="string">&quot;&quot;</span>&#125;,age&#123;<span class="number">0</span>&#125;,state&#123;<span class="string">&quot;&quot;</span>&#125;</span><br><span class="line">Student::<span class="built_in">Student</span>(string name,<span class="type">int</span> age,string state)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">this</span>-&gt;name=name;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>destructors</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class_name::~Class_name();</span><br></pre></td></tr></table></figure>
+
+<p><strong>using</strong></p>
+<ol>
+<li><pre><code class="c++">using namespace name;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2. 指定别名</span><br><span class="line"></span><br><span class="line">```c++</span><br><span class="line">    using iterator = std::string*;</span><br><span class="line">    using size_type = size_t;</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>在派生类中引用基类成员</p>
+</li>
+</ol>
+<h4 id="operator-重载"><a href="#operator-重载" class="headerlink" title="operator 重载"></a>operator 重载</h4><p>重载[]</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">std::string&amp; StrVector::<span class="keyword">operator</span>[](size_type index) &#123;</span><br><span class="line">    <span class="keyword">return</span> *(<span class="built_in">begin</span>() + index);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="const"><a href="#const" class="headerlink" title="const"></a>const</h4><p>后加const表函数不修改成员数据，可以被const对象引用。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">empty</span><span class="params">()</span> <span class="type">const</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>前加const表示返回值为const类型</p>
+<h2 id="Template-Class"><a href="#Template-Class" class="headerlink" title="Template Class"></a>Template Class</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> First, <span class="keyword">typename</span> Second&gt; <span class="keyword">class</span> <span class="title class_">MyPair</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="function">First <span class="title">getFirst</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function">Second <span class="title">getSecond</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setFirst</span><span class="params">(First f)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setSecond</span><span class="params">(Second f)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">First first;</span><br><span class="line">Second second;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/01/19/06_iterators_and_pointers/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1057,100 +1167,6 @@ ordered/unordered
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://iuqtcl.github.io/2023/01/19/11_operators/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/ee2.jpg">
-      <meta itemprop="name" content="iuqtcl">
-      <meta itemprop="description" content="人暂时没remake，blog已经re了">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Cyber Ghost">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/01/19/11_operators/" class="post-title-link" itemprop="url">11 Operators</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2023-01-19 00:28:25 / 修改时间：00:49:59" itemprop="dateCreated datePublished" datetime="2023-01-19T00:28:25+08:00">2023-01-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CS106L%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">CS106L笔记</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="operator-overloading"><a href="#operator-overloading" class="headerlink" title="operator overloading"></a>operator overloading</h2><p><img src="https://i.imgur.com/mObcRf8.png"></p>
-<h3 id="examples"><a href="#examples" class="headerlink" title="examples"></a>examples</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//vector&lt;string&gt;增加元素</span></span><br><span class="line">vector&lt;string&gt;&amp; vector&lt;string&gt;::<span class="keyword">operator</span>+=(<span class="type">const</span> std::string&amp; element)&#123;			<span class="comment">//const reference</span></span><br><span class="line">    <span class="built_in">push_back</span>(element);</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    vector&lt;string&gt; vec;</span><br><span class="line">    <span class="type">const</span> string s = <span class="string">&quot;111&quot;</span>;</span><br><span class="line">    vec+= <span class="string">&quot;gggg&quot;</span>;		<span class="comment">//vec.operator+=(&quot;gggg&quot;); </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>concept check</p>
-<ul>
-<li><p>why return a reference</p>
-</li>
-<li><p>why return *this</p>
-<p>another example</p>
-</li>
-</ul>
-<p>修改 class StringVector 的 + 操作符</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">StringVector StringVector::<span class="keyword">operator</span>+(<span class="type">const</span> StringVector other) <span class="type">const</span> &#123;</span><br><span class="line">    StringVector result = *<span class="keyword">this</span>; <span class="comment">//copy constructor</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">const</span> std::string&amp; s : other)&#123;</span><br><span class="line">        result += s;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="General-rule-of-thumb"><a href="#General-rule-of-thumb" class="headerlink" title="General rule of thumb:"></a>General rule of thumb:</h3><h4 id="member-vs-non-member"><a href="#member-vs-non-member" class="headerlink" title="member vs. non-member"></a>member vs. non-member</h4><ol>
-<li>implement as members ( eg. [], (), -&gt;, &#x3D;)</li>
-<li>implement as non-members (eg. &lt;&lt;)</li>
-<li>一元操作符 implement as member (eg. ++)</li>
-<li>处理符号两侧 equally , implement as non-member ( maybe <strong>friend</strong> ) (eg. +, &lt;)</li>
-<li>not both equally, member (eg. +&#x3D;) 修改了某一个的值</li>
-</ol>
-<h4 id="const-vs-non-const-for-member-functions"><a href="#const-vs-non-const-for-member-functions" class="headerlink" title="const vs. non-const for member functions"></a>const vs. non-const for member functions</h4><p>const 对象只能调用 const function</p>
-<p>可申明一个 const 版本</p>
-<h3 id="Principle-of-Least-Astonishment-POLA"><a href="#Principle-of-Least-Astonishment-POLA" class="headerlink" title="Principle of Least Astonishment (POLA)"></a>Principle of Least Astonishment (POLA)</h3><p>参考</p>
-<ol>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=9i_TNfhVvSM&list=PLCgD3ws8aVdolCexlz8f3U-RROA0s5jWA&index=19&ab_channel=AveryWang">https://www.youtube.com/watch?v=9i_TNfhVvSM&amp;list=PLCgD3ws8aVdolCexlz8f3U-RROA0s5jWA&amp;index=19&amp;ab_channel=AveryWang</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1222,7 +1238,7 @@ ordered/unordered
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
